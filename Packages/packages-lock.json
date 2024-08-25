@@ -7,6 +7,15 @@
       "dependencies": {},
       "hash": "660e7a55406bec8e884bb7b6b6e8b31c9bdaa760"
     },
+    "com.github.homuler.mediapipe": {
+      "version": "file:com.github.homuler.mediapipe",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.unity.ugui": "1.0.0",
+        "com.unity.test-framework": "1.0.0"
+      }
+    },
     "com.spoiledcat.git": {
       "version": "1.0.27",
       "depth": 0,
