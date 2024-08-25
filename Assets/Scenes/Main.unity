@@ -1556,7 +1556,7 @@ GameObject:
   - component: {fileID: 1674733288}
   - component: {fileID: 1674733286}
   m_Layer: 5
-  m_Name: Main
+  m_Name: Content
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1701,7 +1701,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 14.215612
+    width: 14.225509
     height: 7.912088
 --- !u!222 &1764984682
 CanvasRenderer:
@@ -1899,7 +1899,7 @@ GameObject:
   - component: {fileID: 1975532685}
   - component: {fileID: 1975532689}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: Main Menu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2016,7 +2016,7 @@ MonoBehaviour:
   m_ActionEvents: []
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
-  m_DefaultActionMap: 272f6d14-89ba-496f-b7ff-215263d3219f
+  m_DefaultActionMap: UI
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 285447761}
 --- !u!1 &2115874922
