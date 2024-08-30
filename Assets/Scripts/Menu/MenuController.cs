@@ -55,24 +55,84 @@ public class MenuController : MonoBehaviour
             var help = new StringBuilder();
             var mask = InputBinding.MaskByGroups(PlayerInput.all[0].currentControlScheme);
 
+            var move = component.move.ToInputAction();
+            help.Append(GetControlText(move));
+            help.Append("    ");
+
             if (option.Interactive)
             {
                 var submit = component.submit.ToInputAction();
-                help.Append($"[{submit.GetBindingDisplayString(mask)}] {submit.name}");
-                help.Append(' ');
+                help.Append(GetControlText(submit));
             }
 
             if (option.Options != null && option.Options.Length > 0)
             {
                 help.Append("unnamed");
-                help.Append(' ');
             }
-
-            var move = component.move.ToInputAction();
-            help.Append($"[{move.GetBindingDisplayString(mask)}] {move.name}");
 
             hint.text = help.ToString();
         }
+    }
+
+    private string GetControlText(InputAction action)
+    {
+        if (action.controls.Count == 0)
+        {
+            return string.Empty;
+        }
+
+        int lastCompositeIndex = -1;
+        var output = new StringBuilder();
+        var isFirstControl = true;
+
+        foreach (var control in action.controls)
+        {
+            var bindingIndex = action.GetBindingIndexForControl(control);
+            var binding = action.bindings[bindingIndex];
+
+            if (binding.isPartOfComposite)
+            {
+                if (lastCompositeIndex != -1)
+                {
+                    continue;
+                }
+
+                lastCompositeIndex = action.ChangeBinding(bindingIndex).PreviousCompositeBinding().bindingIndex;
+                bindingIndex = lastCompositeIndex;
+            }
+            else
+            {
+                lastCompositeIndex = -1;
+            }
+
+            if (!isFirstControl)
+            {
+                output.Append(' ');
+            }
+            else
+            {
+                isFirstControl = false;
+            }
+
+            output.Append(action.GetBindingDisplayString(bindingIndex));
+        }
+
+        string controls = output.ToString();
+        string tags = "";
+
+        foreach (string control in controls.Split('/'))
+        {
+            string[] bindings = control.Split('|', StringSplitOptions.RemoveEmptyEntries);
+
+            if (bindings.Length == 0)
+            {
+                continue;
+            }
+
+            tags += $"<sprite name=\"keyboard_{bindings[0].ToLowerInvariant()}\">";
+        }
+
+        return $"{tags} {action.name}";
     }
 
     private void HandleScreenChanged(MenuScreen screen)

@@ -620,6 +620,7 @@ MonoBehaviour:
   label: {fileID: 5649671850752199603}
   value: {fileID: 7237913950996726297}
   tooltip: 
+  button: {fileID: 2769570701042241787}
   buttonL: {fileID: 49178486589825639}
   buttonR: {fileID: 3589344680828609554}
   options: []

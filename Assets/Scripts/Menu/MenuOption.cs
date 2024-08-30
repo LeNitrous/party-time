@@ -40,6 +40,11 @@ public class MenuOption : MonoBehaviour, ISubmitHandler, ISelectHandler, IDesele
     private string tooltip;
 
     [BoxGroup("Buttons")]
+    [Label("Main")]
+    [SerializeField]
+    private GameObject button;
+
+    [BoxGroup("Buttons")]
     [Label("Left")]
     [SerializeField]
     private GameObject buttonL;
@@ -230,6 +235,11 @@ public class MenuOption : MonoBehaviour, ISubmitHandler, ISelectHandler, IDesele
         if (hit == buttonR)
         {
             Next();
+        }
+
+        if (hit == button)
+        {
+            onSubmit?.Invoke();
         }
     }
 }
