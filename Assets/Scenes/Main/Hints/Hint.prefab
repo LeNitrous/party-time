@@ -294,12 +294,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 539569f989af7a14fb5ab6624170ce24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  action:
-    m_Name: Action
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 6e1f6bdd-ddfe-4c02-ab66-09ddddb1cdbe
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
+  atlas: {fileID: 100100200, guid: a91f0ad47ad47824bb2f99e5659d2d54, type: 3}
+  actionName: 
+  labelText: 

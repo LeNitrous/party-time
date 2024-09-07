@@ -1,10 +1,26 @@
+using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.U2D;
+using UnityEngine.UI;
 
 public class Hint : MonoBehaviour
 {
+    [Flags]
+    private enum KeyboardArrowFlags : byte
+    {
+        None = 0,
+        Up = 1 << 1,
+        Down = 1 << 2,
+        Left = 1 << 3,
+        Right = 1 << 4,
+        Vertical = Up | Down,
+        Horizontal = Left | Right,
+        All = Vertical | Horizontal,
+    }
+
     /// <summary>
     /// 
     /// </summary>
@@ -18,12 +34,30 @@ public class Hint : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    public string Label
+    {
+        get => labelText;
+        set
+        {
+            labelText = value;
+            OnInputSchemeChanged(input);
+        }
+    }
+
+    [SerializeField]
+    private SpriteAtlas atlas;
+
     [SerializeField]
     private string actionName;
 
+    [SerializeField]
+    private string labelText;
+
     private bool invalidated;
     private Transform icons;
-    private SpriteAtlas atlas;
     private PlayerInput input;
     private TextMeshProUGUI label;
 
@@ -32,18 +66,34 @@ public class Hint : MonoBehaviour
         invalidated = true;
     }
 
-    private GameObject CreateIconObject(string name)
+    private void CreateIconObject(string name)
     {
-        var icon = new GameObject(name);
+        if (icons == null)
+        {
+            return;
+        }
 
-        //var image = icon.AddComponent<Image>();
-        //image.sprite = atlas.GetSprite(name);
+        if (atlas != null)
+        {
+            var sprite =  atlas.GetSprite(name);
 
-        //var layout = icon.AddComponent<LayoutElement>();
-        //layout.preferredWidth = 30;
-        //layout.preferredHeight = 30;
+            if (sprite != null)
+            {
+                var icon = new GameObject(name);
+                var image = icon.AddComponent<Image>();
+                image.sprite = sprite;
 
-        return icon;
+                var layout = icon.AddComponent<LayoutElement>();
+                layout.preferredWidth = 30;
+                layout.preferredHeight = 30;
+
+                icon.transform.SetParent(icons);
+            }
+            else
+            {
+                Debug.Log($"Missing input hint icon: \"{name}\"");
+            }
+        }
     }
 
     private void Start()
@@ -86,10 +136,11 @@ public class Hint : MonoBehaviour
             {
                 int bindingIndex = action.GetBindingIndex(input.currentControlScheme);
                 var binding = action.bindings[bindingIndex];
+                var bindingGroup = InputBinding.MaskByGroup(input.currentControlScheme);
 
                 if (binding.isComposite || binding.isPartOfComposite)
                 {
-                    var bindingGroup = InputBinding.MaskByGroup(input.currentControlScheme);
+                    var keyboardArrowFlags = KeyboardArrowFlags.None;
 
                     for (; bindingIndex < action.bindings.Count; bindingIndex++)
                     {
@@ -100,15 +151,34 @@ public class Hint : MonoBehaviour
                             break;
                         }
 
-                        Instantiate(CreateIconObject(binding.ToDisplayString()), icons);
+                        var key = binding.ToDisplayString(InputBinding.DisplayStringOptions.DontUseShortDisplayNames);
+
+                        if (keyboard_arrow_flags.TryGetValue(key, out var flag))
+                        {
+                            keyboardArrowFlags |= flag;
+                        }
+                        else
+                        {
+                            CreateIconObject(key);
+                        }
+                    }
+
+                    if (keyboard_arrow_icons.TryGetValue(keyboardArrowFlags, out string arrowsKey))
+                    {
+                        CreateIconObject(arrowsKey);
                     }
                 }
                 else
                 {
-                    Instantiate(CreateIconObject(binding.ToDisplayString()), icons);
+                    string[] keys = action.GetBindingDisplayString(bindingGroup, InputBinding.DisplayStringOptions.DontUseShortDisplayNames).Split('|', StringSplitOptions.RemoveEmptyEntries);
+
+                    for (int i = 0; i < keys.Length; i++)
+                    {
+                        CreateIconObject(keys[i].Trim());
+                    }
                 }
 
-                label.text = action.name;
+                label.text = !string.IsNullOrEmpty(Label) ? Label : action.name;
             }
             else
             {
@@ -120,4 +190,23 @@ public class Hint : MonoBehaviour
     }
 
     private const string unknown = "<unknown>";
+
+    private static readonly Dictionary<string, KeyboardArrowFlags> keyboard_arrow_flags = new Dictionary<string, KeyboardArrowFlags>
+    {
+        ["Up Arrow"] = KeyboardArrowFlags.Up,
+        ["Down Arrow"] = KeyboardArrowFlags.Down,
+        ["Left Arrow"] = KeyboardArrowFlags.Left,
+        ["Right Arrow"] = KeyboardArrowFlags.Right,
+    };
+
+    private static readonly Dictionary<KeyboardArrowFlags, string> keyboard_arrow_icons = new Dictionary<KeyboardArrowFlags, string>
+    {
+        [KeyboardArrowFlags.All] = "Arrows",
+        [KeyboardArrowFlags.Vertical] = "ArrowsVertical",
+        [KeyboardArrowFlags.Horizontal] = "ArrowsHorizontal",
+        [KeyboardArrowFlags.Up] = "ArrowsUp",
+        [KeyboardArrowFlags.Down] = "ArrowsDown",
+        [KeyboardArrowFlags.Left] = "ArrowsLeft",
+        [KeyboardArrowFlags.Right] = "ArrowsRight",
+    };
 }

@@ -1,11 +1,32 @@
+using System;
 using UnityEngine;
 
 public class HintController : MonoBehaviour
 {
+    [Serializable]
+    public struct Control
+    {
+        /// <summary>
+        /// The label displayed.
+        /// </summary>
+        public string Label;
+
+        /// <summary>
+        /// The icon names displayed.
+        /// </summary>
+        public string Action;
+
+        public Control(string label, string action)
+        {
+            Label = label;
+            Action = action;
+        }
+    }
+
     /// <summary>
     /// 
     /// </summary>
-    public string[] Hints
+    public Control[] Hints
     {
         get => hints;
         set
@@ -16,7 +37,7 @@ public class HintController : MonoBehaviour
     }
 
     [SerializeField]
-    private string[] hints;
+    private Control[] hints;
 
     [SerializeField]
     private GameObject prefab;
@@ -27,20 +48,9 @@ public class HintController : MonoBehaviour
     {
         if (dirty)
         {
-            for (int i = transform.childCount - 1; i >= 0; i--)
+            while (transform.childCount > 0)
             {
-                var child = transform.GetChild(0).gameObject;
-
-#if UNITY_EDITOR
-                if (!Application.isPlaying)
-                {
-                    DestroyImmediate(child);
-                }
-                else
-#endif
-                {
-                    Destroy(child);
-                }
+                DestroyImmediate(transform.GetChild(0).gameObject);
             }
 
             if (prefab != null && (hints != null || hints.Length > 0))
@@ -48,7 +58,8 @@ public class HintController : MonoBehaviour
                 for (int i = 0; i < hints.Length; i++)
                 {
                     var hint = Instantiate(prefab, transform).GetComponent<Hint>();
-                    hint.Action = hints[i];
+                    hint.Label = hints[i].Label;
+                    hint.Action = hints[i].Action;
                 }
             }
 

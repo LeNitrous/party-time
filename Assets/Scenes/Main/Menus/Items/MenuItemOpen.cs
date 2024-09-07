@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class MenuItemOpen : MenuItemConfirmHandler
+public class MenuItemOpen : MenuItemHandler
 {
     [SerializeField]
     private GameObject screen;

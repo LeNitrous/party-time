@@ -4,7 +4,7 @@ using UnityEditor;
 
 using UnityEngine;
 
-public class MainMenuItemQuit : MonoBehaviour
+public class MainMenuQuit : MonoBehaviour
 {
     /// <summary>
     /// Quits the game.

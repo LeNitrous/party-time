@@ -541,8 +541,8 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 14.223662
-    height: 7.912088
+    width: 14.229165
+    height: 7.9120874
 --- !u!222 &1051460145
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -704,7 +704,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f0eba217dfd41845a6f85450449deb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hints: []
+  hints:
+  - Label: Back
+    Action: Cancel
   prefab: {fileID: 9007359199847422400, guid: 54d8956ba3a059f4fba04a699e1dea0c, type: 3}
 --- !u!1 &1411412945
 GameObject:

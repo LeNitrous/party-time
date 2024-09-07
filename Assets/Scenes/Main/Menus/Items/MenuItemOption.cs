@@ -1,16 +1,14 @@
 using System;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
-public class MenuItemOptions : MonoBehaviour, ISelectHandler, IDeselectHandler, IMoveHandler, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
+public class MenuItemOption : MonoBehaviour, ISelectHandler, IDeselectHandler, IMoveHandler, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
     /// <summary>
     /// Called when the menu item's current selection has been changed.
     /// </summary>
-    public event Action<MenuItemOptions> OnSelectionChanged;
+    public event Action<MenuItemOption> OnSelectionChanged;
 
     /// <summary>
     /// An array of selectable options.
@@ -55,15 +53,12 @@ public class MenuItemOptions : MonoBehaviour, ISelectHandler, IDeselectHandler, 
     private Transform caretL;
     private Transform caretR;
     private TextMeshProUGUI option;
-    private GraphicRaycaster caster;
-    private List<RaycastResult> results;
 
     private void Start()
     {
         option = transform.Find("Options/Label").GetComponent<TextMeshProUGUI>();
         caretL = transform.Find("Options/Left");
         caretR = transform.Find("Options/Right");
-        caster = GetComponentInParent<GraphicRaycaster>();
     }
 
     /// <summary>
@@ -166,12 +161,17 @@ public class MenuItemOptions : MonoBehaviour, ISelectHandler, IDeselectHandler, 
 
     void IPointerClickHandler.OnPointerClick(PointerEventData eventData)
     {
-        results ??= new List<RaycastResult>();
-        results.Clear();
+        if (eventData.button != PointerEventData.InputButton.Left)
+        {
+            return;
+        }
 
-        caster.Raycast(eventData, results);
+        if (!eventData.eligibleForClick)
+        {
+            return;
+        }
 
-        var first = results[0].gameObject;
+        var first = eventData.pointerPressRaycast.gameObject;
 
         if (first == caretL.gameObject)
         {

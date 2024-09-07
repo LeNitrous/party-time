@@ -1,4 +1,4 @@
-public class MenuItemBack : MenuItemConfirmHandler
+public class MenuItemBack : MenuItemHandler
 {
     private ScreenController controller;
 

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -6,6 +7,16 @@ using UnityEngine.EventSystems;
 [ExecuteInEditMode]
 public class MenuScreen : Screen, IMoveHandler, ICancelHandler
 {
+    [Flags]
+    private enum HintFlags : byte
+    {
+        None = 0,
+        Back = 1 << 0,
+        Submit = 1 << 1,
+        Click = 1 << 2,
+        Navigate = 1 << 3,
+    }
+
     /// <summary>
     /// Called when the menu item selection has been changed.
     /// </summary>
@@ -18,6 +29,9 @@ public class MenuScreen : Screen, IMoveHandler, ICancelHandler
     private MenuItem[] items;
     private TextMeshProUGUI tooltip;
     private MenuItemBack back;
+    private HintController hints;
+    private HintFlags currHintFlags;
+    private List<HintController.Control> controls;
 
     /// <summary>
     /// 
@@ -163,6 +177,7 @@ public class MenuScreen : Screen, IMoveHandler, ICancelHandler
 
     private void Start()
     {
+        hints = FindFirstObjectByType<HintController>();
         items = transform.Find("Content").GetComponentsInChildren<MenuItem>();
         
         for (int i = 0; i < items.Length; i++)
@@ -202,10 +217,6 @@ public class MenuScreen : Screen, IMoveHandler, ICancelHandler
                 {
                     tooltip.text = items[current].Description;
                 }
-                else if (pressed >= 0)
-                {
-                    tooltip.text = items[pressed].Description;
-                }
                 else if (hovered >= 0)
                 {
                     tooltip.text = items[hovered].Description;
@@ -213,6 +224,68 @@ public class MenuScreen : Screen, IMoveHandler, ICancelHandler
                 else
                 {
                     tooltip.text = string.Empty;
+                }
+            }
+
+            if (hints != null)
+            {
+                var nextHintFlags = HintFlags.None;
+
+                if (back != null)
+                {
+                    nextHintFlags |= HintFlags.Back;
+                }
+
+                if (current >= 0)
+                {
+                    nextHintFlags |= HintFlags.Navigate;
+
+                    if (items[current].TryGetComponent<MenuItemHandler>(out _))
+                    {
+                        nextHintFlags |= HintFlags.Submit;
+                    }
+                }
+                else if (hovered >= 0)
+                {
+                    if (items[hovered].TryGetComponent<MenuItemHandler>(out _))
+                    {
+                        nextHintFlags |= HintFlags.Click;
+                    }
+                }
+
+                if (currHintFlags != nextHintFlags)
+                {
+                    controls ??= new List<HintController.Control>();
+                    controls.Clear();
+
+                    if (nextHintFlags.HasFlag(HintFlags.Back))
+                    {
+                        controls.Add(new HintController.Control("Back", "Cancel"));
+                    }
+
+                    if (nextHintFlags.HasFlag(HintFlags.Click))
+                    {
+                        if (items[hovered].TryGetComponent<MenuItemHandler>(out var handler))
+                        {
+                            controls.Add(new HintController.Control(string.IsNullOrEmpty(handler.Label) ? "Confirm" : handler.Label, "Click"));
+                        }
+                    }
+
+                    if (nextHintFlags.HasFlag(HintFlags.Navigate))
+                    {
+                        controls.Add(new HintController.Control("Select", "Navigate"));
+                    }
+
+                    if (nextHintFlags.HasFlag(HintFlags.Submit))
+                    {
+                        if (items[current].TryGetComponent<MenuItemHandler>(out var handler))
+                        {
+                            controls.Add(new HintController.Control(string.IsNullOrEmpty(handler.Label) ? "Confirm" : handler.Label, "Submit"));
+                        }
+                    }
+
+                    hints.Hints = controls.ToArray();
+                    currHintFlags = nextHintFlags;
                 }
             }
 
