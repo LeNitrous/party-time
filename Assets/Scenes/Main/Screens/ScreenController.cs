@@ -24,7 +24,7 @@ public class ScreenController : MonoBehaviour
         next.SetActive(true);
     }
 
-    public void Pop()
+    public void Exit()
     {
         if (stack == null)
         {
@@ -33,7 +33,7 @@ public class ScreenController : MonoBehaviour
 
         stack.TryPop(out var prev);
         stack.TryPeek(out var next);
-        StartCoroutine(Pop(prev, next));
+        StartCoroutine(Exit(prev, next));
     }
 
     private IEnumerator Push(GameObject prev, GameObject next)
@@ -42,7 +42,7 @@ public class ScreenController : MonoBehaviour
         {
             if (prev.TryGetComponent<Screen>(out var screen))
             {
-                yield return screen.OnScreenSuspend(prev, next);
+                yield return screen.OnSuspend(prev, next);
             }
             
             prev.SetActive(false);
@@ -56,7 +56,7 @@ public class ScreenController : MonoBehaviour
 
             if (next.TryGetComponent<Screen>(out var screen))
             {
-                yield return screen.OnScreenEntered(prev, next);
+                yield return screen.OnEntered(prev, next);
                 
                 if (EventSystem.current != null)
                 {
@@ -66,13 +66,13 @@ public class ScreenController : MonoBehaviour
         }
     }
 
-    private IEnumerator Pop(GameObject prev, GameObject next)
+    private IEnumerator Exit(GameObject prev, GameObject next)
     {
         if (prev != null)
         {
             if (prev.TryGetComponent<Screen>(out var screen))
             {
-                yield return screen.OnScreenExited(prev, next);
+                yield return screen.OnExiting(prev, next);
             }
 
             Destroy(prev);
@@ -84,7 +84,7 @@ public class ScreenController : MonoBehaviour
 
             if (next.TryGetComponent<Screen>(out var screen))
             {
-                yield return screen.OnScreenResumed(prev, next);
+                yield return screen.OnResumed(prev, next);
             }
 
             if (EventSystem.current != null)

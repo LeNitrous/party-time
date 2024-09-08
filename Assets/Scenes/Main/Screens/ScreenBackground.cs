@@ -1,182 +1,103 @@
+using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 
-[ExecuteInEditMode]
+[RequireComponent(typeof(Screen))]
 public class ScreenBackground : MonoBehaviour
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    public Color Color
+    [SerializeField]
+    private Color accent;
+
+    [SerializeField]
+    private float accentFadeTime = 0.5f;
+
+    [SerializeField]
+    private bool pattern;
+
+    private Screen screen;
+    private ScreenBackgroundController background;
+
+    private void OnScreenEnteringOrResuming()
     {
-        get => color;
-        set
+        if (screen == null)
         {
-            if (color.Equals(value))
+            return;
+        }
+
+        if (background == null)
+        {
+            background = FindFirstObjectByType<ScreenBackgroundController>();
+        }
+
+        if (background != null)
+        {
+            background.ShowPattern = pattern;
+            background.ShowEffects = screen is MenuScreen;
+            
+            if (accentFadeTime == 0.0f)
             {
-                return;
+                background.Color = accent;
             }
-
-            color = value;
-            SetAccent(color);
-        }
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public Texture Pattern
-    {
-        get => pattern;
-        set
-        {
-            pattern = value;
-            SetPattern(pattern);
-        }
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public bool ShowPattern
-    {
-        get => showPattern;
-        set
-        {
-            if (showPattern == value)
+            else
             {
-                return;
+                StartCoroutine(Fade(accent, accentFadeTime));
             }
-
-            showPattern = value;
-            SetEffects(showPattern, showEffects);
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    public bool ShowEffects
+    private void OnScreenEnteringOrResuming(Screen screen, GameObject prev, GameObject next)
     {
-        get => showEffects;
-        set
-        {
-            if (showEffects == value)
-            {
-                return;
-            }
-
-            showEffects = value;
-            SetEffects(showPattern, showEffects);
-        }
+        OnScreenEnteringOrResuming();
     }
 
-    [SerializeField]
-    private bool showPattern;
-
-    [SerializeField]
-    private bool showEffects;
-
-    [SerializeField]
-    private Texture pattern;
-
-    [SerializeField]
-    private Color color = Color.white;
-
-    [SerializeField]
-    private float speed = 0.1f;
-
-    [SerializeField]
-    private float scale = 1.0f;
-
-    private Image back;
-    private Image solid;
-    private Image edger;
-    private RawImage scrolling;
-
-    private void SetEffects(bool pattern, bool effects)
+    private IEnumerator Fade(Color end, float duration)
     {
-        if (solid != null)
-        {
-            solid.gameObject.SetActive(effects);
-        }
-
-        if (edger != null)
-        {
-            edger.gameObject.SetActive(effects);
-        }
-
-        if (scrolling != null)
-        {
-            scrolling.gameObject.SetActive(pattern);
-        }
+        return Fade(background.Color, end, duration);
     }
 
-    private void SetPattern(Texture texture)
+    private IEnumerator Fade(Color start, Color end, float duration)
     {
-        if (scrolling != null)
+        float current = 0.0f;
+        
+        if (background.Color != start)
         {
-            scrolling.texture = texture;
+            background.Color = start;
         }
+
+        while (current < duration)
+        {
+            current += Time.deltaTime;
+            background.Color = Color.Lerp(start, end, current / duration);
+            yield return null;
+        }
+
+        yield break;
     }
 
-    private void SetAccent(Color color)
+    private void OnEnable()
     {
-        var gray = new Color(color.r * 1.05f, color.g * 1.05f, color.b * 1.05f, color.a);
-
-        if (back != null)
+        if (screen == null)
         {
-            back.color = color;
+            screen = GetComponent<Screen>();
         }
 
-        if (solid != null)
+        if (screen != null)
         {
-            solid.color = gray;
-        }
-
-        if (edger != null)
-        {
-            edger.color = gray;
-        }
-
-        if (scrolling != null)
-        {
-            scrolling.color = gray;
+            screen.Entered += OnScreenEnteringOrResuming;
+            screen.Resumed += OnScreenEnteringOrResuming;
         }
     }
 
     private void Start()
     {
-        back = GetComponent<Image>();
-        solid = transform.Find("Halftone/Solid").GetComponent<Image>();
-        edger = transform.Find("Halftone/Edger").GetComponent<Image>();
-        scrolling = transform.Find("Scrolling").GetComponent<RawImage>();
+        OnScreenEnteringOrResuming();
     }
 
-    private void Update()
+    private void OnDisable()
     {
-        Vector2 offset;
-
-#if UNITY_EDITOR
-        if (!Application.isPlaying)
+        if (screen != null)
         {
-            offset = Vector2.zero;
+            screen.Entered -= OnScreenEnteringOrResuming;
+            screen.Resumed -= OnScreenEnteringOrResuming;
         }
-        else
-#endif
-        {
-            offset = scrolling.uvRect.position + (Vector2.one * -(speed * Time.deltaTime));
-        }
-
-        scrolling.uvRect = new Rect(offset, ((RectTransform)transform).rect.size / new Vector2(scrolling.mainTexture.width, scrolling.mainTexture.height) * scale);
     }
-
-#if UNITY_EDITOR
-    private void OnValidate()
-    {
-        SetAccent(Color);
-        SetPattern(Pattern);
-        SetEffects(ShowPattern, ShowEffects);
-    }
-#endif
 }
