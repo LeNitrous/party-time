@@ -1,0 +1,1 @@
+namespace Party.Game.Config;

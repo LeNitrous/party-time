@@ -1,0 +1,31 @@
+[gd_scene load_steps=2 format=3 uid="uid://0srtsbbo211s"]
+
+[ext_resource type="Script" path="res://scripts/game/events/GameEventDummy.cs" id="1_1efq1"]
+
+[node name="Minigame" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_1efq1")
+
+[node name="Win" type="Button" parent="."]
+layout_mode = 0
+offset_left = 375.0
+offset_top = 314.0
+offset_right = 551.0
+offset_bottom = 366.0
+text = "Win"
+
+[node name="Lose" type="Button" parent="."]
+layout_mode = 0
+offset_left = 676.0
+offset_top = 314.0
+offset_right = 852.0
+offset_bottom = 366.0
+text = "Lose"
+
+[connection signal="pressed" from="Win" to="." method="Trigger" binds= [1]]
+[connection signal="pressed" from="Lose" to="." method="Trigger" binds= [2]]

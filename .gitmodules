@@ -1,0 +1,9 @@
+[submodule "vendor/godot_sound_manager"]
+	path = vendor/godot_sound_manager
+	url = https://github.com/nathanhoad/godot_sound_manager
+[submodule "vendor/ProjectResolution"]
+	path = vendor/ProjectResolution
+	url = https://github.com/Danim3D/Godot-4-Plugin-Project-Resolution
+[submodule "vendor/Godot-Tween-Suite"]
+	path = vendor/Godot-Tween-Suite
+	url = https://github.com/KoBeWi/Godot-Tween-Suite

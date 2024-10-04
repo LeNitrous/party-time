@@ -1,0 +1,69 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="Party Time"
+run/main_scene="res://scenes/game.tscn"
+config/project_settings_override="user://settings.cfg"
+config/features=PackedStringArray("4.4", "C#", "Mobile")
+boot_splash/show_image=false
+config/icon="res://icon.svg"
+
+[audio]
+
+buses/default_bus_layout="res://sounds/main.tres"
+
+[autoload]
+
+SceneStack="*res://scripts/SceneStack.cs"
+ConfigManager="*res://scripts/config/ConfigManager.cs"
+SoundManager="*res://addons/godot_sound_manager/sound_manager.gd"
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/size/resizable=false
+window/size/window_width_override="1280"
+window/size/window_height_override="768"
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+
+[dotnet]
+
+project/assembly_name="Party.Game"
+project/solution_directory="../Party.sln"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/ProjectResolution/plugin.cfg", "res://addons/TweenSuite/plugin.cfg", "res://addons/godot_sound_manager/plugin.cfg")
+
+[filesystem]
+
+import/fbx2gltf/enabled=false
+import/blender/enabled=false
+
+[input]
+
+ui_cancel={
+"deadzone": 0.5,
+"events": [Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":1,"pressure":0.0,"pressed":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":4194305,"physical_keycode":0,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
+]
+}
+
+[internationalization]
+
+locale/translations=PackedStringArray("res://locale/locale.en.translation", "res://locale/locale.fil.translation")
+
+[rendering]
+
+anti_aliasing/quality/msaa_2d=1

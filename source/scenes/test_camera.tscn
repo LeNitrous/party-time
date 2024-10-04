@@ -1,0 +1,40 @@
+[gd_scene load_steps=2 format=3 uid="uid://cxo7pqdx1l10f"]
+
+[ext_resource type="Script" path="res://scripts/camera/CameraTexture.cs" id="1_txvf7"]
+
+[node name="Test" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Webcam" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 3
+script = ExtResource("1_txvf7")
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 108.0
+offset_top = 91.0
+offset_right = 277.0
+offset_bottom = 144.0
+text = "Start"
+
+[node name="Button2" type="Button" parent="."]
+layout_mode = 0
+offset_left = 107.0
+offset_top = 155.0
+offset_right = 276.0
+offset_bottom = 208.0
+text = "Stop"
+
+[connection signal="pressed" from="Button" to="Webcam" method="Start"]
+[connection signal="pressed" from="Button2" to="Webcam" method="Stop"]

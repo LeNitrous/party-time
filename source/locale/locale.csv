@@ -1,0 +1,62 @@
+key,en,fil
+UI_ACTION_BACK,Back,Bumalik
+UI_ACTION_NAVIGATE,Navigate,Mag-navigate
+UI_ACTION_RADIO,Select,Pumili
+UI_ACTION_SELECT,Confirm,Kumpirmahin
+UI_ACTION_SLIDER,Decrease/Increase,Bawasan/Dagdagan
+UI_BUTTON_BACK,Back,Bumalik
+UI_BUTTON_BRIGHTNESS,Brightness,Tingkad
+UI_BUTTON_CAMERA,Camera,Kamera
+UI_BUTTON_EXIT,Exit,Umalis
+UI_BUTTON_GAMEPLAY,Gameplay,Paraan ng paglalaro
+UI_BUTTON_LANGUAGE,Language,Wika
+UI_BUTTON_PRACTICE,Practice,Praktis
+UI_BUTTON_SETTINGS,Settings,Mga setting
+UI_BUTTON_SOUND,Sound,Odyo
+UI_BUTTON_START,Start a new game,Magsimula ng bagong laro
+UI_BUTTON_TUTORIAL,Tutorial,Tutoryal
+UI_BUTTON_VIDEO,Video,Bidyo
+UI_HEADER_MAINMENU,Main Menu,Pangunahing Menu
+UI_HEADER_SETTINGS,Settings,Mga setting
+UI_BUTTON_CREDITS,Credits,Parangal
+UI_HEADER_SETTINGS_CAMERA,Camera,Kamera
+UI_HEADER_SETTINGS_GAMEPLAY,Gameplay,Paraan ng paglalaro
+UI_HEADER_SETTINGS_LANGUAGE,Language,Wika
+UI_HEADER_SETTINGS_SOUND,Sound,Odyo
+UI_HEADER_SETTINGS_VIDEO,Video,Bidyo
+UI_MODAL_MAINMENU_CONFIRM_EXIT,Are you sure you want to quit?,Sigurado ka bang gusto mo umalis?
+UI_MODAL_PERMISSION_REQUEST,The game requires access to your device's camera. Please grant the permission as requested.,Ang laro ay nangangailangan ng access sa camera ng iyong device. Mangyaring ibigay ang pahintulot tulad ng hinihiling.
+UI_MODAL_TITLE_PERMISSION_REQUIRED,Permission Required,Pahintulot
+UI_MODAL_TITLE_WARNING,Warning,Babala
+UI_SETTINGS_GENERIC_DISABLE,Off,
+UI_SETTINGS_GENERIC_ENABLE,On,
+UI_SETTINGS_SOUND_EFFECTS,Effects,Epeks
+UI_SETTINGS_SOUND_MASTER,Master,Panlahat
+UI_SETTINGS_SOUND_MUSIC,Music,Musika
+UI_SETTINGS_SOUND_VOICE,Voice,Boses
+UI_SETTINGS_VIDEO_PRESENTATION,Present,
+UI_SETTINGS_VIDEO_PRESENTATION_FULLSCREEN,Fullscreen,
+UI_SETTINGS_VIDEO_PRESENTATION_WINDOWED,Windowed,
+UI_SETTINGS_VIDEO_VSYNC,Vsync,
+UI_TOOLTIP_EXIT,Exit the game.,Umalis sa laro.
+UI_TOOLTIP_PRACTICE,Choose any minigame and practice your skills in it.,Pumili ng anumang minigame at isagawa ang iyong mga kasanayan dito.
+UI_TOOLTIP_SETTINGS,Configure the game's settings.,I-configure ang mga setting ng laro.
+UI_TOOLTIP_START,Progress and win through a random set of minigames.,Umunlad at manalo sa pamamagitan ng random na hanay ng mga minigames.
+UI_TOOLTIP_TUTORIAL,Start the tutorial to learn the ropes of the game.,Simulan ang tutorial upang mapag-aralan ang laro.
+UI_TOOLTIP_SETTINGS_VIDEO,Configure the video settings.,I-configure ang mga setting ng bidyo.
+UI_TOOLTIP_SETTINGS_SOUND,Configure the sound settings.,I-configure ang mga setting ng odyo.
+UI_TOOLTIP_SETTINGS_LANGUAGE,Change the language.,Palitan ang wika.
+UI_TOOLTIP_SETTINGS_GAMEPLAY,Configure the gameplay settings.,I-configure ang mga setting ng gameplay.
+UI_TOOLTIP_SETTINGS_CAMERA,Configure the camera settings.,I-configure ang mga setting ng kamera.
+UI_TOOLTIP_SETTINGS_VIDEO_PRESENTATION,Change how the game is presented.,Palitan paano ipakita ang laro.
+UI_TOOLTIP_SETTINGS_VIDEO_VSYNC,Change the presentation's vertical sync.,Palitan ang vertical sync ng presentasyon. 
+UI_TOOLTIP_SETTINGS_SOUND_MASTER,Change the master volume.,Palitan ang lakas ng tunog ng pangkalahatan.
+UI_TOOLTIP_SETTINGS_SOUND_MUSIC,Change the music volume.,Palitan ang lakas ng tunog ng musika.
+UI_TOOLTIP_SETTINGS_SOUND_EFFECT,Change the effects volume.,Palitan ang lakas ng tunog ng mga epeks.
+UI_TOOLTIP_SETTINGS_SOUND_VOICE,Change the voice volume.,Palitan ang lakas ng boses.
+UI_TOOLTIP_BACK,Go back.,Bumalik.
+UI_MODAL_BUTTON_ACCEPT,Yes,Oo
+UI_MODAL_BUTTON_REJECT,No,Hindi
+UI_TOOLTIP_CREDITS,Show credits.,Ipakita ang mga parangal.
+GAME_HUD_SCORE,Score,Puntos
+GAME_HUD_COMBO,Combo,Kombo

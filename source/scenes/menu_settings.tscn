@@ -1,0 +1,135 @@
+[gd_scene load_steps=12 format=3 uid="uid://b2c4nffk37td2"]
+
+[ext_resource type="Script" path="res://scripts/input/InputManager.cs" id="1_4uyxx"]
+[ext_resource type="PackedScene" uid="uid://cnbg7pq443l40" path="res://scenes/components/ui_background.tscn" id="1_tolbi"]
+[ext_resource type="PackedScene" uid="uid://ofbnn5nbh3oj" path="res://scenes/components/ui_header.tscn" id="2_foq58"]
+[ext_resource type="PackedScene" uid="uid://4na2fumgsqrv" path="res://scenes/components/ui_footer.tscn" id="3_n08fp"]
+[ext_resource type="PackedScene" uid="uid://cml6lqldirm2v" path="res://scenes/components/ui_button.tscn" id="4_kwuq0"]
+[ext_resource type="Texture2D" uid="uid://mmajublds1rp" path="res://textures/icons/video.png" id="6_dqknh"]
+[ext_resource type="Texture2D" uid="uid://dhdb5hr0yr8l8" path="res://textures/icons/audioOn.png" id="7_8ctgu"]
+[ext_resource type="Script" path="res://scripts/menu/ButtonSceneStackPush.cs" id="7_cb6ud"]
+[ext_resource type="Texture2D" uid="uid://cmlk6e0i56k8y" path="res://textures/icons/gamepad.png" id="8_pstfy"]
+[ext_resource type="Texture2D" uid="uid://sr8jtosl177k" path="res://textures/icons/phone.png" id="9_l4o2h"]
+[ext_resource type="Script" path="res://scripts/menu/ButtonSceneStackExit.cs" id="11_v8s0y"]
+
+[node name="Settings" type="Control"]
+clip_contents = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Input" type="Node" parent="." node_paths=PackedStringArray("FirstSelected")]
+script = ExtResource("1_4uyxx")
+FirstSelected = NodePath("../Margin/Content/Video")
+
+[node name="Background" parent="." instance=ExtResource("1_tolbi")]
+layout_mode = 1
+
+[node name="Header" parent="." instance=ExtResource("2_foq58")]
+layout_mode = 1
+Title = "UI_HEADER_SETTINGS"
+Color = Color(0.674815, 0.674815, 0.674815, 1)
+
+[node name="Footer" parent="." instance=ExtResource("3_n08fp")]
+layout_mode = 1
+offset_top = -50.0
+
+[node name="Margin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Content" type="HFlowContainer" parent="Margin"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 10
+
+[node name="Video" parent="Margin/Content" instance=ExtResource("4_kwuq0")]
+custom_minimum_size = Vector2(485, 100)
+layout_mode = 2
+Text = "UI_BUTTON_VIDEO"
+Icon = ExtResource("6_dqknh")
+Default = Color(0.5, 0.5, 0.5, 1)
+Hovered = Color(0.6, 0.6, 0.6, 1)
+Pressed = Color(0.7, 0.7, 0.7, 1)
+metadata/tooltip = "UI_TOOLTIP_SETTINGS_VIDEO"
+
+[node name="Handler" type="Node" parent="Margin/Content/Video"]
+script = ExtResource("7_cb6ud")
+Scene = "res://scenes/menu_settings_video.tscn"
+
+[node name="Language" parent="Margin/Content" instance=ExtResource("4_kwuq0")]
+custom_minimum_size = Vector2(485, 100)
+layout_mode = 2
+Text = "UI_BUTTON_LANGUAGE"
+Default = Color(0.5, 0.5, 0.5, 1)
+Hovered = Color(0.6, 0.6, 0.6, 1)
+Pressed = Color(0.7, 0.7, 0.7, 1)
+metadata/tooltip = "UI_TOOLTIP_SETTINGS_LANGUAGE"
+
+[node name="Handler" type="Node" parent="Margin/Content/Language"]
+script = ExtResource("7_cb6ud")
+Scene = "res://scenes/menu_settings_language.tscn"
+
+[node name="Sound" parent="Margin/Content" instance=ExtResource("4_kwuq0")]
+custom_minimum_size = Vector2(640, 100)
+layout_mode = 2
+Text = "UI_BUTTON_SOUND"
+Icon = ExtResource("7_8ctgu")
+Default = Color(0.5, 0.5, 0.5, 1)
+Hovered = Color(0.6, 0.6, 0.6, 1)
+Pressed = Color(0.7, 0.7, 0.7, 1)
+metadata/tooltip = "UI_TOOLTIP_SETTINGS_SOUND"
+
+[node name="Handler" type="Node" parent="Margin/Content/Sound"]
+script = ExtResource("7_cb6ud")
+Scene = "res://scenes/menu_settings_audio.tscn"
+
+[node name="Credits" parent="Margin/Content" instance=ExtResource("4_kwuq0")]
+custom_minimum_size = Vector2(330, 100)
+layout_mode = 2
+Text = "UI_BUTTON_CREDITS"
+Default = Color(0.5, 0.5, 0.5, 1)
+Hovered = Color(0.6, 0.6, 0.6, 1)
+Pressed = Color(0.7, 0.7, 0.7, 1)
+metadata/tooltip = "UI_TOOLTIP_CREDITS"
+
+[node name="Gameplay" parent="Margin/Content" instance=ExtResource("4_kwuq0")]
+custom_minimum_size = Vector2(980, 100)
+layout_mode = 2
+Text = "UI_BUTTON_GAMEPLAY"
+Icon = ExtResource("8_pstfy")
+Default = Color(0.5, 0.5, 0.5, 1)
+Hovered = Color(0.6, 0.6, 0.6, 1)
+Pressed = Color(0.7, 0.7, 0.7, 1)
+metadata/tooltip = "UI_TOOLTIP_SETTINGS_GAMEPLAY"
+
+[node name="Camera" parent="Margin/Content" instance=ExtResource("4_kwuq0")]
+custom_minimum_size = Vector2(700, 100)
+layout_mode = 2
+Text = "UI_BUTTON_CAMERA"
+Icon = ExtResource("9_l4o2h")
+Default = Color(0.5, 0.5, 0.5, 1)
+Hovered = Color(0.6, 0.6, 0.6, 1)
+Pressed = Color(0.7, 0.7, 0.7, 1)
+metadata/tooltip = "UI_TOOLTIP_SETTINGS_CAMERA"
+
+[node name="Back" parent="Margin/Content" instance=ExtResource("4_kwuq0")]
+custom_minimum_size = Vector2(270, 100)
+layout_mode = 2
+Text = "UI_BUTTON_BACK"
+Default = Color(1, 0.3, 0.3, 1)
+Hovered = Color(1, 0.4, 0.4, 1)
+Pressed = Color(1, 0.5, 0.5, 1)
+metadata/tooltip = "UI_TOOLTIP_BACK"
+
+[node name="Handler" type="Node" parent="Margin/Content/Back"]
+script = ExtResource("11_v8s0y")

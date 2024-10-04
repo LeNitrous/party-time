@@ -1,0 +1,89 @@
+[gd_scene load_steps=7 format=3 uid="uid://du35j0gbgvfq4"]
+
+[ext_resource type="Script" path="res://scripts/menu/SelectOption.cs" id="1_eevtg"]
+[ext_resource type="FontFile" uid="uid://cuj4gq8fufdl" path="res://fonts/Sublima-ExtraBold.otf" id="1_qcdy0"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7fksi"]
+bg_color = Color(1, 1, 1, 0)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+shadow_color = Color(0.0862745, 0.0862745, 0.0862745, 1)
+shadow_size = 1
+shadow_offset = Vector2(2, 2)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8tjrw"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iiuhk"]
+bg_color = Color(1, 1, 1, 0)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.0862745, 0.0862745, 0.0862745, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="LabelSettings" id="LabelSettings_lnjgc"]
+font = ExtResource("1_qcdy0")
+font_size = 28
+
+[node name="Button" type="MarginContainer"]
+custom_minimum_size = Vector2(0, 58)
+offset_right = 101.0
+offset_bottom = 58.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+script = ExtResource("1_eevtg")
+Text = "Label"
+Selected = true
+Highligted = true
+
+[node name="Shadow" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_7fksi")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 4
+
+[node name="Background" type="PanelContainer" parent="MarginContainer"]
+unique_name_in_owner = true
+self_modulate = Color(0.949, 0.808, 0.231, 1)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_8tjrw")
+
+[node name="Border" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_iiuhk")
+
+[node name="MarginContainer2" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 4
+
+[node name="Label" type="Label" parent="MarginContainer2"]
+unique_name_in_owner = true
+self_modulate = Color(0.08, 0.08, 0.08, 1)
+layout_mode = 2
+mouse_filter = 1
+text = "Label"
+label_settings = SubResource("LabelSettings_lnjgc")
+text_overrun_behavior = 3

@@ -1,0 +1,106 @@
+[gd_scene load_steps=5 format=3 uid="uid://cml6lqldirm2v"]
+
+[ext_resource type="Texture2D" uid="uid://b0vxtrdo1fnq1" path="res://textures/menu/h_halftone.png" id="1_5ttnl"]
+[ext_resource type="Script" path="res://scripts/menu/Button.cs" id="1_8ih4p"]
+[ext_resource type="LabelSettings" uid="uid://crkkitv4n21q3" path="res://fonts/settings/ui_control.tres" id="3_cr8xt"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sbqr1"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 6
+border_width_top = 6
+border_width_right = 6
+border_width_bottom = 6
+border_color = Color(1, 1, 1, 1)
+
+[node name="Button" type="Control"]
+clip_contents = true
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 723.0
+offset_bottom = 100.0
+focus_mode = 2
+script = ExtResource("1_8ih4p")
+
+[node name="Background" type="ColorRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+color = Color(0, 0, 0, 0)
+
+[node name="Texture" type="TextureRect" parent="."]
+self_modulate = Color(1, 1, 1, 0.196078)
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = -124.0
+offset_right = 184.0
+grow_vertical = 2
+texture = ExtResource("1_5ttnl")
+stretch_mode = 1
+
+[node name="Border" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+self_modulate = Color(0.086, 0.086, 0.086, 1)
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_sbqr1")
+
+[node name="Content" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="Padder" type="MarginContainer" parent="Content"]
+layout_mode = 2
+
+[node name="Fill" type="ColorRect" parent="Content/Padder"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+mouse_filter = 1
+color = Color(0.086, 0.086, 0.086, 1)
+
+[node name="Margin" type="MarginContainer" parent="Content/Padder"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_right = 18
+
+[node name="Icon" type="TextureRect" parent="Content/Padder/Margin"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Content"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+label_settings = ExtResource("3_cr8xt")
+text_overrun_behavior = 3
+
+[connection signal="focus_entered" from="." to="." method="onSelected"]
+[connection signal="focus_exited" from="." to="." method="onDeselect"]
+[connection signal="gui_input" from="." to="." method="onButtonGUIInput"]
+[connection signal="gui_input" from="." to="." method="onGUIInput"]
+[connection signal="mouse_entered" from="." to="." method="onHoverGain"]
+[connection signal="mouse_exited" from="." to="." method="onHoverLost"]

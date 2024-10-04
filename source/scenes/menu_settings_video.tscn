@@ -1,0 +1,88 @@
+[gd_scene load_steps=10 format=3 uid="uid://dhovlttphbixr"]
+
+[ext_resource type="PackedScene" uid="uid://cnbg7pq443l40" path="res://scenes/components/ui_background.tscn" id="1_1aowx"]
+[ext_resource type="Script" path="res://scripts/input/InputManager.cs" id="1_pud6w"]
+[ext_resource type="PackedScene" uid="uid://ofbnn5nbh3oj" path="res://scenes/components/ui_header.tscn" id="2_humq3"]
+[ext_resource type="PackedScene" uid="uid://4na2fumgsqrv" path="res://scenes/components/ui_footer.tscn" id="3_rvmlk"]
+[ext_resource type="PackedScene" uid="uid://0352dctld7qo" path="res://scenes/components/ui_select.tscn" id="5_hs4dr"]
+[ext_resource type="Script" path="res://scripts/menu/settings/SelectVideoPresentation.cs" id="6_4ra01"]
+[ext_resource type="PackedScene" uid="uid://cml6lqldirm2v" path="res://scenes/components/ui_button.tscn" id="6_tglfv"]
+[ext_resource type="Script" path="res://scripts/menu/ButtonSceneStackExit.cs" id="7_ndigw"]
+[ext_resource type="Script" path="res://scripts/menu/settings/SelectVideoVsync.cs" id="7_xw5fp"]
+
+[node name="Video" type="Control"]
+clip_contents = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Input" type="Node" parent="." node_paths=PackedStringArray("FirstSelected")]
+script = ExtResource("1_pud6w")
+FirstSelected = NodePath("../Margin/Contents/Presentation")
+
+[node name="Background" parent="." instance=ExtResource("1_1aowx")]
+layout_mode = 1
+
+[node name="Header" parent="." instance=ExtResource("2_humq3")]
+layout_mode = 1
+offset_left = -840.0
+offset_right = 840.0
+offset_bottom = 80.0
+Title = "UI_HEADER_SETTINGS"
+Subtitle = "UI_HEADER_SETTINGS_VIDEO"
+Color = Color(0.674815, 0.674815, 0.674815, 1)
+
+[node name="Footer" parent="." instance=ExtResource("3_rvmlk")]
+layout_mode = 1
+
+[node name="Margin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_top = 100
+
+[node name="Contents" type="VBoxContainer" parent="Margin"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 10
+
+[node name="Presentation" parent="Margin/Contents" instance=ExtResource("5_hs4dr")]
+layout_mode = 2
+Text = "UI_SETTINGS_VIDEO_PRESENTATION"
+Options = ["UI_SETTINGS_VIDEO_PRESENTATION_WINDOWED", "UI_SETTINGS_VIDEO_PRESENTATION_FULLSCREEN"]
+Selected = 1
+metadata/tooltip = "UI_TOOLTIP_SETTINGS_VIDEO_PRESENTATION"
+
+[node name="Handler" type="Node" parent="Margin/Contents/Presentation"]
+script = ExtResource("6_4ra01")
+
+[node name="VSync" parent="Margin/Contents" instance=ExtResource("5_hs4dr")]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+Text = "UI_SETTINGS_VIDEO_VSYNC"
+Options = ["UI_SETTINGS_GENERIC_DISABLE", "UI_SETTINGS_GENERIC_ENABLE"]
+Selected = 1
+metadata/tooltip = "UI_TOOLTIP_SETTINGS_VIDEO_VSYNC"
+
+[node name="Handler" type="Node" parent="Margin/Contents/VSync"]
+script = ExtResource("7_xw5fp")
+
+[node name="Back" parent="Margin/Contents" instance=ExtResource("6_tglfv")]
+custom_minimum_size = Vector2(270, 100)
+layout_mode = 2
+size_flags_horizontal = 8
+Text = "UI_BUTTON_BACK"
+Default = Color(1, 0.3, 0.3, 1)
+Hovered = Color(1, 0.4, 0.4, 1)
+Pressed = Color(1, 0.5, 0.5, 1)
+metadata/tooltip = "UI_TOOLTIP_BACK"
+
+[node name="Handler" type="Node" parent="Margin/Contents/Back"]
+script = ExtResource("7_ndigw")

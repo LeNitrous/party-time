@@ -1,0 +1,600 @@
+[gd_scene load_steps=28 format=3 uid="uid://vpvcl7rtgnye"]
+
+[ext_resource type="Script" path="res://scripts/game/managers/GameStateManager.cs" id="1_g7oxf"]
+[ext_resource type="Script" path="res://scripts/game/GameContext.cs" id="1_pfb1g"]
+[ext_resource type="Script" path="res://scripts/game/managers/GameMusicManager.cs" id="2_0yn5y"]
+[ext_resource type="Script" path="res://addons/TweenSuite/TweenNode.gd" id="2_448es"]
+[ext_resource type="Script" path="res://scripts/game/managers/GameEffectsManager.cs" id="3_0c103"]
+[ext_resource type="Script" path="res://addons/TweenSuite/TweenAnimation.gd" id="3_h1ifc"]
+[ext_resource type="Script" path="res://scripts/game/managers/GameCountdown.cs" id="4_gyqyu"]
+[ext_resource type="Script" path="res://scripts/game/managers/GameAnimationsManager.cs" id="5_5oxlm"]
+[ext_resource type="Shader" path="res://shaders/grid.gdshader" id="7_eo44j"]
+[ext_resource type="Script" path="res://scripts/game/Controller.cs" id="7_o60co"]
+[ext_resource type="FontFile" uid="uid://cuj4gq8fufdl" path="res://fonts/Sublima-ExtraBold.otf" id="10_r31ya"]
+[ext_resource type="PackedScene" uid="uid://boo8jo7raatta" path="res://scenes/components/ui_game_label.tscn" id="10_vini8"]
+[ext_resource type="Script" path="res://scripts/game/HUDLabelValueSetter.cs" id="12_jr0lv"]
+[ext_resource type="Script" path="res://scripts/game/HUDLabelCombo.cs" id="13_437ev"]
+[ext_resource type="Script" path="res://scripts/game/ControllerStatusLabel.cs" id="15_4rrrl"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nsx35"]
+shader = ExtResource("7_eo44j")
+shader_parameter/size = Vector2(1280, 720)
+shader_parameter/line_width = 0.1
+shader_parameter/offset = Vector2(0, 0)
+shader_parameter/speed = Vector2(0, 20)
+shader_parameter/grid_size = 32.0
+
+[sub_resource type="Resource" id="Resource_aaxuc"]
+script = ExtResource("3_h1ifc")
+step_0/0 = {
+"delay": 0.0,
+"duration": 0.5,
+"easing": 1,
+"final_value": -0.25,
+"from": 0,
+"from_current": false,
+"property": NodePath(":anchor_left"),
+"relative": false,
+"target": NodePath("."),
+"transition": 4,
+"type": 0
+}
+step_0/1 = {
+"delay": 0.0,
+"duration": 0.5,
+"easing": 1,
+"final_value": -0.25,
+"from": 0,
+"from_current": false,
+"property": NodePath(":anchor_top"),
+"relative": false,
+"target": NodePath("."),
+"transition": 4,
+"type": 0
+}
+step_0/2 = {
+"delay": 0.0,
+"duration": 0.5,
+"easing": 1,
+"final_value": 1.25,
+"from": 1,
+"from_current": false,
+"property": NodePath(":anchor_right"),
+"relative": false,
+"target": NodePath("."),
+"transition": 4,
+"type": 0
+}
+step_0/3 = {
+"delay": 0.0,
+"duration": 0.5,
+"easing": 1,
+"final_value": 1.25,
+"from": 1,
+"from_current": false,
+"property": NodePath(":anchor_bottom"),
+"relative": false,
+"target": NodePath("."),
+"transition": 4,
+"type": 0
+}
+step_0/4 = {
+"delay": 0.0,
+"duration": 0.5,
+"easing": 1,
+"final_value": Color(1, 1, 1, 0),
+"from": Color(1, 1, 1, 1),
+"from_current": false,
+"property": NodePath(":modulate"),
+"relative": false,
+"target": NodePath("."),
+"transition": 4,
+"type": 0
+}
+
+[sub_resource type="Resource" id="Resource_720v7"]
+script = ExtResource("3_h1ifc")
+step_0/0 = {
+"delay": 0.0,
+"duration": 0.5,
+"easing": 1,
+"final_value": 0,
+"from": -0.25,
+"from_current": false,
+"property": NodePath(":anchor_left"),
+"relative": false,
+"target": NodePath("."),
+"transition": 4,
+"type": 0
+}
+step_0/1 = {
+"delay": 0.0,
+"duration": 0.5,
+"easing": 1,
+"final_value": 0,
+"from": -0.25,
+"from_current": false,
+"property": NodePath(":anchor_top"),
+"relative": false,
+"target": NodePath("."),
+"transition": 4,
+"type": 0
+}
+step_0/2 = {
+"delay": 0.0,
+"duration": 0.5,
+"easing": 1,
+"final_value": 1,
+"from": 1.25,
+"from_current": false,
+"property": NodePath(":anchor_right"),
+"relative": false,
+"target": NodePath("."),
+"transition": 4,
+"type": 0
+}
+step_0/3 = {
+"delay": 0.0,
+"duration": 0.5,
+"easing": 1,
+"final_value": 1,
+"from": 1.25,
+"from_current": false,
+"property": NodePath(":anchor_bottom"),
+"relative": false,
+"target": NodePath("."),
+"transition": 4,
+"type": 0
+}
+step_0/4 = {
+"delay": 0.0,
+"duration": 0.5,
+"easing": 1,
+"final_value": Color(1, 1, 1, 1),
+"from": Color(1, 1, 1, 0),
+"from_current": false,
+"property": NodePath(":modulate"),
+"relative": false,
+"target": NodePath("."),
+"transition": 4,
+"type": 0
+}
+
+[sub_resource type="LabelSettings" id="LabelSettings_x8j2n"]
+font = ExtResource("10_r31ya")
+font_size = 80
+outline_size = 20
+outline_color = Color(0.0862745, 0.0862745, 0.0862745, 1)
+shadow_size = 15
+shadow_color = Color(0.0862745, 0.0862745, 0.0862745, 1)
+shadow_offset = Vector2(4, 4)
+
+[sub_resource type="Resource" id="Resource_gc3jj"]
+script = ExtResource("3_h1ifc")
+step_0/0 = {
+"delay": 0.0,
+"duration": 0.5,
+"easing": 1,
+"final_value": 1.25,
+"from": 1,
+"from_current": false,
+"property": NodePath(":anchor_right"),
+"relative": false,
+"target": NodePath("."),
+"transition": 4,
+"type": 0
+}
+step_0/1 = {
+"delay": 0.0,
+"duration": 0.5,
+"easing": 1,
+"final_value": -0.25,
+"from": 0,
+"from_current": false,
+"property": NodePath(":anchor_left"),
+"relative": false,
+"target": NodePath("."),
+"transition": 4,
+"type": 0
+}
+
+[sub_resource type="Resource" id="Resource_fyixr"]
+script = ExtResource("3_h1ifc")
+step_0/0 = {
+"delay": 0.0,
+"duration": 0.5,
+"easing": 1,
+"final_value": 1,
+"from": 1.25,
+"from_current": false,
+"property": NodePath(":anchor_right"),
+"relative": false,
+"target": NodePath("."),
+"transition": 4,
+"type": 0
+}
+step_0/1 = {
+"delay": 0.0,
+"duration": 0.5,
+"easing": 1,
+"final_value": 0,
+"from": -0.25,
+"from_current": false,
+"property": NodePath(":anchor_left"),
+"relative": false,
+"target": NodePath("."),
+"transition": 4,
+"type": 0
+}
+
+[sub_resource type="Resource" id="Resource_y5nj1"]
+script = ExtResource("3_h1ifc")
+step_0/0 = {
+"delay": 0.0,
+"duration": 0.5,
+"easing": 1,
+"final_value": 1.25,
+"from": 1,
+"from_current": false,
+"property": NodePath(":anchor_bottom"),
+"relative": false,
+"target": NodePath("."),
+"transition": 4,
+"type": 0
+}
+step_0/1 = {
+"delay": 0.0,
+"duration": 0.5,
+"easing": 1,
+"final_value": -0.25,
+"from": 0,
+"from_current": false,
+"property": NodePath(":anchor_top"),
+"relative": false,
+"target": NodePath("."),
+"transition": 4,
+"type": 0
+}
+
+[sub_resource type="Resource" id="Resource_nfr3y"]
+script = ExtResource("3_h1ifc")
+step_0/0 = {
+"delay": 0.0,
+"duration": 0.5,
+"easing": 1,
+"final_value": 1,
+"from": 1.25,
+"from_current": false,
+"property": NodePath(":anchor_bottom"),
+"relative": false,
+"target": NodePath("."),
+"transition": 4,
+"type": 0
+}
+step_0/1 = {
+"delay": 0.0,
+"duration": 0.5,
+"easing": 1,
+"final_value": 0,
+"from": -0.25,
+"from_current": false,
+"property": NodePath(":anchor_top"),
+"relative": false,
+"target": NodePath("."),
+"transition": 4,
+"type": 0
+}
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6warc"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 12
+border_width_top = 12
+border_width_right = 12
+border_width_bottom = 12
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="Resource" id="Resource_3wopp"]
+script = ExtResource("3_h1ifc")
+step_0/0 = {
+"delay": 0.0,
+"duration": 0.3,
+"easing": 0,
+"final_value": Color(1, 1, 1, 0),
+"from": Color(1, 1, 1, 1),
+"from_current": false,
+"property": NodePath(":modulate"),
+"relative": false,
+"target": NodePath("."),
+"transition": 0,
+"type": 0
+}
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_bwhu3"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_txoe8"]
+
+[node name="Game" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_g7oxf")
+
+[node name="Context" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("1_pfb1g")
+
+[node name="Time" type="Timer" parent="Context"]
+one_shot = true
+
+[node name="Wait" type="Timer" parent="Context"]
+one_shot = true
+
+[node name="Sounds" type="Node" parent="."]
+
+[node name="Music" type="Node" parent="Sounds"]
+script = ExtResource("2_0yn5y")
+
+[node name="Effects" type="Node" parent="Sounds"]
+script = ExtResource("3_0c103")
+
+[node name="Voice" type="Node" parent="Sounds"]
+
+[node name="Countdown" type="Node" parent="Sounds/Voice"]
+script = ExtResource("4_gyqyu")
+
+[node name="Time" type="Timer" parent="Sounds/Voice/Countdown"]
+
+[node name="Wait" type="Timer" parent="Sounds/Voice/Countdown"]
+
+[node name="Animations" type="Node" parent="."]
+script = ExtResource("5_5oxlm")
+
+[node name="Controller" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("7_o60co")
+
+[node name="View" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+
+[node name="HUD" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="U Margin" type="MarginContainer" parent="HUD"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Modulator" type="MarginContainer" parent="HUD/U Margin"]
+modulate = Color(0, 0.7, 1, 0.431373)
+layout_mode = 2
+
+[node name="Fill" type="ColorRect" parent="HUD/U Margin/Modulator"]
+layout_mode = 2
+color = Color(0.226707, 0.226707, 0.226707, 1)
+
+[node name="Grid" type="ColorRect" parent="HUD/U Margin/Modulator"]
+self_modulate = Color(1, 1, 1, 0.392157)
+material = SubResource("ShaderMaterial_nsx35")
+layout_mode = 2
+color = Color(0.194349, 0.194349, 0.194349, 1)
+
+[node name="Expander" type="Node" parent="HUD/U Margin"]
+script = ExtResource("2_448es")
+animation = SubResource("Resource_aaxuc")
+
+[node name="Shrinker" type="Node" parent="HUD/U Margin"]
+script = ExtResource("2_448es")
+animation = SubResource("Resource_720v7")
+
+[node name="H Margin" type="MarginContainer" parent="HUD"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.25
+anchor_right = 1.25
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(640, 360)
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 40
+
+[node name="Time" type="Label" parent="HUD/H Margin"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+text = "99"
+label_settings = SubResource("LabelSettings_x8j2n")
+
+[node name="Expander" type="Node" parent="HUD/H Margin"]
+script = ExtResource("2_448es")
+animation = SubResource("Resource_gc3jj")
+
+[node name="Shrinker" type="Node" parent="HUD/H Margin"]
+script = ExtResource("2_448es")
+animation = SubResource("Resource_fyixr")
+
+[node name="V Margin" type="MarginContainer" parent="HUD"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = -0.25
+anchor_right = 1.0
+anchor_bottom = 1.25
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 40
+
+[node name="Labels" type="HBoxContainer" parent="HUD/V Margin"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+theme_override_constants/separation = 20
+
+[node name="Score" parent="HUD/V Margin/Labels" instance=ExtResource("10_vini8")]
+layout_mode = 2
+Label = "GAME_HUD_SCORE"
+Value = "0"
+
+[node name="Setter" type="Node" parent="HUD/V Margin/Labels/Score"]
+script = ExtResource("12_jr0lv")
+
+[node name="Combo" type="MarginContainer" parent="HUD/V Margin/Labels"]
+layout_mode = 2
+theme_override_constants/margin_bottom = -200
+script = ExtResource("13_437ev")
+
+[node name="Label" parent="HUD/V Margin/Labels/Combo" instance=ExtResource("10_vini8")]
+layout_mode = 2
+size_flags_vertical = 8
+Label = "GAME_HUD_COMBO"
+Value = "0"
+
+[node name="Setter" type="Node" parent="HUD/V Margin/Labels/Combo/Label"]
+script = ExtResource("12_jr0lv")
+
+[node name="Expander" type="Node" parent="HUD/V Margin"]
+script = ExtResource("2_448es")
+animation = SubResource("Resource_y5nj1")
+
+[node name="Shrinker" type="Node" parent="HUD/V Margin"]
+script = ExtResource("2_448es")
+animation = SubResource("Resource_nfr3y")
+
+[node name="Border" type="Control" parent="HUD"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Visual" type="Panel" parent="HUD/Border"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_6warc")
+
+[node name="Flash" type="Node" parent="HUD/Border"]
+script = ExtResource("2_448es")
+animation = SubResource("Resource_3wopp")
+
+[node name="Debug" type="CanvasLayer" parent="."]
+layer = 128
+
+[node name="Controls" type="VFlowContainer" parent="Debug"]
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 250.0
+grow_vertical = 2
+size_flags_horizontal = 4
+
+[node name="Stand" type="Button" parent="Debug/Controls"]
+custom_minimum_size = Vector2(250, 55)
+layout_mode = 2
+toggle_mode = true
+button_group = SubResource("ButtonGroup_bwhu3")
+text = "Stand"
+
+[node name="Walk" type="Button" parent="Debug/Controls"]
+custom_minimum_size = Vector2(250, 55)
+layout_mode = 2
+toggle_mode = true
+button_group = SubResource("ButtonGroup_txoe8")
+text = "Walk"
+
+[node name="Run" type="Button" parent="Debug/Controls"]
+custom_minimum_size = Vector2(250, 55)
+layout_mode = 2
+toggle_mode = true
+button_group = SubResource("ButtonGroup_txoe8")
+text = "Run"
+
+[node name="Jump" type="Button" parent="Debug/Controls"]
+custom_minimum_size = Vector2(250, 55)
+layout_mode = 2
+toggle_mode = true
+button_group = SubResource("ButtonGroup_txoe8")
+text = "Jump"
+
+[node name="Sit" type="Button" parent="Debug/Controls"]
+custom_minimum_size = Vector2(250, 55)
+layout_mode = 2
+toggle_mode = true
+button_group = SubResource("ButtonGroup_txoe8")
+text = "Sit"
+
+[node name="Squat" type="Button" parent="Debug/Controls"]
+custom_minimum_size = Vector2(250, 55)
+layout_mode = 2
+toggle_mode = true
+button_group = SubResource("ButtonGroup_txoe8")
+text = "Squat"
+
+[node name="Kick" type="Button" parent="Debug/Controls"]
+custom_minimum_size = Vector2(250, 55)
+layout_mode = 2
+toggle_mode = true
+button_group = SubResource("ButtonGroup_txoe8")
+text = "Kick"
+
+[node name="Punch" type="Button" parent="Debug/Controls"]
+custom_minimum_size = Vector2(250, 55)
+layout_mode = 2
+toggle_mode = true
+button_group = SubResource("ButtonGroup_txoe8")
+text = "Punch"
+
+[node name="Wave" type="Button" parent="Debug/Controls"]
+custom_minimum_size = Vector2(250, 55)
+layout_mode = 2
+toggle_mode = true
+button_group = SubResource("ButtonGroup_txoe8")
+text = "Wave"
+
+[node name="Status" type="Label" parent="Debug/Controls"]
+layout_mode = 2
+script = ExtResource("15_4rrrl")
+
+[connection signal="ComboChanged" from="." to="HUD/V Margin/Labels/Combo" method="onValueChanged"]
+[connection signal="ComboChanged" from="." to="HUD/V Margin/Labels/Combo/Label/Setter" method="onValueChanged"]
+[connection signal="ScoreChanged" from="." to="HUD/V Margin/Labels/Score/Setter" method="onValueChanged"]
+[connection signal="ready" from="." to="Context" method="Start"]
+[connection signal="CompletionRaised" from="Context" to="." method="onCompletionChanged"]
+[connection signal="CompletionRaised" from="Context" to="Sounds/Music" method="onCompletionChanged"]
+[connection signal="CompletionRaised" from="Context" to="Sounds/Effects" method="onCompletionChanged"]
+[connection signal="CompletionRaised" from="Context" to="Sounds/Voice/Countdown" method="onCompletionChanged"]
+[connection signal="CompletionRaised" from="Context" to="Animations" method="onCompletionChanged"]
+[connection signal="PhaseChanged" from="Context" to="." method="onPhaseChanged"]
+[connection signal="PhaseChanged" from="Context" to="Sounds/Music" method="onPhaseChanged"]
+[connection signal="PhaseChanged" from="Context" to="Sounds/Effects" method="onPhaseChanged"]
+[connection signal="PhaseChanged" from="Context" to="Sounds/Voice/Countdown" method="onPhaseChanged"]
+[connection signal="PhaseChanged" from="Context" to="Animations" method="onPhaseChanged"]
+[connection signal="pressed" from="Debug/Controls/Stand" to="Controller" method="Perform" binds= [0]]
+[connection signal="pressed" from="Debug/Controls/Walk" to="Controller" method="Perform" binds= [1]]
+[connection signal="pressed" from="Debug/Controls/Run" to="Controller" method="Perform" binds= [2]]
+[connection signal="pressed" from="Debug/Controls/Jump" to="Controller" method="Perform" binds= [3]]
+[connection signal="pressed" from="Debug/Controls/Sit" to="Controller" method="Perform" binds= [4]]
+[connection signal="pressed" from="Debug/Controls/Squat" to="Controller" method="Perform" binds= [5]]
+[connection signal="pressed" from="Debug/Controls/Kick" to="Controller" method="Perform" binds= [6]]
+[connection signal="pressed" from="Debug/Controls/Punch" to="Controller" method="Perform" binds= [7]]
+[connection signal="pressed" from="Debug/Controls/Wave" to="Controller" method="Perform" binds= [8]]

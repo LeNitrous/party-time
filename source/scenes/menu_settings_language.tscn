@@ -1,0 +1,72 @@
+[gd_scene load_steps=7 format=3 uid="uid://dimrcet4ju6gf"]
+
+[ext_resource type="PackedScene" uid="uid://cnbg7pq443l40" path="res://scenes/components/ui_background.tscn" id="1_2nq0j"]
+[ext_resource type="Script" path="res://scripts/input/InputManager.cs" id="1_gq4j5"]
+[ext_resource type="PackedScene" uid="uid://ofbnn5nbh3oj" path="res://scenes/components/ui_header.tscn" id="2_rq16y"]
+[ext_resource type="PackedScene" uid="uid://4na2fumgsqrv" path="res://scenes/components/ui_footer.tscn" id="3_7hu2o"]
+[ext_resource type="PackedScene" uid="uid://hnukac2fnvvx" path="res://scenes/components/ui_button_small.tscn" id="4_ro3dg"]
+[ext_resource type="Script" path="res://scripts/menu/locale/ButtonLocaleChange.cs" id="5_5dnu7"]
+
+[node name="Language" type="Control"]
+clip_contents = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Input" type="Node" parent="." node_paths=PackedStringArray("FirstSelected")]
+script = ExtResource("1_gq4j5")
+FirstSelected = NodePath("../Margin/Grid/English")
+
+[node name="Background" parent="." instance=ExtResource("1_2nq0j")]
+layout_mode = 1
+
+[node name="Header" parent="." instance=ExtResource("2_rq16y")]
+layout_mode = 1
+Title = "UI_HEADER_SETTINGS"
+Subtitle = "UI_HEADER_SETTINGS_LANGUAGE"
+Color = Color(0.674815, 0.674815, 0.674815, 1)
+
+[node name="Footer" parent="." instance=ExtResource("3_7hu2o")]
+layout_mode = 1
+
+[node name="Margin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Grid" type="GridContainer" parent="Margin"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 10
+columns = 2
+
+[node name="English" parent="Margin/Grid" instance=ExtResource("4_ro3dg")]
+custom_minimum_size = Vector2(320, 75)
+layout_mode = 2
+Text = "English"
+Default = Color(0.94902, 0.807843, 0.231373, 1)
+Hovered = Color(0.95, 0.8246, 0.323, 1)
+Pressed = Color(0.95, 0.8436, 0.418, 1)
+
+[node name="Handler" type="Node" parent="Margin/Grid/English"]
+script = ExtResource("5_5dnu7")
+
+[node name="Filipino" parent="Margin/Grid" instance=ExtResource("4_ro3dg")]
+custom_minimum_size = Vector2(320, 75)
+layout_mode = 2
+Text = "Filipino"
+Default = Color(0.94902, 0.807843, 0.231373, 1)
+Hovered = Color(0.95, 0.8246, 0.323, 1)
+Pressed = Color(0.95, 0.8436, 0.418, 1)
+
+[node name="Handler" type="Node" parent="Margin/Grid/Filipino"]
+script = ExtResource("5_5dnu7")
+Locale = "fil"

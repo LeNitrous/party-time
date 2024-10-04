@@ -1,0 +1,243 @@
+[gd_scene load_steps=16 format=3 uid="uid://bycxt7vhleyut"]
+
+[ext_resource type="Script" path="res://scripts/menu/Slider.cs" id="1_gas6q"]
+[ext_resource type="Texture2D" uid="uid://5x2ytd8x7m5l" path="res://textures/menu/control_padding_slanted_left.png" id="2_am8o5"]
+[ext_resource type="FontFile" uid="uid://cuj4gq8fufdl" path="res://fonts/Sublima-ExtraBold.otf" id="2_g778l"]
+[ext_resource type="Texture2D" uid="uid://br8gs5edbm38q" path="res://textures/menu/control_padding_slanted_right.png" id="3_k6fvj"]
+[ext_resource type="Texture2D" uid="uid://b0vxtrdo1fnq1" path="res://textures/menu/h_halftone.png" id="4_xs8jd"]
+[ext_resource type="LabelSettings" uid="uid://crkkitv4n21q3" path="res://fonts/settings/ui_control.tres" id="5_jbxq2"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dk1f8"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 6
+border_width_top = 6
+border_width_right = 6
+border_width_bottom = 6
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lw5kb"]
+bg_color = Color(0.737255, 0.796078, 0.85098, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="Gradient" id="Gradient_878rp"]
+colors = PackedColorArray(0, 0.54902, 1, 1, 0.866667, 0.462745, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_2hyds"]
+gradient = SubResource("Gradient_878rp")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_o4exh"]
+texture = SubResource("GradientTexture1D_2hyds")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xjd3l"]
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ehx8e"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.0862745, 0.0862745, 0.0862745, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0.0862745, 0.0862745, 0.0862745, 1)
+shadow_size = 1
+shadow_offset = Vector2(2, 2)
+anti_aliasing_size = 0.92
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s21kv"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0.0862745, 0.0862745, 0.0862745, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_6eo3r"]
+font = ExtResource("2_g778l")
+font_size = 32
+outline_size = 15
+outline_color = Color(0.0862745, 0.0862745, 0.0862745, 1)
+shadow_size = 10
+shadow_color = Color(0.0862745, 0.0862745, 0.0862745, 1)
+shadow_offset = Vector2(4, 4)
+
+[node name="Slider" type="Control"]
+clip_contents = true
+custom_minimum_size = Vector2(980, 100)
+layout_mode = 3
+anchors_preset = 0
+focus_mode = 2
+script = ExtResource("1_gas6q")
+
+[node name="Fill" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="Padding Left" type="TextureRect" parent="."]
+self_modulate = Color(0.0862745, 0.0862745, 0.0862745, 1)
+layout_mode = 1
+offset_right = 330.0
+offset_bottom = 100.0
+texture = ExtResource("2_am8o5")
+
+[node name="Padding Right" type="TextureRect" parent="."]
+self_modulate = Color(0.0862745, 0.0862745, 0.0862745, 1)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -100.0
+offset_bottom = 100.0
+grow_horizontal = 0
+texture = ExtResource("3_k6fvj")
+
+[node name="Texture" type="TextureRect" parent="."]
+self_modulate = Color(1, 1, 1, 0.0470588)
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = -124.0
+offset_right = 184.0
+grow_vertical = 2
+texture = ExtResource("4_xs8jd")
+stretch_mode = 1
+
+[node name="Border" type="PanelContainer" parent="."]
+self_modulate = Color(0.0862745, 0.0862745, 0.0862745, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_dk1f8")
+
+[node name="Icon" type="MarginContainer" parent="."]
+layout_mode = 0
+offset_right = 288.0
+offset_bottom = 100.0
+theme_override_constants/margin_left = 20
+
+[node name="Label" type="Label" parent="Icon"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 1
+label_settings = ExtResource("5_jbxq2")
+text_overrun_behavior = 3
+
+[node name="Body" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = 327.0
+offset_right = 883.0
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 20
+
+[node name="Base" type="PanelContainer" parent="Body"]
+clip_children = 2
+clip_contents = true
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_lw5kb")
+
+[node name="Fill" type="Control" parent="Body/Base"]
+layout_mode = 2
+
+[node name="Gradient" type="PanelContainer" parent="Body/Base/Fill"]
+clip_contents = true
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.5
+anchor_bottom = 0.5
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxTexture_o4exh")
+
+[node name="Drag" type="Control" parent="Body"]
+layout_mode = 2
+mouse_filter = 1
+
+[node name="Knob" type="PanelContainer" parent="Body/Drag"]
+custom_minimum_size = Vector2(18, 63)
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_xjd3l")
+
+[node name="Back" type="PanelContainer" parent="Body/Drag/Knob"]
+visible = false
+custom_minimum_size = Vector2(18, 63)
+layout_mode = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_ehx8e")
+
+[node name="Fill" type="ColorRect" parent="Body/Drag/Knob"]
+custom_minimum_size = Vector2(12, 56)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 1
+color = Color(0.94902, 0.807843, 0.231373, 1)
+
+[node name="Border" type="PanelContainer" parent="Body/Drag/Knob"]
+self_modulate = Color(0.0862745, 0.0862745, 0.0862745, 1)
+custom_minimum_size = Vector2(18, 63)
+layout_mode = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_s21kv")
+
+[node name="Value" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -69.0
+offset_top = -41.0
+offset_right = -13.0
+offset_bottom = -6.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 1
+text = "0"
+label_settings = SubResource("LabelSettings_6eo3r")
+horizontal_alignment = 2
+
+[connection signal="focus_entered" from="." to="." method="onSelected"]
+[connection signal="focus_exited" from="." to="." method="onDeselect"]
+[connection signal="gui_input" from="." to="." method="onSliderGUIInput"]
+[connection signal="gui_input" from="." to="." method="onGUIInput"]
+[connection signal="mouse_entered" from="." to="." method="onHoverGain"]
+[connection signal="mouse_exited" from="." to="." method="onHoverLost"]
