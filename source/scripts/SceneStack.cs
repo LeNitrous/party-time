@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Godot;
+using Party.Game.Menu;
 
 namespace Party.Game;
 
@@ -9,6 +10,8 @@ public partial class SceneStack : Node
     public static SceneStack Current { get; private set; }
 
     public bool IsRoot => scenes.Count == 0;
+
+    public Modal Modal { get; set; }
 
     private readonly Stack<string> scenes = new Stack<string>();
 
@@ -26,14 +29,19 @@ public partial class SceneStack : Node
         }
     }
 
+    public override void _Input(InputEvent e)
+    {
+        if (e.IsActionReleased("ui_cancel"))
+        {
+            handleQuitRequest();
+        }
+    }
+
     public override void _Notification(int what)
     {
-        switch (what)
+        if (what is ((int)NotificationWMCloseRequest) or ((int)NotificationWMGoBackRequest))
         {
-            case (int)NotificationWMCloseRequest:
-            case (int)NotificationWMGoBackRequest:
-                Exit();
-                break;
+            handleQuitRequest();
         }
     }
 
@@ -57,13 +65,28 @@ public partial class SceneStack : Node
         {
             CallDeferred(MethodName.changeSceneToFile, path);
         }
-        else if (OS.HasFeature("editor"))
+        else
         {
             GetTree().Quit();
         }
+    }
+
+    private void handleQuitRequest()
+    {
+        if (Modal is not null)
+        {
+            if (Modal.Visible)
+            {
+                Modal.EmitSignal(Modal.SignalName.Accept);
+            }
+            else
+            {
+                Modal.Show();
+            }
+        }
         else
         {
-            GD.PrintErr(nameof(SceneStack), " :: Attempted to exit scene but there are no scenes left!");
+            Exit();
         }
     }
 

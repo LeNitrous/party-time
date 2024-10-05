@@ -1,4 +1,5 @@
 using System.IO;
+using System.Linq;
 using Godot;
 using NathanHoad;
 
@@ -7,6 +8,38 @@ namespace Party.Game.Experience.Managers;
 public sealed partial class GameMusicManager : Node
 {
     private Completion completion;
+
+    public override void _Notification(int what)
+    {
+        if (what == NotificationPaused)
+        {
+            handleScenePaused(true);
+        }
+
+        if (what == NotificationUnpaused)
+        {
+            handleScenePaused(false);
+        }
+    }
+
+    private void handleScenePaused(bool isPaused)
+    {
+        var stream = SoundManager.GetCurrentlyPlayingMusic()[0];
+
+        if (loop.Contains(Path.GetFileName(stream.ResourcePath)))
+        {
+            return;
+        }
+
+        if (isPaused)
+        {
+            SoundManager.PauseMusic(stream);
+        }
+        else
+        {
+            SoundManager.ResumeMusic(stream);
+        }
+    }
 
     private void onCompletionChanged(Completion completion)
     {

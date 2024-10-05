@@ -79,14 +79,6 @@ public partial class InputManager : Node
     {
         var next = InputSchema.None;
 
-        if (input.IsActionReleased("ui_cancel"))
-        {
-            if (SceneStack.Current is not null)
-            {
-                SceneStack.Current.Exit();
-            }
-        }
-
         if (input.IsActionPressed("ui_focus_next") || input.IsActionPressed("ui_focus_prev") || input.IsActionPressed("ui_up") || input.IsActionPressed("ui_down") || input.IsActionPressed("ui_left") || input.IsActionPressed("ui_right"))
         {
             if (FirstSelected.IsInsideTree() && (Focused is null || Focused.IsEmpty))

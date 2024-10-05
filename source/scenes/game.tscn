@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://vpvcl7rtgnye"]
+[gd_scene load_steps=30 format=3 uid="uid://vpvcl7rtgnye"]
 
 [ext_resource type="Script" path="res://scripts/game/managers/GameStateManager.cs" id="1_g7oxf"]
 [ext_resource type="Script" path="res://scripts/game/GameContext.cs" id="1_pfb1g"]
@@ -15,6 +15,8 @@
 [ext_resource type="Script" path="res://scripts/game/HUDLabelValueSetter.cs" id="12_jr0lv"]
 [ext_resource type="Script" path="res://scripts/game/HUDLabelCombo.cs" id="13_437ev"]
 [ext_resource type="Script" path="res://scripts/game/ControllerStatusLabel.cs" id="15_4rrrl"]
+[ext_resource type="PackedScene" uid="uid://blbviaarb7n8t" path="res://scenes/components/ui_modal.tscn" id="16_khpbt"]
+[ext_resource type="Script" path="res://scripts/menu/ModalExitHandler.cs" id="17_5wsc8"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_nsx35"]
 shader = ExtResource("7_eo44j")
@@ -314,6 +316,7 @@ step_0/0 = {
 [sub_resource type="ButtonGroup" id="ButtonGroup_txoe8"]
 
 [node name="Game" type="Control"]
+process_mode = 1
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -359,18 +362,12 @@ script = ExtResource("7_o60co")
 [node name="View" type="CanvasLayer" parent="."]
 unique_name_in_owner = true
 
-[node name="HUD" type="Control" parent="."]
+[node name="HUD" type="CanvasLayer" parent="."]
 unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layer = 2
 
 [node name="U Margin" type="MarginContainer" parent="HUD"]
-layout_mode = 1
-anchors_preset = -1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
@@ -399,7 +396,6 @@ script = ExtResource("2_448es")
 animation = SubResource("Resource_720v7")
 
 [node name="H Margin" type="MarginContainer" parent="HUD"]
-layout_mode = 1
 anchors_preset = -1
 anchor_left = -0.25
 anchor_right = 1.25
@@ -428,7 +424,6 @@ script = ExtResource("2_448es")
 animation = SubResource("Resource_fyixr")
 
 [node name="V Margin" type="MarginContainer" parent="HUD"]
-layout_mode = 1
 anchors_preset = -1
 anchor_top = -0.25
 anchor_right = 1.0
@@ -478,7 +473,7 @@ animation = SubResource("Resource_nfr3y")
 
 [node name="Border" type="Control" parent="HUD"]
 modulate = Color(1, 1, 1, 0)
-layout_mode = 1
+layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -499,7 +494,7 @@ script = ExtResource("2_448es")
 animation = SubResource("Resource_3wopp")
 
 [node name="Debug" type="CanvasLayer" parent="."]
-layer = 128
+layer = 3
 
 [node name="Controls" type="VFlowContainer" parent="Debug"]
 anchors_preset = 9
@@ -574,6 +569,20 @@ text = "Wave"
 [node name="Status" type="Label" parent="Debug/Controls"]
 layout_mode = 2
 script = ExtResource("15_4rrrl")
+
+[node name="Overlay" type="CanvasLayer" parent="."]
+process_mode = 3
+layer = 4
+
+[node name="Modal" parent="Overlay" instance=ExtResource("16_khpbt")]
+unique_name_in_owner = true
+visible = false
+Title = "Paused"
+Content = "Are you sure you want to quit the game?"
+Accent = Color(0, 1, 0.833333, 1)
+
+[node name="Handler" type="Node" parent="Overlay/Modal"]
+script = ExtResource("17_5wsc8")
 
 [connection signal="ComboChanged" from="." to="HUD/V Margin/Labels/Combo" method="onValueChanged"]
 [connection signal="ComboChanged" from="." to="HUD/V Margin/Labels/Combo/Label/Setter" method="onValueChanged"]

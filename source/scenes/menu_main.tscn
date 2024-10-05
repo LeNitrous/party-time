@@ -1,9 +1,8 @@
-[gd_scene load_steps=15 format=3 uid="uid://dppkuqgg30ji"]
+[gd_scene load_steps=14 format=3 uid="uid://dppkuqgg30ji"]
 
 [ext_resource type="PackedScene" uid="uid://cnbg7pq443l40" path="res://scenes/components/ui_background.tscn" id="1_88ej7"]
 [ext_resource type="Script" path="res://scripts/input/InputManager.cs" id="1_x61v6"]
 [ext_resource type="PackedScene" uid="uid://ofbnn5nbh3oj" path="res://scenes/components/ui_header.tscn" id="2_g1tqy"]
-[ext_resource type="Script" path="res://scripts/menu/main/QuitHandler.cs" id="2_xf1kl"]
 [ext_resource type="PackedScene" uid="uid://4na2fumgsqrv" path="res://scenes/components/ui_footer.tscn" id="3_gq0a0"]
 [ext_resource type="PackedScene" uid="uid://cml6lqldirm2v" path="res://scenes/components/ui_button.tscn" id="5_qnikn"]
 [ext_resource type="Texture2D" uid="uid://dhop5p2vtifmm" path="res://textures/icons/flag.png" id="6_b5ksj"]
@@ -12,10 +11,11 @@
 [ext_resource type="Texture2D" uid="uid://eiwl8xya3n0g" path="res://textures/icons/gear.png" id="9_pi4gl"]
 [ext_resource type="Texture2D" uid="uid://dvpnxvawjcujf" path="res://textures/icons/exit.png" id="10_a5sjt"]
 [ext_resource type="PackedScene" uid="uid://blbviaarb7n8t" path="res://scenes/components/ui_modal.tscn" id="11_ymynk"]
-[ext_resource type="Script" path="res://scripts/menu/main/ModalConfirmExit.cs" id="12_746qh"]
 [ext_resource type="Texture2D" uid="uid://o8ioi4scyqrs" path="res://textures/icons/exclamation.png" id="12_wvfxg"]
+[ext_resource type="Script" path="res://scripts/menu/ModalExitHandler.cs" id="13_fr814"]
 
 [node name="Main" type="Control"]
+process_mode = 1
 clip_contents = true
 layout_mode = 3
 anchors_preset = 15
@@ -27,9 +27,6 @@ grow_vertical = 2
 [node name="Input" type="Node" parent="." node_paths=PackedStringArray("FirstSelected")]
 script = ExtResource("1_x61v6")
 FirstSelected = NodePath("../Margin/Content/Start")
-
-[node name="Quit" type="Node" parent="."]
-script = ExtResource("2_xf1kl")
 
 [node name="Background" parent="." instance=ExtResource("1_88ej7")]
 layout_mode = 1
@@ -139,7 +136,7 @@ Accent = Color(1, 0.883333, 0, 1)
 Icon = ExtResource("12_wvfxg")
 
 [node name="Handler" type="Node" parent="Modal"]
-script = ExtResource("12_746qh")
+script = ExtResource("13_fr814")
 
 [node name="Footer" parent="." instance=ExtResource("3_gq0a0")]
 layout_mode = 1

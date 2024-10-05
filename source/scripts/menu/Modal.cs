@@ -52,21 +52,26 @@ public partial class Modal : Control
 
     private void onVisibilityChanged()
     {
-        if (InputManager.Current is null)
+        if (IsInsideTree())
         {
-            return;
+            GetTree().Paused = Visible;
         }
 
-        if (Visible)
+        if (InputManager.Current is not null)
         {
-            firstSelected = InputManager.Current.FirstSelected;
-            InputManager.Current.FirstSelected = GetNode<Control>("%Accept");
+            if (Visible)
+            {
+                firstSelected = InputManager.Current.FirstSelected;
+                InputManager.Current.FirstSelected = GetNode<Control>("%Accept");
+            }
+            else
+            {
+                InputManager.Current.FirstSelected = firstSelected;
+                firstSelected = null;
+            }
         }
-        else
-        {
-            InputManager.Current.FirstSelected = firstSelected;
-            firstSelected = null;
-        }
+
+        AudioServer.SetBusEffectEnabled(0, 0, Visible);
     }
 
     private void onAccept()
