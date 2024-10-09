@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://vpvcl7rtgnye"]
+[gd_scene load_steps=34 format=3 uid="uid://vpvcl7rtgnye"]
 
 [ext_resource type="Script" path="res://scripts/game/managers/GameStateManager.cs" id="1_g7oxf"]
 [ext_resource type="Script" path="res://scripts/game/GameContext.cs" id="1_pfb1g"]
@@ -15,8 +15,9 @@
 [ext_resource type="Script" path="res://scripts/game/HUDLabelValueSetter.cs" id="12_jr0lv"]
 [ext_resource type="Script" path="res://scripts/game/HUDLabelCombo.cs" id="13_437ev"]
 [ext_resource type="Script" path="res://scripts/game/ControllerStatusLabel.cs" id="15_4rrrl"]
-[ext_resource type="PackedScene" uid="uid://blbviaarb7n8t" path="res://scenes/components/ui_modal.tscn" id="16_khpbt"]
-[ext_resource type="Script" path="res://scripts/menu/ModalExitHandler.cs" id="17_5wsc8"]
+[ext_resource type="Shader" path="res://shaders/stripes.gdshader" id="15_svvxn"]
+[ext_resource type="Texture2D" uid="uid://drnebolenupil" path="res://textures/menu/spinner.png" id="16_76xhb"]
+[ext_resource type="PackedScene" uid="uid://dtfsvcpcqi8j3" path="res://scenes/components/ui_modal_results.tscn" id="16_ykq0k"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_nsx35"]
 shader = ExtResource("7_eo44j")
@@ -176,7 +177,7 @@ script = ExtResource("3_h1ifc")
 step_0/0 = {
 "delay": 0.0,
 "duration": 0.5,
-"easing": 1,
+"easing": 0,
 "final_value": 1.25,
 "from": 1,
 "from_current": false,
@@ -189,7 +190,7 @@ step_0/0 = {
 step_0/1 = {
 "delay": 0.0,
 "duration": 0.5,
-"easing": 1,
+"easing": 0,
 "final_value": -0.25,
 "from": 0,
 "from_current": false,
@@ -234,7 +235,7 @@ script = ExtResource("3_h1ifc")
 step_0/0 = {
 "delay": 0.0,
 "duration": 0.5,
-"easing": 1,
+"easing": 0,
 "final_value": 1.25,
 "from": 1,
 "from_current": false,
@@ -247,7 +248,7 @@ step_0/0 = {
 step_0/1 = {
 "delay": 0.0,
 "duration": 0.5,
-"easing": 1,
+"easing": 0,
 "final_value": -0.25,
 "from": 0,
 "from_current": false,
@@ -287,6 +288,22 @@ step_0/1 = {
 "type": 0
 }
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_iw0g7"]
+shader = ExtResource("15_svvxn")
+shader_parameter/stripe_color = Color(0, 0, 0, 1)
+shader_parameter/stripe_bias = 2.5
+shader_parameter/speed = 0.05
+shader_parameter/angle = 4.0
+shader_parameter/density = 30.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_svx5f"]
+shader = ExtResource("15_svvxn")
+shader_parameter/stripe_color = Color(0, 0, 0, 1)
+shader_parameter/stripe_bias = 2.5
+shader_parameter/speed = -0.05
+shader_parameter/angle = 4.0
+shader_parameter/density = 30.0
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6warc"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
 border_width_left = 12
@@ -310,6 +327,15 @@ step_0/0 = {
 "transition": 0,
 "type": 0
 }
+
+[sub_resource type="LabelSettings" id="LabelSettings_1m2mc"]
+font = ExtResource("10_r31ya")
+font_size = 80
+outline_size = 25
+outline_color = Color(0.0862745, 0.0862745, 0.0862745, 1)
+shadow_size = 10
+shadow_color = Color(0.0862745, 0.0862745, 0.0862745, 1)
+shadow_offset = Vector2(6, 6)
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_bwhu3"]
 
@@ -471,6 +497,36 @@ animation = SubResource("Resource_y5nj1")
 script = ExtResource("2_448es")
 animation = SubResource("Resource_nfr3y")
 
+[node name="S Margin" type="MarginContainer" parent="HUD"]
+anchors_preset = -1
+anchor_top = -0.25
+anchor_right = 1.0
+anchor_bottom = 1.25
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Top" type="ColorRect" parent="HUD/S Margin"]
+material = SubResource("ShaderMaterial_iw0g7")
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_vertical = 0
+color = Color(1, 1, 0, 1)
+
+[node name="Bottom" type="ColorRect" parent="HUD/S Margin"]
+material = SubResource("ShaderMaterial_svx5f")
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_vertical = 8
+color = Color(1, 1, 0, 1)
+
+[node name="Expander" type="Node" parent="HUD/S Margin"]
+script = ExtResource("2_448es")
+animation = SubResource("Resource_y5nj1")
+
+[node name="Shrinker" type="Node" parent="HUD/S Margin"]
+script = ExtResource("2_448es")
+animation = SubResource("Resource_nfr3y")
+
 [node name="Border" type="Control" parent="HUD"]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 3
@@ -493,8 +549,40 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_6warc")
 script = ExtResource("2_448es")
 animation = SubResource("Resource_3wopp")
 
+[node name="Spinner" type="TextureRect" parent="HUD"]
+unique_name_in_owner = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -64.0
+offset_right = 64.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(64, 64)
+texture = ExtResource("16_76xhb")
+expand_mode = 1
+
+[node name="Ready" type="Label" parent="HUD"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(640, 360)
+text = "READY?"
+label_settings = SubResource("LabelSettings_1m2mc")
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="Debug" type="CanvasLayer" parent="."]
 layer = 3
+visible = false
 
 [node name="Controls" type="VFlowContainer" parent="Debug"]
 anchors_preset = 9
@@ -574,15 +662,8 @@ script = ExtResource("15_4rrrl")
 process_mode = 3
 layer = 4
 
-[node name="Modal" parent="Overlay" instance=ExtResource("16_khpbt")]
-unique_name_in_owner = true
+[node name="Results" parent="Overlay" instance=ExtResource("16_ykq0k")]
 visible = false
-Title = "Paused"
-Content = "Are you sure you want to quit the game?"
-Accent = Color(0, 1, 0.833333, 1)
-
-[node name="Handler" type="Node" parent="Overlay/Modal"]
-script = ExtResource("17_5wsc8")
 
 [connection signal="ComboChanged" from="." to="HUD/V Margin/Labels/Combo" method="onValueChanged"]
 [connection signal="ComboChanged" from="." to="HUD/V Margin/Labels/Combo/Label/Setter" method="onValueChanged"]
@@ -598,6 +679,7 @@ script = ExtResource("17_5wsc8")
 [connection signal="PhaseChanged" from="Context" to="Sounds/Effects" method="onPhaseChanged"]
 [connection signal="PhaseChanged" from="Context" to="Sounds/Voice/Countdown" method="onPhaseChanged"]
 [connection signal="PhaseChanged" from="Context" to="Animations" method="onPhaseChanged"]
+[connection signal="PhaseChanged" from="Context" to="Overlay/Results" method="onPhaseChanged"]
 [connection signal="pressed" from="Debug/Controls/Stand" to="Controller" method="Perform" binds= [0]]
 [connection signal="pressed" from="Debug/Controls/Walk" to="Controller" method="Perform" binds= [1]]
 [connection signal="pressed" from="Debug/Controls/Run" to="Controller" method="Perform" binds= [2]]

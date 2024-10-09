@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dppkuqgg30ji"]
+[gd_scene load_steps=13 format=3 uid="uid://dppkuqgg30ji"]
 
 [ext_resource type="PackedScene" uid="uid://cnbg7pq443l40" path="res://scenes/components/ui_background.tscn" id="1_88ej7"]
 [ext_resource type="Script" path="res://scripts/input/InputManager.cs" id="1_x61v6"]
@@ -9,10 +9,9 @@
 [ext_resource type="Texture2D" uid="uid://ds7la6kglbg22" path="res://textures/icons/target.png" id="7_qoypu"]
 [ext_resource type="Script" path="res://scripts/menu/ButtonSceneStackPush.cs" id="9_8ces4"]
 [ext_resource type="Texture2D" uid="uid://eiwl8xya3n0g" path="res://textures/icons/gear.png" id="9_pi4gl"]
+[ext_resource type="PackedScene" uid="uid://ceh6x7s2368uo" path="res://scenes/components/ui_modal_prompt.tscn" id="10_0qswb"]
 [ext_resource type="Texture2D" uid="uid://dvpnxvawjcujf" path="res://textures/icons/exit.png" id="10_a5sjt"]
-[ext_resource type="PackedScene" uid="uid://blbviaarb7n8t" path="res://scenes/components/ui_modal.tscn" id="11_ymynk"]
-[ext_resource type="Texture2D" uid="uid://o8ioi4scyqrs" path="res://textures/icons/exclamation.png" id="12_wvfxg"]
-[ext_resource type="Script" path="res://scripts/menu/ModalExitHandler.cs" id="13_fr814"]
+[ext_resource type="Script" path="res://scripts/menu/PromptExitHandler.cs" id="11_xy2ah"]
 
 [node name="Main" type="Control"]
 process_mode = 1
@@ -126,20 +125,19 @@ Hovered = Color(0.95, 0.323, 0.323, 1)
 Pressed = Color(0.95, 0.418, 0.418, 1)
 metadata/tooltip = "UI_TOOLTIP_EXIT"
 
-[node name="Modal" parent="." instance=ExtResource("11_ymynk")]
-unique_name_in_owner = true
+[node name="Prompt" parent="." instance=ExtResource("10_0qswb")]
 visible = false
 layout_mode = 1
 Title = "UI_MODAL_TITLE_WARNING"
-Content = "UI_MODAL_MAINMENU_CONFIRM_EXIT"
-Accent = Color(1, 0.883333, 0, 1)
-Icon = ExtResource("12_wvfxg")
+Text = "UI_MODAL_MAINMENU_CONFIRM_EXIT"
+Accent = Color(1, 1, 0, 1)
 
-[node name="Handler" type="Node" parent="Modal"]
-script = ExtResource("13_fr814")
+[node name="Handler" type="Node" parent="Prompt"]
+script = ExtResource("11_xy2ah")
 
 [node name="Footer" parent="." instance=ExtResource("3_gq0a0")]
 layout_mode = 1
 offset_top = -50.0
 
-[connection signal="Confirm" from="Margin/Content/Exit" to="Modal" method="show"]
+[connection signal="Confirm" from="Margin/Content/Exit" to="Prompt" method="show"]
+[connection signal="Reject" from="Prompt" to="Prompt" method="hide"]

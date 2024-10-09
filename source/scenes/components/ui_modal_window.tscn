@@ -1,0 +1,54 @@
+[gd_scene load_steps=4 format=3 uid="uid://cebvl0o4x6c4"]
+
+[ext_resource type="Texture2D" uid="uid://cu3rtoac0ry0f" path="res://textures/menu/modal_effect.png" id="1_8uvmu"]
+[ext_resource type="FontFile" uid="uid://cuj4gq8fufdl" path="res://fonts/Sublima-ExtraBold.otf" id="2_sdicd"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_g53uy"]
+font = ExtResource("2_sdicd")
+font_size = 36
+
+[node name="Modal" type="VBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="Header" type="MarginContainer" parent="."]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+
+[node name="Accent" type="MarginContainer" parent="Header"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Background" type="ColorRect" parent="Header/Accent"]
+layout_mode = 2
+color = Color(0.501961, 0.501961, 0.501961, 1)
+
+[node name="Effect" type="TextureRect" parent="Header/Accent"]
+layout_mode = 2
+size_flags_horizontal = 8
+texture = ExtResource("1_8uvmu")
+
+[node name="MarginContainer" type="MarginContainer" parent="Header"]
+layout_mode = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Header/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Header/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Title"
+label_settings = SubResource("LabelSettings_g53uy")
+text_overrun_behavior = 1
+
+[node name="Body" type="ColorRect" parent="."]
+layout_mode = 2
+size_flags_vertical = 3

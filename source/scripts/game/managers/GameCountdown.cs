@@ -40,9 +40,7 @@ public sealed partial class GameCountdown : Node
                 return;
             }
 
-            string name = countdown[index--];
-            string path = Path.Combine("res://", "sounds", "voice", "b", name);
-            SoundManager.PlaySound(GD.Load<AudioStream>(path), "Voice");
+            speak(countdown[index--]);
         }
 
         time.Start(1.0);
@@ -58,6 +56,53 @@ public sealed partial class GameCountdown : Node
         void startCountdownOnFive()
         {
             startCountdownVoice(5);
+        }
+
+        if (phase == Phase.Prologue)
+        {
+            var tween = CreateTween();
+            var label = GetNode<Label>("%Ready");
+
+            tween
+                .SetParallel(true);
+
+            tween
+                .TweenProperty(label, "scale", new Vector2(1, 1), 0.3)
+                .From(new Vector2(0.5f, 0.5f))
+                .SetDelay(GameContext.Duration.Prologue - 3.0)
+                .SetEase(Tween.EaseType.Out)
+                .SetTrans(Tween.TransitionType.Back);
+
+            tween
+                .TweenProperty(label, "modulate", Colors.White, 0.3)
+                .From(Colors.Transparent)
+                .SetDelay(GameContext.Duration.Prologue - 3.0);
+
+            tween
+                .TweenCallback(Callable.From(() => label.Text = "SET"))
+                .SetDelay(GameContext.Duration.Prologue - 2.0);
+
+            tween
+                .TweenCallback(Callable.From(() => label.Text = "GO"))
+                .SetDelay(GameContext.Duration.Prologue - 1.0);
+
+            tween
+                .TweenCallback(Callable.From(label.Hide))
+                .SetDelay(GameContext.Duration.Prologue);
+
+            tween
+                .TweenCallback(Callable.From(() => speak("ready")))
+                .SetDelay(GameContext.Duration.Prologue - 3.0);
+
+            tween
+                .TweenCallback(Callable.From(() => speak("set")))
+                .SetDelay(GameContext.Duration.Prologue - 2.0);
+
+            tween
+                .TweenCallback(Callable.From(() => speak("go")))
+                .SetDelay(GameContext.Duration.Prologue - 1.0);
+
+            tween.Play();
         }
 
         if (phase == Phase.Starting)
@@ -91,6 +136,20 @@ public sealed partial class GameCountdown : Node
         }
 
         wait.Stop();
+    }
+
+    private void speak(string line)
+    {
+        string path = Path.Combine("res://", "sounds", "voice", "a", Path.ChangeExtension(line, ".ogg"));
+
+        if (ResourceLoader.Exists(path))
+        {
+            SoundManager.PlaySound(GD.Load<AudioStream>(path), "Voice");
+        }
+        else
+        {
+            GD.PrintErr(nameof(GameCountdown), " :: tried to play \"", path, "\" but the file does not exist!");
+        }
     }
 
     private static readonly string[] countdown = new string[]

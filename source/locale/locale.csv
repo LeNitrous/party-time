@@ -60,3 +60,9 @@ UI_MODAL_BUTTON_REJECT,No,Hindi
 UI_TOOLTIP_CREDITS,Show credits.,Ipakita ang mga parangal.
 GAME_HUD_SCORE,Score,Puntos
 GAME_HUD_COMBO,Combo,Kombo
+GAME_HUD_LENGTH,Length,Tagal
+UI_MODAL_TITLE_RESULTS,Results,Kalabasan
+UI_MODAL_TITLE_PAUSED,Paused,Pahinga
+UI_MODAL_BUTTON_RESUME,Resume,Ituloy
+UI_MODAL_BUTTON_RETURN,Return,Bumalik
+UI_MODAL_BUTTON_CONTINUE,Continue,Ituloy

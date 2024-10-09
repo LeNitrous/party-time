@@ -7,3 +7,6 @@
 [submodule "vendor/Godot-Tween-Suite"]
 	path = vendor/Godot-Tween-Suite
 	url = https://github.com/KoBeWi/Godot-Tween-Suite
+[submodule "vendor/godot-debug-menu"]
+	path = vendor/godot-debug-menu
+	url = https://github.com/godot-extended-libraries/godot-debug-menu

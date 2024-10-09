@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
 using Party.Game.Menu;
 
@@ -11,7 +12,7 @@ public partial class SceneStack : Node
 
     public bool IsRoot => scenes.Count == 0;
 
-    public Modal Modal { get; set; }
+    public Control Modal { get; set; }
 
     private readonly Stack<string> scenes = new Stack<string>();
 
@@ -33,7 +34,14 @@ public partial class SceneStack : Node
     {
         if (e.IsActionReleased("ui_cancel"))
         {
-            handleQuitRequest();
+            if (Modal is not null && Modal.Visible && Modal is IModal modal)
+            {
+                modal.Reject();
+            }
+            else
+            {
+                handleQuitRequest();
+            }
         }
     }
 
@@ -59,6 +67,24 @@ public partial class SceneStack : Node
         CallDeferred(MethodName.changeSceneToFile, path);
     }
 
+    public bool Exit(string path)
+    {
+        int index = scenes.ToList().IndexOf(path);
+
+        if (index == -1)
+        {
+            return false;
+        }
+
+        for (int i = scenes.Count; i > index; i--)
+        {
+            scenes.Pop();
+        }
+
+        CallDeferred(MethodName.changeSceneToFile, path);
+        return true;
+    }
+
     public void Exit()
     {
         if (scenes.TryPop(out string path))
@@ -75,9 +101,9 @@ public partial class SceneStack : Node
     {
         if (Modal is not null)
         {
-            if (Modal.Visible)
+            if (Modal.Visible && Modal is IModal modal)
             {
-                Modal.EmitSignal(Modal.SignalName.Accept);
+                modal.Accept();
             }
             else
             {

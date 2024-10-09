@@ -142,6 +142,11 @@ public partial class HintController : RichTextLabel
             cache.Add(getLocalizedText(schema, HintFlags.Radio));
         }
 
+        if (flags.HasFlag(HintFlags.Options))
+        {
+            cache.Add(getLocalizedText(schema, HintFlags.Options));
+        }
+
         if (flags.HasFlag(HintFlags.Navigate))
         {
             cache.Add(getLocalizedText(schema, HintFlags.Navigate));
@@ -222,6 +227,7 @@ public partial class HintController : RichTextLabel
         [HintFlags.Navigate]           = "UI_ACTION_NAVIGATE",
         [HintFlags.Slider]             = "UI_ACTION_SLIDER",
         [HintFlags.Radio]              = "UI_ACTION_RADIO",
+        [HintFlags.Options]            = "UI_ACTION_OPTIONS",
     };
 
     private static readonly Dictionary<InputSchema, Dictionary<HintFlags, string>> action_mapping = new Dictionary<InputSchema, Dictionary<HintFlags, string>>
@@ -245,6 +251,7 @@ public partial class HintController : RichTextLabel
             [HintFlags.Navigate]           = "keyboard_arrows_all",
             [HintFlags.Slider]             = "keyboard_arrows_horizontal",
             [HintFlags.Radio]              = "keyboard_arrows_horizontal",
+            [HintFlags.Options]            = "keyboard_arrows_horizontal",
         },
         [InputSchema.Xbox] = new Dictionary<HintFlags, string>
         {
@@ -259,6 +266,7 @@ public partial class HintController : RichTextLabel
             [HintFlags.Navigate]           = "xbox_dpad_all",
             [HintFlags.Slider]             = "xbox_dpad_horizontal",
             [HintFlags.Radio]              = "xbox_dpad_horizontal",
+            [HintFlags.Options]            = "xbox_dpad_horizontal",
         },
         [InputSchema.PlayStation] = new Dictionary<HintFlags, string>
         {
@@ -273,6 +281,7 @@ public partial class HintController : RichTextLabel
             [HintFlags.Navigate]           = "playstation_dpad_all",
             [HintFlags.Slider]             = "playstation_dpad_horizontal",
             [HintFlags.Radio]              = "playstation_dpad_horizontal",
+            [HintFlags.Options]            = "playstation_dpad_horizontal",
         },
         [InputSchema.Xbox] = new Dictionary<HintFlags, string>
         {
@@ -287,6 +296,7 @@ public partial class HintController : RichTextLabel
             [HintFlags.Navigate]           = "nintendo_dpad_all",
             [HintFlags.Slider]             = "nintendo_dpad_horizontal",
             [HintFlags.Radio]              = "nintendo_dpad_horizontal",
+            [HintFlags.Options]            = "nintendo_dpad_horizontal",
         },
         [InputSchema.Touch] = new Dictionary<HintFlags, string>(),
     };
@@ -306,5 +316,6 @@ public partial class HintController : RichTextLabel
         NavigateHorizontal = NavigateLeft | NavigateRight,
         NavigateVertical = NavigateUp | NavigateDown,
         Navigate = NavigateHorizontal | NavigateVertical,
+        Options = 1 << 9
     }
 }

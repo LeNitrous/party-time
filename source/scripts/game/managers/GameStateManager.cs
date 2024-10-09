@@ -1,14 +1,18 @@
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Godot;
 
 namespace Party.Game.Experience.Managers;
 
 public sealed partial class GameStateManager : Node
 {
+    public static GameStateManager Current { get; private set; }
+
     public int Score
     {
         get => score;
-        set
+        private set
         {
             if (score == value)
             {
@@ -22,7 +26,7 @@ public sealed partial class GameStateManager : Node
     public int Combo
     {
         get => combo;
-        set
+        private set
         {
             if (combo == value)
             {
@@ -36,7 +40,7 @@ public sealed partial class GameStateManager : Node
     public int Round
     {
         get => round;
-        set
+        private set
         {
             if (round == value)
             {
@@ -47,10 +51,44 @@ public sealed partial class GameStateManager : Node
         }
     }
 
+    public int ComboMaximum { get; private set; }
+
+    public TimeSpan Duration => stopwatch?.Elapsed ?? TimeSpan.Zero;
+
     private int score;
     private int combo;
     private int round;
+    private Stopwatch stopwatch;
     private readonly Queue<Completion> completions = new Queue<Completion>();
+
+    public override void _EnterTree()
+    {
+        if (Current is null)
+        {
+            Current = this;
+        }
+    }
+
+    public override void _ExitTree()
+    {
+        if (Current is not null && Current == this)
+        {
+            Current = null;
+        }
+    }
+
+    public override void _Notification(int what)
+    {
+        if (what == NotificationPaused)
+        {
+            stopwatch?.Stop();
+        }
+
+        if (what == NotificationUnpaused)
+        {
+            stopwatch?.Start();
+        }
+    }
 
     private void onCompletionChanged(Completion completion)
     {
@@ -64,6 +102,11 @@ public sealed partial class GameStateManager : Node
             Combo = 0;
         }
 
+        if (Combo > ComboMaximum)
+        {
+            ComboMaximum = Combo;
+        }
+
         completions.Enqueue(completion);
     }
 
@@ -72,6 +115,17 @@ public sealed partial class GameStateManager : Node
         if (phase is Phase.Starting)
         {
             Round++;
+        }
+
+        if (phase is Phase.Starting && stopwatch is null)
+        {
+            stopwatch = new Stopwatch();
+            stopwatch.Start();
+        }
+
+        if (phase is Phase.Epilogue)
+        {
+            stopwatch?.Stop();
         }
     }
 

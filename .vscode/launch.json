@@ -16,20 +16,6 @@
             ],
         },
         {
-          "name": "Test",
-          "type": "coreclr",
-          "request": "launch",
-          "program": "${workspaceFolder}/tools/Party.Tools.Models/bin/Debug/net8.0/Party.Tools.Models.dll",
-          "cwd": "${workspaceFolder}",
-          "console": "internalConsole",
-          "stopAtEntry": false,
-          "preLaunchTask": "build",
-          "args": [
-              "--path",
-              "${workspaceFolder}/tools/Party.Tools.Models"
-          ],
-        },
-        {
             "name": "Launch Editor",
             "type": "coreclr",
             "request": "launch",

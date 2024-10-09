@@ -7,18 +7,22 @@ public sealed partial class GameAnimationsManager : Node
 {
     private Node borderFlashEffect;
     private Timer time;
+    private Control spinner;
     private Control hudMarginH;
     private Control hudMarginV;
     private Control hudMarginU;
+    private Control hudMarginS;
     private Label timeLabel;
 
     public override void _Ready()
     {
         time = GetNode<Timer>("%Context/Time");
+        spinner = GetNode<TextureRect>("%Spinner");
         timeLabel = GetNode<Label>("%HUD/H Margin/Time");
         hudMarginH = GetNode<Control>("%HUD/H Margin");
         hudMarginV = GetNode<Control>("%HUD/V Margin");
         hudMarginU = GetNode<Control>("%HUD/U Margin");
+        hudMarginS = GetNode<Control>("%HUD/S Margin");
         borderFlashEffect = GetNode("%HUD/Border/Flash");
     }
 
@@ -29,6 +33,33 @@ public sealed partial class GameAnimationsManager : Node
 
     private void onPhaseChanged(Phase phase)
     {
+        if (phase == Phase.Prologue)
+        {
+            var spin = CreateTween();
+
+            spin
+                .SetLoops()
+                .TweenProperty(spinner, "rotation_degrees", 360.0, 0.5)
+                .AsRelative();
+            
+            spin.Play();
+
+            var load = CreateTween();
+
+            load
+                .SetParallel();
+
+            load
+                .TweenCallback(Callable.From(() => hudMarginS.GetNode(shrinker).Call(Tween.MethodName.Play)))
+                .SetDelay(GameContext.Duration.Prologue - 5.0);
+
+            load
+                .TweenProperty(spinner, "modulate", Colors.Transparent, 0.25)
+                .SetDelay(GameContext.Duration.Prologue - 5.0);
+
+            load.Play();
+        }
+
         if (phase == Phase.Starting)
         {
             borderFlashEffect.GetParent().GetNode(border)
@@ -39,6 +70,7 @@ public sealed partial class GameAnimationsManager : Node
             hudMarginH.GetNode(shrinker).Call(Tween.MethodName.Play);
             hudMarginV.GetNode(shrinker).Call(Tween.MethodName.Play);
             hudMarginU.GetNode(expander).Call(Tween.MethodName.Play);
+            hudMarginS.GetNode(expander).Call(Tween.MethodName.Play);
         }
 
         if (phase == Phase.Ending)
@@ -46,13 +78,19 @@ public sealed partial class GameAnimationsManager : Node
             hudMarginH.GetNode(expander).Call(Tween.MethodName.Play);
             hudMarginV.GetNode(expander).Call(Tween.MethodName.Play);
             hudMarginU.GetNode(shrinker).Call(Tween.MethodName.Play);
+            hudMarginS.GetNode(shrinker).Call(Tween.MethodName.Play);
         }
 
         if (phase == Phase.Epilogue)
         {
-            var tween = GetTree().CreateTween();
-            tween.TweenProperty(hudMarginU.GetNode<Control>(modulate), "modulate", grid_modulate_default, 0.5);
+            var tween = CreateTween();
+
+            tween
+                .TweenProperty(hudMarginU.GetNode<Control>(modulate), "modulate", grid_modulate_default, 0.5);
+            
             tween.Play();
+
+            hudMarginS.GetNode(expander).Call(Tween.MethodName.Play);
         }
     }
 
