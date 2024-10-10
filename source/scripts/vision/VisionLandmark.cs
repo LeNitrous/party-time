@@ -33,7 +33,7 @@ public enum VisionLandmark
     RightAnkle,
     LeftHeel,
     RightHeel,
-    LeftFootIndex,
-    RightFootIndex,
+    LeftToe,
+    RightToe,
     Maximum,
 }

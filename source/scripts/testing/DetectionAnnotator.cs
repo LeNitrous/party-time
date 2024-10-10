@@ -95,8 +95,8 @@ public sealed partial class DetectionAnnotator : Control
         (VisionLandmark.LeftHip, VisionLandmark.LeftKnee),
         (VisionLandmark.LeftKnee, VisionLandmark.LeftAnkle),
         (VisionLandmark.LeftAnkle, VisionLandmark.LeftHeel),
-        (VisionLandmark.LeftAnkle, VisionLandmark.LeftFootIndex),
-        (VisionLandmark.LeftHeel, VisionLandmark.LeftFootIndex),
+        (VisionLandmark.LeftAnkle, VisionLandmark.LeftToe),
+        (VisionLandmark.LeftHeel, VisionLandmark.LeftToe),
 
         // RIGHT ARM
         (VisionLandmark.RightShoulder, VisionLandmark.RightElbow),
@@ -110,7 +110,7 @@ public sealed partial class DetectionAnnotator : Control
         (VisionLandmark.RightHip, VisionLandmark.RightKnee),
         (VisionLandmark.RightKnee, VisionLandmark.RightAnkle),
         (VisionLandmark.RightAnkle, VisionLandmark.RightHeel),
-        (VisionLandmark.RightAnkle, VisionLandmark.RightFootIndex),
-        (VisionLandmark.RightHeel, VisionLandmark.RightFootIndex),
+        (VisionLandmark.RightAnkle, VisionLandmark.RightToe),
+        (VisionLandmark.RightHeel, VisionLandmark.RightToe),
     ];
 }
