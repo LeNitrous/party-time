@@ -15,7 +15,7 @@ border_color = Color(1, 1, 1, 1)
 
 [node name="Select" type="Control"]
 clip_contents = true
-custom_minimum_size = Vector2(980, 100)
+custom_minimum_size = Vector2(1000, 100)
 layout_mode = 3
 anchors_preset = 0
 focus_mode = 2
@@ -75,7 +75,7 @@ text_overrun_behavior = 3
 [node name="Content" type="MarginContainer" parent="."]
 layout_mode = 0
 offset_left = 327.0
-offset_right = 974.0
+offset_right = 994.0
 offset_bottom = 100.0
 theme_override_constants/margin_left = 25
 theme_override_constants/margin_right = 25

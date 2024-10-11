@@ -9,6 +9,8 @@ public interface ICameraFeed
 
     int Height { get; }
 
+    bool Accelerated { get; }
+
     event Action OnStart;
 
     event Action OnClose;

@@ -116,16 +116,18 @@ alignment = 2
 unique_name_in_owner = true
 custom_minimum_size = Vector2(214, 75)
 layout_mode = 2
+focus_neighbor_left = NodePath("../Accept")
+focus_next = NodePath("../Accept")
+focus_previous = NodePath("../Accept")
 Text = "UI_MODAL_BUTTON_REJECT"
 Default = Color(0.94902, 0.807843, 0.231373, 1)
-Hovered = Color(0.95, 0.8246, 0.323, 1)
-Pressed = Color(0.95, 0.8436, 0.418, 1)
 
 [node name="Accept" parent="MarginContainer/Content/VBoxContainer/MarginContainer2/HBoxContainer" instance=ExtResource("3_v020f")]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(214, 75)
 layout_mode = 2
+focus_neighbor_left = NodePath("../Reject")
+focus_next = NodePath("../Reject")
+focus_previous = NodePath("../Reject")
 Text = "UI_MODAL_BUTTON_ACCEPT"
 Default = Color(0.94902, 0.807843, 0.231373, 1)
-Hovered = Color(0.95, 0.8246, 0.323, 1)
-Pressed = Color(0.95, 0.8436, 0.418, 1)

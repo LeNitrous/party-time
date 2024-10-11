@@ -4,7 +4,6 @@ public sealed partial class PromptExitHandler : Component<Prompt>
 {
     protected override void OnAttach()
     {
-        Parent.Accept += handleExitRequest;
     }
 
     private void handleExitRequest()

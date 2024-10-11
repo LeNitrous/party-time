@@ -1,4 +1,5 @@
 using Godot;
+using Party.Game.Camera;
 using Party.Game.Experience.Directors;
 using Party.Game.Experience.Events;
 
@@ -16,9 +17,23 @@ public sealed partial class GameContext : Node
 
     public override void _Ready()
     {
+        if (CameraService.Current is not null)
+        {
+            GetNode<TextureRect>("%Camera").Texture = new CameraFeedTexture();
+            CameraService.Current.Start();
+        }
+
         time = GetNode<Timer>("Time");
         wait = GetNode<Timer>("Wait");
         view = GetNode<CanvasLayer>("%View");
+    }
+
+    public override void _ExitTree()
+    {
+        if (CameraService.Current is not null)
+        {
+            CameraService.Current.Close();
+        }
     }
 
     public override void _Process(double delta)

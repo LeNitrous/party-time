@@ -8,11 +8,17 @@ public abstract partial class SliderChangeHandler : Component<Slider>
 
     protected sealed override void OnAttach()
     {
-        Parent.Connect(Slider.SignalName.CurrentChanged, Callable.From<float>(OnCurrentChanged));
+        if (!Engine.IsEditorHint())
+        {
+            Parent.Connect(Slider.SignalName.CurrentChanged, Callable.From<float>(OnCurrentChanged));
+        }
     }
 
     protected sealed override void OnDetach()
     {
-        Parent.Disconnect(Slider.SignalName.CurrentChanged, Callable.From<float>(OnCurrentChanged));
+        if (!Engine.IsEditorHint())
+        {
+            Parent.Disconnect(Slider.SignalName.CurrentChanged, Callable.From<float>(OnCurrentChanged));
+        }
     }
 }

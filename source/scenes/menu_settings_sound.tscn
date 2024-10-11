@@ -1,0 +1,78 @@
+[gd_scene load_steps=7 format=3 uid="uid://c2j782jma1kas"]
+
+[ext_resource type="PackedScene" uid="uid://6juf6a2f66rw" path="res://scenes/menu_base.tscn" id="1_chl7k"]
+[ext_resource type="PackedScene" uid="uid://bycxt7vhleyut" path="res://scenes/components/ui_slider.tscn" id="2_ps2l8"]
+[ext_resource type="Script" path="res://scripts/menu/settings/SliderAudioVolume.cs" id="3_48wpv"]
+[ext_resource type="PackedScene" uid="uid://cml6lqldirm2v" path="res://scenes/components/ui_button.tscn" id="3_m7rwg"]
+[ext_resource type="Texture2D" uid="uid://cp444xp8f6svw" path="res://textures/icons/exitLeft.png" id="4_aqb7u"]
+[ext_resource type="Script" path="res://scripts/menu/ButtonSceneStackExit.cs" id="5_ay6oc"]
+
+[node name="Menu" instance=ExtResource("1_chl7k")]
+
+[node name="Colorable" parent="Header" index="0"]
+self_modulate = Color(0.724, 0.31, 1, 1)
+
+[node name="Title" parent="Header/Content/Flow" index="0"]
+self_modulate = Color(0.724, 0.31, 1, 1)
+text = "UI_HEADER_SETTINGS"
+
+[node name="Subtitle" parent="Header/Content/Flow" index="2"]
+text = "UI_HEADER_SETTINGS_SOUND"
+
+[node name="Master" parent="Content" index="0" instance=ExtResource("2_ps2l8")]
+layout_mode = 2
+Text = "UI_SETTINGS_SOUND_MASTER"
+Maximum = 100.0
+Current = 100.0
+Step = 1.0
+metadata/tooltip = "UI_TOOLTIP_SETTINGS_SOUND_MASTER"
+
+[node name="Handler" type="Node" parent="Content/Master" index="8"]
+script = ExtResource("3_48wpv")
+
+[node name="Music" parent="Content" index="1" instance=ExtResource("2_ps2l8")]
+layout_mode = 2
+Text = "UI_SETTINGS_SOUND_MUSIC"
+Maximum = 100.0
+Current = 100.0
+Step = 1.0
+metadata/tooltip = "UI_TOOLTIP_SETTINGS_SOUND_MUSIC"
+
+[node name="Handler" type="Node" parent="Content/Music" index="8"]
+script = ExtResource("3_48wpv")
+Bus = 1
+
+[node name="Effects" parent="Content" index="2" instance=ExtResource("2_ps2l8")]
+layout_mode = 2
+Text = "UI_SETTINGS_SOUND_EFFECTS"
+Maximum = 100.0
+Current = 100.0
+Step = 1.0
+metadata/tooltip = "UI_TOOLTIP_SETTINGS_SOUND_EFFECT"
+
+[node name="Handler" type="Node" parent="Content/Effects" index="8"]
+script = ExtResource("3_48wpv")
+Bus = 2
+
+[node name="Voice" parent="Content" index="3" instance=ExtResource("2_ps2l8")]
+layout_mode = 2
+Text = "UI_SETTINGS_SOUND_VOICE"
+Maximum = 100.0
+Current = 100.0
+Step = 1.0
+metadata/tooltip = "UI_TOOLTIP_SETTINGS_SOUND_VOICE"
+
+[node name="Handler" type="Node" parent="Content/Voice" index="8"]
+script = ExtResource("3_48wpv")
+Bus = 3
+
+[node name="Back" parent="Content" index="4" instance=ExtResource("3_m7rwg")]
+custom_minimum_size = Vector2(1000, 100)
+layout_mode = 2
+Text = "UI_BUTTON_BACK"
+Icon = ExtResource("4_aqb7u")
+Default = Color(1, 0.31, 0.3215, 1)
+metadata/tooltip = "UI_TOOLTIP_BACK"
+
+[node name="Handler" type="Node" parent="Content/Back" index="4"]
+script = ExtResource("5_ay6oc")

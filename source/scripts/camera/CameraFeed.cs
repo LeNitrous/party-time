@@ -1,10 +1,9 @@
 using System;
 using Godot;
-using Party.Game.Vision;
 
 namespace Party.Game.Camera;
 
-public abstract class CameraFeed : ICameraFeed, IFrameSource
+public abstract class CameraFeed : ICameraFeed
 {
     public event Action<Image> OnFrame;
 
@@ -18,7 +17,7 @@ public abstract class CameraFeed : ICameraFeed, IFrameSource
 
     public abstract int Height { get; }
 
-    protected abstract bool Accelerated { get; }
+    public abstract bool Accelerated { get; }
 
     public abstract void Start();
 
@@ -29,8 +28,4 @@ public abstract class CameraFeed : ICameraFeed, IFrameSource
     protected void EmitStart() => OnStart?.Invoke();
 
     protected void EmitClose() => OnClose?.Invoke();
-
-    bool Vision.IFrameSource.Accelerated => Accelerated;
-
-    FrameSourceKind Vision.IFrameSource.Kind => FrameSourceKind.Stream;
 }

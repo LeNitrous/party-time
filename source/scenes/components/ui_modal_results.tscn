@@ -293,8 +293,6 @@ custom_minimum_size = Vector2(214, 75)
 layout_mode = 2
 Text = "UI_MODAL_BUTTON_RETURN"
 Default = Color(0.94902, 0.807843, 0.231373, 1)
-Hovered = Color(0.95, 0.8246, 0.323, 1)
-Pressed = Color(0.95, 0.8436, 0.418, 1)
 
 [node name="Resume" parent="MarginContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer" instance=ExtResource("4_5dhew")]
 unique_name_in_owner = true
@@ -302,8 +300,6 @@ custom_minimum_size = Vector2(214, 75)
 layout_mode = 2
 Text = "UI_MODAL_BUTTON_RESUME"
 Default = Color(0.94902, 0.807843, 0.231373, 1)
-Hovered = Color(0.95, 0.8246, 0.323, 1)
-Pressed = Color(0.95, 0.8436, 0.418, 1)
 
 [node name="Continue" parent="MarginContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer" instance=ExtResource("4_5dhew")]
 unique_name_in_owner = true
@@ -311,8 +307,6 @@ custom_minimum_size = Vector2(214, 75)
 layout_mode = 2
 Text = "UI_MODAL_BUTTON_CONTINUE"
 Default = Color(0.94902, 0.807843, 0.231373, 1)
-Hovered = Color(0.95, 0.8246, 0.323, 1)
-Pressed = Color(0.95, 0.8436, 0.418, 1)
 
 [node name="Popup" type="Node" parent="."]
 script = ExtResource("7_f62su")

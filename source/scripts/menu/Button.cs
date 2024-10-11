@@ -29,14 +29,28 @@ public partial class Button : Interactable
     public Color Default
     {
         get => color;
-        set => this.SetValueAt("%Background", ColorRect.PropertyName.Color, color = value);
+        set
+        {
+            value.ToHsv(out float h, out float s, out float v);
+
+            if (s > 0.3f)
+            {
+                Hovered = Color.FromHsv(h, s - 0.1f, v);
+                Pressed = Color.FromHsv(h, s - 0.2f, v);
+            }
+            else
+            {
+                Hovered = Color.FromHsv(h, s, v + 0.1f);
+                Pressed = Color.FromHsv(h, s, v + 0.2f);
+            }
+            
+            this.SetValueAt("%Background", ColorRect.PropertyName.Color, color = value);
+        }
     }
 
-    [Export]
-    public Color Hovered { get; set; }
+    public Color Hovered { get; private set; }
 
-    [Export]
-    public Color Pressed { get; set; }
+    public Color Pressed { get; private set; }
 
     private bool primed;
     private string text;

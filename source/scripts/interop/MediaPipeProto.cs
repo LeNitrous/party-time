@@ -45,9 +45,9 @@ public partial class MediaPipeProto : RefCounted
 
     public int GetFieldSize(string fieldName) => Call("get_field_size", fieldName).As<int>();
 
-    public void Get(string fieldName) => Call("get", fieldName);
+    public T Get<[MustBeVariant] T>(string fieldName) => Call("get", fieldName).As<T>();
 
-    public void GetRepeated(string fieldName, int index) => Call("get_repeated", fieldName, index);
+    public MediaPipeProto GetRepeated(string fieldName, int index) => GDExtensionHelper.Bind<MediaPipeProto>(Call("get_repeated", fieldName, index).AsGodotObject());
 
     public bool Set(string fieldName, Variant? value) => Call("set", fieldName, value ?? new Variant()).As<bool>();
 

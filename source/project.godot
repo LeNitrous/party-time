@@ -12,7 +12,7 @@ config_version=5
 
 config/name="Party Time"
 config/version="1.0.0"
-run/main_scene="res://scenes/test_camera.tscn"
+run/main_scene="res://scenes/game.tscn"
 config/project_settings_override="user://settings.cfg"
 config/features=PackedStringArray("4.4", "C#", "Mobile")
 boot_splash/show_image=false
@@ -28,7 +28,6 @@ SceneStack="*res://scripts/SceneStack.cs"
 ConfigManager="*res://scripts/config/ConfigManager.cs"
 SoundManager="*res://addons/godot_sound_manager/sound_manager.gd"
 CameraService="*res://scripts/camera/CameraService.cs"
-VisionService="*res://scripts/vision/VisionService.cs"
 DebugMenu="*res://addons/debug_menu/debug_menu.tscn"
 
 [display]

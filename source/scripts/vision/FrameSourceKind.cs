@@ -1,6 +1,6 @@
-namespace Party.Game.Vision;
+namespace Party.Game.Detection;
 
-public enum FrameSourceKind
+public enum FrameSource
 {
     Image,
     Video,

@@ -8,6 +8,11 @@ public sealed partial class CameraFeedTexture : Texture2D
     private Rid placeholder;
     private readonly ICameraFeed feed;
 
+    public CameraFeedTexture()
+        : this(CameraService.Current)
+    {
+    }
+
     public CameraFeedTexture(ICameraFeed feed)
     {
         this.feed = feed;

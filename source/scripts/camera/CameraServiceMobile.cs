@@ -42,7 +42,7 @@ public sealed class CameraServiceMobile : CameraService.Impl
         public override string Name => facing.ToString();
         public override int Width => DisplayServer.WindowGetSize().X;
         public override int Height => DisplayServer.WindowGetSize().Y;
-        protected override bool Accelerated => true;
+        public override bool Accelerated => true;
 
         private bool hasStarted;
         private readonly MediaPipeCameraHelper camera;

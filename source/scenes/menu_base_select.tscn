@@ -1,0 +1,52 @@
+[gd_scene load_steps=3 format=3 uid="uid://cuvvyidg5h8uv"]
+
+[ext_resource type="PackedScene" uid="uid://bnc3y7uepqh4u" path="res://scenes/menu.tscn" id="1_1fitj"]
+[ext_resource type="Texture2D" uid="uid://b3nnwmw7yn0da" path="res://textures/menu/halftone_radial.png" id="2_37hjt"]
+
+[node name="Menu" instance=ExtResource("1_1fitj")]
+
+[node name="Fill" type="ColorRect" parent="." index="3"]
+clip_contents = true
+custom_minimum_size = Vector2(0, 250)
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -50.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Texture" type="TextureRect" parent="Fill" index="0"]
+self_modulate = Color(0.95, 0.95, 0.95, 1)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -113.0
+offset_top = -329.0
+offset_right = 404.0
+offset_bottom = 188.0
+grow_horizontal = 0
+grow_vertical = 0
+rotation = 0.785398
+texture = ExtResource("2_37hjt")
+
+[node name="Preview" type="ColorRect" parent="." index="4"]
+clip_contents = true
+custom_minimum_size = Vector2(674, 378)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = -100.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)

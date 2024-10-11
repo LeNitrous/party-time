@@ -2,11 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Godot;
-using Party.Game.Vision;
 
 namespace Party.Game.Camera;
 
-public sealed partial class CameraService : Node, ICameraFeed, IFrameSource
+public sealed partial class CameraService : Node, ICameraFeed
 {
     public static CameraService Current { get; private set; }
 
@@ -15,6 +14,30 @@ public sealed partial class CameraService : Node, ICameraFeed, IFrameSource
         get => feed.Current;
         set => feed.Current = value;
     }
+
+    public event Action<CameraFeed> OnFeedAdded;
+
+    public event Action<CameraFeed> OnFeedRemoved;
+
+    public event Action<Image> OnFrame
+    {
+        add => feed.OnFrame += value;
+        remove => feed.OnFrame -= value;
+    }
+
+    public event Action OnStart
+    {
+        add => feed.OnStart += value;
+        remove => feed.OnStart -= value;
+    }
+
+    public event Action OnClose
+    {
+        add => feed.OnClose += value;
+        remove => feed.OnClose -= value;
+    }
+
+    public bool Accelerated => feed.Accelerated;
     
     private Impl impl;
     private CameraFeedSwitchable feed;
@@ -54,11 +77,13 @@ public sealed partial class CameraService : Node, ICameraFeed, IFrameSource
     public void AddFeed(CameraFeed feed)
     {
         feeds.Add(feed);
+        OnFeedAdded?.Invoke(feed);
     }
 
     public void RemoveFeed(CameraFeed feed)
     {
         feeds.Remove(feed);
+        OnFeedRemoved?.Invoke(feed);
     }
 
     public bool PermissionGranted()
@@ -71,37 +96,9 @@ public sealed partial class CameraService : Node, ICameraFeed, IFrameSource
         return impl.RequestPermission();
     }
 
-    event Action<Image> IFrameSource.OnFrame
-    {
-        add => feed.OnFrame += value;
-        remove => feed.OnFrame -= value;
-    }
-
-     event Action<Image> ICameraFeed.OnFrame
-    {
-        add => feed.OnFrame += value;
-        remove => feed.OnFrame -= value;
-    }
-
-    event Action ICameraFeed.OnStart
-    {
-        add => feed.OnStart += value;
-        remove => feed.OnStart -= value;
-    }
-
-    event Action ICameraFeed.OnClose
-    {
-        add => feed.OnClose += value;
-        remove => feed.OnClose -= value;
-    }
-
     int ICameraFeed.Width => feed.Width;
 
     int ICameraFeed.Height => feed.Height;
-
-    FrameSourceKind IFrameSource.Kind => FrameSourceKind.Stream;
-
-    bool IFrameSource.Accelerated => feed.IsAccelerated();
 
     public abstract class Impl : IDisposable
     {
@@ -120,7 +117,7 @@ public sealed partial class CameraService : Node, ICameraFeed, IFrameSource
 
         public override int Height => current < owner.feeds.Count ? owner.feeds[current].Height : 0;
 
-        protected override bool Accelerated => current < owner.feeds.Count && ((Vision.IFrameSource)owner.feeds[current]).Accelerated;
+        public override bool Accelerated => current < owner.feeds.Count && owner.feeds[current].Accelerated;
 
         public int Current
         {
@@ -140,11 +137,13 @@ public sealed partial class CameraService : Node, ICameraFeed, IFrameSource
 
         private int current;
         private bool hasStarted;
+        private bool hasStartAttempted;
         private readonly CameraService owner;
 
         public CameraFeedSwitchable(CameraService owner)
         {
             this.owner = owner;
+            this.owner.OnFeedAdded += onFeedAdded;
         }
 
         public bool IsAccelerated()
@@ -159,6 +158,8 @@ public sealed partial class CameraService : Node, ICameraFeed, IFrameSource
                 return;
             }
 
+            hasStartAttempted = true;
+
             if (current >= owner.feeds.Count)
             {
                 return;
@@ -170,6 +171,7 @@ public sealed partial class CameraService : Node, ICameraFeed, IFrameSource
             owner.feeds[current].Start();
 
             hasStarted = true;
+            hasStartAttempted = false;
         }
 
         public override void Close()
@@ -190,6 +192,14 @@ public sealed partial class CameraService : Node, ICameraFeed, IFrameSource
             owner.feeds[current].OnFrame -= EmitFrame;
 
             hasStarted = false;
+        }
+
+        private void onFeedAdded(CameraFeed feed)
+        {
+            if (hasStartAttempted)
+            {
+                Start();
+            }
         }
     }
 }

@@ -1,9 +1,6 @@
-[gd_scene load_steps=12 format=3 uid="uid://b2c4nffk37td2"]
+[gd_scene load_steps=9 format=3 uid="uid://681ypgep35x2"]
 
-[ext_resource type="Script" path="res://scripts/input/InputManager.cs" id="1_4uyxx"]
-[ext_resource type="PackedScene" uid="uid://cnbg7pq443l40" path="res://scenes/components/ui_background.tscn" id="1_tolbi"]
-[ext_resource type="PackedScene" uid="uid://ofbnn5nbh3oj" path="res://scenes/components/ui_header.tscn" id="2_foq58"]
-[ext_resource type="PackedScene" uid="uid://4na2fumgsqrv" path="res://scenes/components/ui_footer.tscn" id="3_n08fp"]
+[ext_resource type="PackedScene" uid="uid://6juf6a2f66rw" path="res://scenes/menu_base.tscn" id="1_c7bep"]
 [ext_resource type="PackedScene" uid="uid://cml6lqldirm2v" path="res://scenes/components/ui_button.tscn" id="4_kwuq0"]
 [ext_resource type="Texture2D" uid="uid://mmajublds1rp" path="res://textures/icons/video.png" id="6_dqknh"]
 [ext_resource type="Texture2D" uid="uid://dhdb5hr0yr8l8" path="res://textures/icons/audioOn.png" id="7_8ctgu"]
@@ -12,124 +9,97 @@
 [ext_resource type="Texture2D" uid="uid://sr8jtosl177k" path="res://textures/icons/phone.png" id="9_l4o2h"]
 [ext_resource type="Script" path="res://scripts/menu/ButtonSceneStackExit.cs" id="11_v8s0y"]
 
-[node name="Settings" type="Control"]
-clip_contents = true
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="Menu" instance=ExtResource("1_c7bep")]
 
-[node name="Input" type="Node" parent="." node_paths=PackedStringArray("FirstSelected")]
-script = ExtResource("1_4uyxx")
-FirstSelected = NodePath("../Margin/Content/Video")
+[node name="Colorable" parent="Header" index="0"]
+self_modulate = Color(0.724, 0.31, 1, 1)
 
-[node name="Background" parent="." instance=ExtResource("1_tolbi")]
-layout_mode = 1
+[node name="Title" parent="Header/Content/Flow" index="0"]
+self_modulate = Color(0.724, 0.31, 1, 1)
+text = "UI_HEADER_SETTINGS"
 
-[node name="Header" parent="." instance=ExtResource("2_foq58")]
-layout_mode = 1
-Title = "UI_HEADER_SETTINGS"
-Color = Color(0.674815, 0.674815, 0.674815, 1)
+[node name="Separator" parent="Header/Content/Flow" index="1"]
+visible = false
 
-[node name="Footer" parent="." instance=ExtResource("3_n08fp")]
-layout_mode = 1
-offset_top = -50.0
+[node name="Subtitle" parent="Header/Content/Flow" index="2"]
+visible = false
 
-[node name="Margin" type="MarginContainer" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Content" type="HFlowContainer" parent="Margin"]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_override_constants/h_separation = 10
-theme_override_constants/v_separation = 10
-
-[node name="Video" parent="Margin/Content" instance=ExtResource("4_kwuq0")]
-custom_minimum_size = Vector2(485, 100)
+[node name="Video" parent="Content" index="0" instance=ExtResource("4_kwuq0")]
+custom_minimum_size = Vector2(695, 100)
 layout_mode = 2
 Text = "UI_BUTTON_VIDEO"
 Icon = ExtResource("6_dqknh")
-Default = Color(0.5, 0.5, 0.5, 1)
-Hovered = Color(0.6, 0.6, 0.6, 1)
-Pressed = Color(0.7, 0.7, 0.7, 1)
+Default = Color(0.76, 0.4, 1, 1)
 metadata/tooltip = "UI_TOOLTIP_SETTINGS_VIDEO"
 
-[node name="Handler" type="Node" parent="Margin/Content/Video"]
+[node name="Handler" type="Node" parent="Content/Video" index="4"]
 script = ExtResource("7_cb6ud")
 Scene = "res://scenes/menu_settings_video.tscn"
 
-[node name="Language" parent="Margin/Content" instance=ExtResource("4_kwuq0")]
-custom_minimum_size = Vector2(485, 100)
+[node name="Language" parent="Content" index="1" instance=ExtResource("4_kwuq0")]
+custom_minimum_size = Vector2(295, 100)
 layout_mode = 2
 Text = "UI_BUTTON_LANGUAGE"
-Default = Color(0.5, 0.5, 0.5, 1)
-Hovered = Color(0.6, 0.6, 0.6, 1)
-Pressed = Color(0.7, 0.7, 0.7, 1)
+Default = Color(0.76, 0.4, 1, 1)
 metadata/tooltip = "UI_TOOLTIP_SETTINGS_LANGUAGE"
 
-[node name="Handler" type="Node" parent="Margin/Content/Language"]
+[node name="Handler" type="Node" parent="Content/Language" index="4"]
 script = ExtResource("7_cb6ud")
 Scene = "res://scenes/menu_settings_language.tscn"
 
-[node name="Sound" parent="Margin/Content" instance=ExtResource("4_kwuq0")]
-custom_minimum_size = Vector2(640, 100)
+[node name="Sound" parent="Content" index="2" instance=ExtResource("4_kwuq0")]
+custom_minimum_size = Vector2(595, 100)
 layout_mode = 2
 Text = "UI_BUTTON_SOUND"
 Icon = ExtResource("7_8ctgu")
-Default = Color(0.5, 0.5, 0.5, 1)
-Hovered = Color(0.6, 0.6, 0.6, 1)
-Pressed = Color(0.7, 0.7, 0.7, 1)
+Default = Color(0.78, 0.45, 1, 1)
 metadata/tooltip = "UI_TOOLTIP_SETTINGS_SOUND"
 
-[node name="Handler" type="Node" parent="Margin/Content/Sound"]
+[node name="Handler" type="Node" parent="Content/Sound" index="4"]
 script = ExtResource("7_cb6ud")
-Scene = "res://scenes/menu_settings_audio.tscn"
+Scene = "res://scenes/menu_settings_sound.tscn"
 
-[node name="Credits" parent="Margin/Content" instance=ExtResource("4_kwuq0")]
-custom_minimum_size = Vector2(330, 100)
+[node name="Extras" parent="Content" index="3" instance=ExtResource("4_kwuq0")]
+custom_minimum_size = Vector2(395, 100)
 layout_mode = 2
-Text = "UI_BUTTON_CREDITS"
-Default = Color(0.5, 0.5, 0.5, 1)
-Hovered = Color(0.6, 0.6, 0.6, 1)
-Pressed = Color(0.7, 0.7, 0.7, 1)
-metadata/tooltip = "UI_TOOLTIP_CREDITS"
+Text = "UI_BUTTON_EXTRAS"
+Default = Color(0.78, 0.45, 1, 1)
+metadata/tooltip = "UI_TOOLTIP_SETTINGS_EXTRAS"
 
-[node name="Gameplay" parent="Margin/Content" instance=ExtResource("4_kwuq0")]
-custom_minimum_size = Vector2(980, 100)
+[node name="Handler" type="Node" parent="Content/Extras" index="4"]
+script = ExtResource("7_cb6ud")
+Scene = "res://scenes/menu_settings_extras.tscn"
+
+[node name="Gameplay" parent="Content" index="4" instance=ExtResource("4_kwuq0")]
+custom_minimum_size = Vector2(1000, 100)
 layout_mode = 2
 Text = "UI_BUTTON_GAMEPLAY"
 Icon = ExtResource("8_pstfy")
-Default = Color(0.5, 0.5, 0.5, 1)
-Hovered = Color(0.6, 0.6, 0.6, 1)
-Pressed = Color(0.7, 0.7, 0.7, 1)
+Default = Color(0.8, 0.5, 1, 1)
 metadata/tooltip = "UI_TOOLTIP_SETTINGS_GAMEPLAY"
 
-[node name="Camera" parent="Margin/Content" instance=ExtResource("4_kwuq0")]
-custom_minimum_size = Vector2(700, 100)
+[node name="Handler" type="Node" parent="Content/Gameplay" index="4"]
+script = ExtResource("7_cb6ud")
+Scene = "res://scenes/menu_settings_gameplay.tscn"
+
+[node name="Camera" parent="Content" index="5" instance=ExtResource("4_kwuq0")]
+custom_minimum_size = Vector2(695, 100)
 layout_mode = 2
 Text = "UI_BUTTON_CAMERA"
 Icon = ExtResource("9_l4o2h")
-Default = Color(0.5, 0.5, 0.5, 1)
-Hovered = Color(0.6, 0.6, 0.6, 1)
-Pressed = Color(0.7, 0.7, 0.7, 1)
+Default = Color(0.82, 0.55, 1, 1)
 metadata/tooltip = "UI_TOOLTIP_SETTINGS_CAMERA"
 
-[node name="Back" parent="Margin/Content" instance=ExtResource("4_kwuq0")]
-custom_minimum_size = Vector2(270, 100)
+[node name="Handler" type="Node" parent="Content/Camera" index="4"]
+script = ExtResource("7_cb6ud")
+Scene = "res://scenes/menu_settings_camera.tscn"
+
+[node name="Back" parent="Content" index="6" instance=ExtResource("4_kwuq0")]
+custom_minimum_size = Vector2(295, 100)
 layout_mode = 2
 Text = "UI_BUTTON_BACK"
-Default = Color(1, 0.3, 0.3, 1)
-Hovered = Color(1, 0.4, 0.4, 1)
-Pressed = Color(1, 0.5, 0.5, 1)
+Default = Color(1, 0.31, 0.3215, 1)
 metadata/tooltip = "UI_TOOLTIP_BACK"
 
-[node name="Handler" type="Node" parent="Margin/Content/Back"]
+[node name="Handler" type="Node" parent="Content/Back" index="4"]
 script = ExtResource("11_v8s0y")

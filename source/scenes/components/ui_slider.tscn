@@ -77,7 +77,7 @@ shadow_offset = Vector2(4, 4)
 
 [node name="Slider" type="Control"]
 clip_contents = true
-custom_minimum_size = Vector2(980, 100)
+custom_minimum_size = Vector2(1000, 100)
 layout_mode = 3
 anchors_preset = 0
 focus_mode = 2
@@ -150,7 +150,7 @@ layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
 offset_left = 327.0
-offset_right = 883.0
+offset_right = 903.0
 grow_vertical = 2
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_right = 20
@@ -237,7 +237,7 @@ horizontal_alignment = 2
 
 [connection signal="focus_entered" from="." to="." method="onSelected"]
 [connection signal="focus_exited" from="." to="." method="onDeselect"]
-[connection signal="gui_input" from="." to="." method="onSliderGUIInput"]
 [connection signal="gui_input" from="." to="." method="onGUIInput"]
+[connection signal="gui_input" from="." to="." method="onSliderGUIInput"]
 [connection signal="mouse_entered" from="." to="." method="onHoverGain"]
 [connection signal="mouse_exited" from="." to="." method="onHoverLost"]

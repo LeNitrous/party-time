@@ -1,0 +1,139 @@
+[gd_scene format=3 uid="uid://cxo7pqdx1l10f"]
+
+[node name="Test" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Preview" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Ratio" type="AspectRatioContainer" parent="Preview"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+ratio = 1.666
+
+[node name="Video" type="VideoStreamPlayer" parent="Preview/Ratio"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+expand = true
+
+[node name="Image" type="TextureRect" parent="Preview"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 3
+
+[node name="Annotator" type="Control" parent="Preview"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Controls" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Camera" type="Label" parent="Controls"]
+layout_mode = 0
+offset_left = 21.0
+offset_top = 16.0
+offset_right = 82.0
+offset_bottom = 39.0
+text = "Camera"
+
+[node name="Start" type="Button" parent="Controls"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 20.0
+offset_top = 48.0
+offset_right = 189.0
+offset_bottom = 101.0
+text = "Start"
+
+[node name="Close" type="Button" parent="Controls"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 19.0
+offset_top = 112.0
+offset_right = 188.0
+offset_bottom = 165.0
+text = "Close"
+
+[node name="Video" type="Label" parent="Controls"]
+layout_mode = 0
+offset_left = 19.0
+offset_top = 179.0
+offset_right = 67.0
+offset_bottom = 202.0
+text = "Video"
+
+[node name="Open_Video" type="Button" parent="Controls"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 209.0
+offset_right = 189.0
+offset_bottom = 262.0
+text = "Open"
+
+[node name="Image" type="Label" parent="Controls"]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 273.0
+offset_right = 70.0
+offset_bottom = 296.0
+text = "Image"
+
+[node name="Open_Image" type="Button" parent="Controls"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 304.0
+offset_right = 189.0
+offset_bottom = 357.0
+text = "Open"
+
+[node name="Dialog_Video" type="FileDialog" parent="Controls"]
+unique_name_in_owner = true
+title = "Open a File"
+ok_button_text = "Open"
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.ogv;Video Files")
+use_native_dialog = true
+
+[node name="Dialog_Image" type="FileDialog" parent="Controls"]
+unique_name_in_owner = true
+auto_translate_mode = 1
+title = "Open a File"
+ok_button_text = "Open"
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.png,*.jpg,*.jpeg;Image Files")
+use_native_dialog = true
+
+[connection signal="pressed" from="Controls/Open_Video" to="Controls/Dialog_Video" method="show"]
+[connection signal="pressed" from="Controls/Open_Image" to="Controls/Dialog_Image" method="show"]

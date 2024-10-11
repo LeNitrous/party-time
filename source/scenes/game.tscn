@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://vpvcl7rtgnye"]
+[gd_scene load_steps=33 format=3 uid="uid://vpvcl7rtgnye"]
 
 [ext_resource type="Script" path="res://scripts/game/managers/GameStateManager.cs" id="1_g7oxf"]
 [ext_resource type="Script" path="res://scripts/game/GameContext.cs" id="1_pfb1g"]
@@ -10,14 +10,18 @@
 [ext_resource type="Script" path="res://scripts/game/managers/GameAnimationsManager.cs" id="5_5oxlm"]
 [ext_resource type="Shader" path="res://shaders/grid.gdshader" id="7_eo44j"]
 [ext_resource type="Script" path="res://scripts/game/Controller.cs" id="7_o60co"]
+[ext_resource type="Shader" path="res://shaders/screen_space_blur.gdshader" id="8_fkjxw"]
 [ext_resource type="FontFile" uid="uid://cuj4gq8fufdl" path="res://fonts/Sublima-ExtraBold.otf" id="10_r31ya"]
 [ext_resource type="PackedScene" uid="uid://boo8jo7raatta" path="res://scenes/components/ui_game_label.tscn" id="10_vini8"]
 [ext_resource type="Script" path="res://scripts/game/HUDLabelValueSetter.cs" id="12_jr0lv"]
 [ext_resource type="Script" path="res://scripts/game/HUDLabelCombo.cs" id="13_437ev"]
-[ext_resource type="Script" path="res://scripts/game/ControllerStatusLabel.cs" id="15_4rrrl"]
 [ext_resource type="Shader" path="res://shaders/stripes.gdshader" id="15_svvxn"]
 [ext_resource type="Texture2D" uid="uid://drnebolenupil" path="res://textures/menu/spinner.png" id="16_76xhb"]
 [ext_resource type="PackedScene" uid="uid://dtfsvcpcqi8j3" path="res://scenes/components/ui_modal_results.tscn" id="16_ykq0k"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_v1rec"]
+shader = ExtResource("8_fkjxw")
+shader_parameter/amount = 2.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_nsx35"]
 shader = ExtResource("7_eo44j")
@@ -337,10 +341,6 @@ shadow_size = 10
 shadow_color = Color(0.0862745, 0.0862745, 0.0862745, 1)
 shadow_offset = Vector2(6, 6)
 
-[sub_resource type="ButtonGroup" id="ButtonGroup_bwhu3"]
-
-[sub_resource type="ButtonGroup" id="ButtonGroup_txoe8"]
-
 [node name="Game" type="Control"]
 process_mode = 1
 layout_mode = 3
@@ -385,6 +385,18 @@ script = ExtResource("5_5oxlm")
 unique_name_in_owner = true
 script = ExtResource("7_o60co")
 
+[node name="Camera" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+expand_mode = 5
+stretch_mode = 6
+
 [node name="View" type="CanvasLayer" parent="."]
 unique_name_in_owner = true
 
@@ -398,19 +410,29 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="Modulator" type="MarginContainer" parent="HUD/U Margin"]
 modulate = Color(0, 0.7, 1, 0.431373)
 layout_mode = 2
+mouse_filter = 2
+
+[node name="Blur" type="ColorRect" parent="HUD/U Margin/Modulator"]
+material = SubResource("ShaderMaterial_v1rec")
+layout_mode = 2
+mouse_filter = 2
+color = Color(1, 1, 1, 0)
 
 [node name="Fill" type="ColorRect" parent="HUD/U Margin/Modulator"]
 layout_mode = 2
+mouse_filter = 2
 color = Color(0.226707, 0.226707, 0.226707, 1)
 
 [node name="Grid" type="ColorRect" parent="HUD/U Margin/Modulator"]
 self_modulate = Color(1, 1, 1, 0.392157)
 material = SubResource("ShaderMaterial_nsx35")
 layout_mode = 2
+mouse_filter = 2
 color = Color(0.194349, 0.194349, 0.194349, 1)
 
 [node name="Expander" type="Node" parent="HUD/U Margin"]
@@ -429,6 +451,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(640, 360)
+mouse_filter = 2
 theme_override_constants/margin_left = 40
 theme_override_constants/margin_top = 40
 theme_override_constants/margin_right = 40
@@ -456,6 +479,7 @@ anchor_right = 1.0
 anchor_bottom = 1.25
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme_override_constants/margin_left = 40
 theme_override_constants/margin_top = 40
 theme_override_constants/margin_right = 40
@@ -465,10 +489,12 @@ theme_override_constants/margin_bottom = 40
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 8
+mouse_filter = 2
 theme_override_constants/separation = 20
 
 [node name="Score" parent="HUD/V Margin/Labels" instance=ExtResource("10_vini8")]
 layout_mode = 2
+mouse_filter = 2
 Label = "GAME_HUD_SCORE"
 Value = "0"
 
@@ -477,12 +503,14 @@ script = ExtResource("12_jr0lv")
 
 [node name="Combo" type="MarginContainer" parent="HUD/V Margin/Labels"]
 layout_mode = 2
+mouse_filter = 2
 theme_override_constants/margin_bottom = -200
 script = ExtResource("13_437ev")
 
 [node name="Label" parent="HUD/V Margin/Labels/Combo" instance=ExtResource("10_vini8")]
 layout_mode = 2
 size_flags_vertical = 8
+mouse_filter = 2
 Label = "GAME_HUD_COMBO"
 Value = "0"
 
@@ -504,12 +532,14 @@ anchor_right = 1.0
 anchor_bottom = 1.25
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="Top" type="ColorRect" parent="HUD/S Margin"]
 material = SubResource("ShaderMaterial_iw0g7")
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 size_flags_vertical = 0
+mouse_filter = 2
 color = Color(1, 1, 0, 1)
 
 [node name="Bottom" type="ColorRect" parent="HUD/S Margin"]
@@ -517,6 +547,7 @@ material = SubResource("ShaderMaterial_svx5f")
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 size_flags_vertical = 8
+mouse_filter = 2
 color = Color(1, 1, 0, 1)
 
 [node name="Expander" type="Node" parent="HUD/S Margin"]
@@ -535,6 +566,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="Visual" type="Panel" parent="HUD/Border"]
 layout_mode = 1
@@ -543,6 +575,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_6warc")
 
 [node name="Flash" type="Node" parent="HUD/Border"]
@@ -563,6 +596,7 @@ offset_bottom = 64.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(64, 64)
+mouse_filter = 2
 texture = ExtResource("16_76xhb")
 expand_mode = 1
 
@@ -579,84 +613,6 @@ text = "READY?"
 label_settings = SubResource("LabelSettings_1m2mc")
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="Debug" type="CanvasLayer" parent="."]
-layer = 3
-visible = false
-
-[node name="Controls" type="VFlowContainer" parent="Debug"]
-anchors_preset = 9
-anchor_bottom = 1.0
-offset_right = 250.0
-grow_vertical = 2
-size_flags_horizontal = 4
-
-[node name="Stand" type="Button" parent="Debug/Controls"]
-custom_minimum_size = Vector2(250, 55)
-layout_mode = 2
-toggle_mode = true
-button_group = SubResource("ButtonGroup_bwhu3")
-text = "Stand"
-
-[node name="Walk" type="Button" parent="Debug/Controls"]
-custom_minimum_size = Vector2(250, 55)
-layout_mode = 2
-toggle_mode = true
-button_group = SubResource("ButtonGroup_txoe8")
-text = "Walk"
-
-[node name="Run" type="Button" parent="Debug/Controls"]
-custom_minimum_size = Vector2(250, 55)
-layout_mode = 2
-toggle_mode = true
-button_group = SubResource("ButtonGroup_txoe8")
-text = "Run"
-
-[node name="Jump" type="Button" parent="Debug/Controls"]
-custom_minimum_size = Vector2(250, 55)
-layout_mode = 2
-toggle_mode = true
-button_group = SubResource("ButtonGroup_txoe8")
-text = "Jump"
-
-[node name="Sit" type="Button" parent="Debug/Controls"]
-custom_minimum_size = Vector2(250, 55)
-layout_mode = 2
-toggle_mode = true
-button_group = SubResource("ButtonGroup_txoe8")
-text = "Sit"
-
-[node name="Squat" type="Button" parent="Debug/Controls"]
-custom_minimum_size = Vector2(250, 55)
-layout_mode = 2
-toggle_mode = true
-button_group = SubResource("ButtonGroup_txoe8")
-text = "Squat"
-
-[node name="Kick" type="Button" parent="Debug/Controls"]
-custom_minimum_size = Vector2(250, 55)
-layout_mode = 2
-toggle_mode = true
-button_group = SubResource("ButtonGroup_txoe8")
-text = "Kick"
-
-[node name="Punch" type="Button" parent="Debug/Controls"]
-custom_minimum_size = Vector2(250, 55)
-layout_mode = 2
-toggle_mode = true
-button_group = SubResource("ButtonGroup_txoe8")
-text = "Punch"
-
-[node name="Wave" type="Button" parent="Debug/Controls"]
-custom_minimum_size = Vector2(250, 55)
-layout_mode = 2
-toggle_mode = true
-button_group = SubResource("ButtonGroup_txoe8")
-text = "Wave"
-
-[node name="Status" type="Label" parent="Debug/Controls"]
-layout_mode = 2
-script = ExtResource("15_4rrrl")
 
 [node name="Overlay" type="CanvasLayer" parent="."]
 process_mode = 3
@@ -680,12 +636,3 @@ visible = false
 [connection signal="PhaseChanged" from="Context" to="Sounds/Voice/Countdown" method="onPhaseChanged"]
 [connection signal="PhaseChanged" from="Context" to="Animations" method="onPhaseChanged"]
 [connection signal="PhaseChanged" from="Context" to="Overlay/Results" method="onPhaseChanged"]
-[connection signal="pressed" from="Debug/Controls/Stand" to="Controller" method="Perform" binds= [0]]
-[connection signal="pressed" from="Debug/Controls/Walk" to="Controller" method="Perform" binds= [1]]
-[connection signal="pressed" from="Debug/Controls/Run" to="Controller" method="Perform" binds= [2]]
-[connection signal="pressed" from="Debug/Controls/Jump" to="Controller" method="Perform" binds= [3]]
-[connection signal="pressed" from="Debug/Controls/Sit" to="Controller" method="Perform" binds= [4]]
-[connection signal="pressed" from="Debug/Controls/Squat" to="Controller" method="Perform" binds= [5]]
-[connection signal="pressed" from="Debug/Controls/Kick" to="Controller" method="Perform" binds= [6]]
-[connection signal="pressed" from="Debug/Controls/Punch" to="Controller" method="Perform" binds= [7]]
-[connection signal="pressed" from="Debug/Controls/Wave" to="Controller" method="Perform" binds= [8]]

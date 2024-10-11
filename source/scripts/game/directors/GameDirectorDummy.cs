@@ -24,7 +24,7 @@ public sealed partial class GameDirectorDummy : GameDirector
         }
         else
         {
-            game = GD.Load<PackedScene>("res://scenes/minigames/minigame_instruct.tscn").Instantiate<GameEvent>();
+            game = GD.Load<PackedScene>("res://scenes/minigames/minigame_dummy.tscn").Instantiate<GameEvent>();
             return true;
         }
     }

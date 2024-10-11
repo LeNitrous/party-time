@@ -1,0 +1,11 @@
+[gd_scene load_steps=4 format=3 uid="uid://cgchlo8v8jl8e"]
+
+[ext_resource type="PackedScene" uid="uid://cxo7pqdx1l10f" path="res://scenes/testing/test_detection.tscn" id="1_siheu"]
+[ext_resource type="Script" path="res://scripts/vision/PoseLandmarkerTest.cs" id="2_rcepq"]
+[ext_resource type="Script" path="res://scripts/vision/PoseLandmarkerAnnotator.cs" id="3_ushei"]
+
+[node name="Test" instance=ExtResource("1_siheu")]
+script = ExtResource("2_rcepq")
+
+[node name="Annotator" parent="Preview" index="2"]
+script = ExtResource("3_ushei")

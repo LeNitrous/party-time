@@ -57,7 +57,7 @@ UI_TOOLTIP_SETTINGS_SOUND_VOICE,Change the voice volume.,Palitan ang lakas ng bo
 UI_TOOLTIP_BACK,Go back.,Bumalik.
 UI_MODAL_BUTTON_ACCEPT,Yes,Oo
 UI_MODAL_BUTTON_REJECT,No,Hindi
-UI_TOOLTIP_CREDITS,Show credits.,Ipakita ang mga parangal.
+UI_TOOLTIP_SETTINGS_CREDITS,Show credits.,Ipakita ang mga parangal.
 GAME_HUD_SCORE,Score,Puntos
 GAME_HUD_COMBO,Combo,Kombo
 GAME_HUD_LENGTH,Length,Tagal
@@ -66,3 +66,25 @@ UI_MODAL_TITLE_PAUSED,Paused,Pahinga
 UI_MODAL_BUTTON_RESUME,Resume,Ituloy
 UI_MODAL_BUTTON_RETURN,Return,Bumalik
 UI_MODAL_BUTTON_CONTINUE,Continue,Ituloy
+UI_BUTTON_LEGAL,Licenses,Lisensya
+UI_TOOLTIP_SETTINGS_LEGAL,Show thirdparty licenses.,Ipakita ang mga lisensya mula sa ikatlong partido.
+UI_SETTINGS_GAMEPLAY_LENGTH,Length,Haba
+UI_SETTINGS_GAMEPLAY_LENGTH_SHORT,Short,Maikli
+UI_SETTINGS_GAMEPLAY_LENGTH_MEDIUM,Medium,Katamtaman
+UI_SETTINGS_GAMEPLAY_LENGTH_LONG,Long,Mahaba
+UI_SETTINGS_GAMEPLAY_TIMESHIFT,Speed,Bilis
+UI_SETTINGS_GAMEPLAY_TIMESHIFT_NORMAL,Normal,Hindi Nagbabago
+UI_SETTINGS_GAMEPLAY_TIMESHIFT_SHIFTING,Shifting,Nagbabago
+UI_SETTINGS_GAMEPLAY_ANNOUNCER,Announcer,Anunsyador
+UI_SETTINGS_GAMEPLAY_ANNOUNCER_MALE,Type 1,Lalaki
+UI_SETTINGS_GAMEPLAY_ANNOUNCER_FEMALE,Type 2,Babae
+UI_SETTINGS_GAMEPLAY_ANNOUNCER_RANDOM,Random,Kahit Ano
+UI_TOOLTIP_SETTINGS_GAMEPLAY_LENGTH,How long the game duration is.,Gaano kahaba ang laro.
+UI_TOOLTIP_SETTINGS_GAMEPLAY_TIMESHIFT,Should the game speed up based on progress?,Dapat ba bumilis ang laro ayon sa progreso?
+UI_TOOLTIP_SETTINGS_GAMEPLAY_ANNOUNCER,Change the announcer.,Palitan ang anunsyador.
+UI_BUTTON_EXTRAS,Extras,Bono
+UI_HEADER_SETTINGS_EXTRAS,Extras,Bono
+UI_TOOLTIP_SETTINGS_EXTRAS,Show extra content.,Ipakita ang karagdagang impormasyon.
+UI_SETTINGS_CAMERA_HINT,Stand in front of the camera until a green border flashes in this preview to ensure that the game can see you.,Tumayo sa harapan ng iyong kamera hanggang may kumikislap na berde sa giliran ng pribyu para tiyakin na nakikita ka ng laro
+UI_BUTTON_ENDURANCE,Endurance,Katatagan
+UI_TOOLTIP_ENDURANCE,Test your skills in this endless mode.,Subukan ang iyong kakayahan sa modang walang katapusan.

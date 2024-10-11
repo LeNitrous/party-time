@@ -89,7 +89,7 @@ public sealed class CameraServiceDesktop : CameraService.Impl
         public override string Name => descriptor.Name;
         public override int Width => characters.Width;
         public override int Height => characters.Height;
-        protected override bool Accelerated => false;
+        public override bool Accelerated => false;
 
         private Task runner;
         private CancellationTokenSource source;
