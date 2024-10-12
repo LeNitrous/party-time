@@ -4,6 +4,8 @@ using System.Reflection;
 using System.Collections.Concurrent;
 using Godot;
 
+namespace GDExtension.Wrappers;
+
 public static class GDExtensionHelper
 {
     private static readonly ConcurrentDictionary<string, GodotObject> _instances = [];
@@ -19,9 +21,9 @@ public static class GDExtensionHelper
     {
         return _instances.GetOrAdd(className,InstantiateStaticFactory).Call(method, arguments);
     }
-    
+
     private static GodotObject InstantiateStaticFactory(string className) => ClassDB.Instantiate(className).As<GodotObject>();
-    
+
     /// <summary>
     /// Try to cast the script on the supplied <paramref name="godotObject"/> to the <typeparamref name="T"/> wrapper type,
     /// if no script has attached to the type, or the script attached to the type does not inherit the <typeparamref name="T"/> wrapper type,
@@ -46,7 +48,7 @@ public static class GDExtensionHelper
         godotObject.SetScript(script);
         return (T)GodotObject.InstanceFromId(instanceId);
     }
-    
+
     private static Variant GetScriptFactory(Type type)
     {
         var scriptPath = type.GetCustomAttributes<ScriptPathAttribute>().FirstOrDefault();
@@ -57,7 +59,7 @@ public static class GDExtensionHelper
     {
         return new Godot.Collections.Array<T>(godotObjects.Select(Bind<T>));
     }
-    
+
     /// <summary>
     /// Creates an instance of the GDExtension <typeparam name="T"/> type, and attaches the wrapper script to it.
     /// </summary>

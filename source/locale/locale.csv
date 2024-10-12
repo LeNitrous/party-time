@@ -88,3 +88,9 @@ UI_TOOLTIP_SETTINGS_EXTRAS,Show extra content.,Ipakita ang karagdagang impormasy
 UI_SETTINGS_CAMERA_HINT,Stand in front of the camera until a green border flashes in this preview to ensure that the game can see you.,Tumayo sa harapan ng iyong kamera hanggang may kumikislap na berde sa giliran ng pribyu para tiyakin na nakikita ka ng laro
 UI_BUTTON_ENDURANCE,Endurance,Katatagan
 UI_TOOLTIP_ENDURANCE,Test your skills in this endless mode.,Subukan ang iyong kakayahan sa modang walang katapusan.
+GAME_DONTSTOPMOVING,Don't Stop Moving!,Magpatuloy!
+GAME_DESC_DONTSTOPMOVING,Keep moving until the timer runs out.,Gumalaw hanggang maubos ang oras.
+GAME_HINT_DONTSTOPMOVING,Don't Stop Moving!,Galaw!
+GAME_STANDSTILL,Don't Move!,Huwag Gumalaw!
+GAME_DESC_STANDSTILL,Don't move until the timer runs out.,Huwag gumalaw hanggang maubos ang oras.
+GAME_HINT_STANDSTILL,Don't Move!,Huwag Gumalaw!

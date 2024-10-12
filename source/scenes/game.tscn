@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://vpvcl7rtgnye"]
+[gd_scene load_steps=32 format=3 uid="uid://vpvcl7rtgnye"]
 
 [ext_resource type="Script" path="res://scripts/game/managers/GameStateManager.cs" id="1_g7oxf"]
 [ext_resource type="Script" path="res://scripts/game/GameContext.cs" id="1_pfb1g"]
@@ -9,7 +9,6 @@
 [ext_resource type="Script" path="res://scripts/game/managers/GameCountdown.cs" id="4_gyqyu"]
 [ext_resource type="Script" path="res://scripts/game/managers/GameAnimationsManager.cs" id="5_5oxlm"]
 [ext_resource type="Shader" path="res://shaders/grid.gdshader" id="7_eo44j"]
-[ext_resource type="Script" path="res://scripts/game/Controller.cs" id="7_o60co"]
 [ext_resource type="Shader" path="res://shaders/screen_space_blur.gdshader" id="8_fkjxw"]
 [ext_resource type="FontFile" uid="uid://cuj4gq8fufdl" path="res://fonts/Sublima-ExtraBold.otf" id="10_r31ya"]
 [ext_resource type="PackedScene" uid="uid://boo8jo7raatta" path="res://scenes/components/ui_game_label.tscn" id="10_vini8"]
@@ -380,10 +379,6 @@ script = ExtResource("4_gyqyu")
 
 [node name="Animations" type="Node" parent="."]
 script = ExtResource("5_5oxlm")
-
-[node name="Controller" type="Node" parent="."]
-unique_name_in_owner = true
-script = ExtResource("7_o60co")
 
 [node name="Camera" type="TextureRect" parent="."]
 unique_name_in_owner = true

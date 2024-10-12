@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="GameEventMetadata" load_steps=3 format=3 uid="uid://cx5iiibnte75y"]
+
+[ext_resource type="PackedScene" uid="uid://d2wvsblap8ccn" path="res://scenes/minigames/minigame_movement_standstill.tscn" id="1_c1sfw"]
+[ext_resource type="Script" path="res://scripts/game/GameEventMetadata.cs" id="2_hebu8"]
+
+[resource]
+script = ExtResource("2_hebu8")
+name = "GAME_STANDSTILL"
+description = "GAME_DESC_STANDSTILL"
+scene = ExtResource("1_c1sfw")
+weight = 1.0

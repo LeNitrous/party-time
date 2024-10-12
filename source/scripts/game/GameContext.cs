@@ -42,14 +42,14 @@ public sealed partial class GameContext : Node
         {
             if (state is not Completion.None && time.TimeLeft > 5.0)
             {
-                time.Start(5.0);
+                time.CallThreadSafe(Timer.MethodName.Start, 5.0);
             }
 
             completion = state;
             game.CompletionChanged -= raise;
 
             GD.Print(nameof(GameContext), " :: raised \"", state, "\" completion state");
-            EmitSignal(SignalName.CompletionRaised, (int)state);
+            CallThreadSafe(GodotObject.MethodName.EmitSignal, SignalName.CompletionRaised, (int)state);
         }
 
         if (director == null)
@@ -82,6 +82,7 @@ public sealed partial class GameContext : Node
             if (director.Next(out game))
             {
                 game.CompletionChanged += raise;
+                game.ProcessMode = ProcessModeEnum.Disabled;
                 view.Hide();
                 view.AddChild(game);
             }
@@ -102,6 +103,7 @@ public sealed partial class GameContext : Node
             }
 
             view.Show();
+            game.ProcessMode = ProcessModeEnum.Inherit;
         }
 
         if (next is not Phase.InProgress)
@@ -126,7 +128,7 @@ public sealed partial class GameContext : Node
         {
             if (completion == Completion.None)
             {
-                raise(game.Timeout);
+                raise(game.GetCompletionOnTimeout());
             }
 
             director.OnFinish(completion);

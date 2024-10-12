@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="GameEventMetadata" load_steps=3 format=3 uid="uid://d1diyycip72o0"]
+
+[ext_resource type="Script" path="res://scripts/game/GameEventMetadata.cs" id="1_va7xd"]
+[ext_resource type="PackedScene" uid="uid://ce45dy0vatct" path="res://scenes/minigames/minigame_movement_dontstopmoving.tscn" id="1_xxtl0"]
+
+[resource]
+script = ExtResource("1_va7xd")
+name = "GAME_DONTSTOPMOVING"
+description = "GAME_DESC_DONTSTOPMOVING"
+scene = ExtResource("1_xxtl0")
+weight = 1.0

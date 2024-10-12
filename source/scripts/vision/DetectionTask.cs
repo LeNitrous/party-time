@@ -1,6 +1,6 @@
 using System;
-using System.Collections.Concurrent;
 using System.Threading;
+using System.Threading.Tasks;
 using GDExtension.Wrappers;
 using Godot;
 
@@ -21,12 +21,12 @@ public abstract class DetectionTask<TTask, TTaskOutput, TOutput> : DetectionTask
     where TTaskOutput : RefCounted
 {
     private TTask task;
+    private TTaskOutput output;
     private bool isHardwareAccelerated;
     private FrameSource source;
     private AutoResetEvent reset;
     private MediaPipeImage frame;
     private readonly string taskFilePath;
-    private ConcurrentQueue<TTaskOutput> taskAsyncOutput;
 
     protected DetectionTask(string taskFilePath)
     {
@@ -79,14 +79,15 @@ public abstract class DetectionTask<TTask, TTaskOutput, TOutput> : DetectionTask
         else if (source is FrameSource.Stream)
         {
             reset ??= new AutoResetEvent(false);
-            taskAsyncOutput ??= new ConcurrentQueue<TTaskOutput>();
 
             Detect(task, frame, area, time);
             reset.WaitOne();
 
-            if (taskAsyncOutput.TryDequeue(out var output))
+            if (output is not null)
             {
-                return Transform(output);
+                var transformed = Transform(output);
+                output = null;
+                return transformed;
             }
             else
             {
@@ -101,14 +102,19 @@ public abstract class DetectionTask<TTask, TTaskOutput, TOutput> : DetectionTask
 
     public sealed override void Dispose()
     {
-        Destroy(task);
-        task?.Dispose();
+        if (task is not null)
+        {
+            Destroy(task);
+            task.Dispose();
+            task = null;
+        }
+
         GC.SuppressFinalize(this);
     }
 
-    protected virtual void OnAsyncResult(TTaskOutput output, MediaPipeImage image, int timestamp)
+    protected virtual void OnAsyncResult(TTaskOutput result, MediaPipeImage image, int timestamp)
     {
-        taskAsyncOutput.Enqueue(output);
+        output = result;
         reset.Set();
     }
 
