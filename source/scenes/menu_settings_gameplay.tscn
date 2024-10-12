@@ -8,6 +8,9 @@
 
 [node name="Menu" instance=ExtResource("1_32i3y")]
 
+[node name="Input" parent="." index="0" node_paths=PackedStringArray("FirstSelected")]
+FirstSelected = NodePath("../Content/Length")
+
 [node name="Colorable" parent="Header" index="0"]
 self_modulate = Color(0.724, 0.31, 1, 1)
 
@@ -24,7 +27,7 @@ Text = "UI_SETTINGS_GAMEPLAY_LENGTH"
 Options = ["UI_SETTINGS_GAMEPLAY_LENGTH_SHORT", "UI_SETTINGS_GAMEPLAY_LENGTH_MEDIUM", "UI_SETTINGS_GAMEPLAY_LENGTH_LONG"]
 metadata/tooltip = "UI_TOOLTIP_SETTINGS_GAMEPLAY_LENGTH"
 
-[node name="Length2" parent="Content" index="1" instance=ExtResource("2_jt5cf")]
+[node name="Shifting" parent="Content" index="1" instance=ExtResource("2_jt5cf")]
 layout_mode = 2
 Text = "UI_SETTINGS_GAMEPLAY_TIMESHIFT"
 Options = ["UI_SETTINGS_GAMEPLAY_TIMESHIFT_NORMAL", "UI_SETTINGS_GAMEPLAY_TIMESHIFT_SHIFTING"]

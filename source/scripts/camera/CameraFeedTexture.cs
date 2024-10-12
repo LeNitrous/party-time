@@ -18,6 +18,7 @@ public sealed partial class CameraFeedTexture : Texture2D
         this.feed = feed;
         this.feed.OnFrame += onFrame;
         this.feed.OnClose += onClose;
+        this.feed.OnStart += onStart;
     }
 
     public override int _GetWidth()
@@ -51,7 +52,13 @@ public sealed partial class CameraFeedTexture : Texture2D
         placeholder = default;
         feed.OnFrame -= onFrame;
         feed.OnClose -= onClose;
+        feed.OnStart -= onStart;
         base.Dispose(disposing);
+    }
+
+    private void onStart()
+    {
+        CallDeferred(Resource.MethodName.EmitChanged);
     }
 
     private void onClose()

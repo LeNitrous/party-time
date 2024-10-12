@@ -1,12 +1,10 @@
-using System;
-using System.Collections.Generic;
 using Godot;
 using Godot.Collections;
 
 namespace Party.Game.Menu;
 
 [Tool]
-public partial class Select : Interactable
+public sealed partial class Select : Choice
 {
     [Export]
     public string Text
@@ -15,49 +13,52 @@ public partial class Select : Interactable
         set => this.SetValueAt("%Label", Label.PropertyName.Text, value);
     }
 
-    [Export]
-    public Array<string> Options
-    {
-        get => options;
-        set => setOptions(in value);
-    }
-
-    [Export]
-    public int Selected
-    {
-        get => selected;
-        set => setSelected(in value);
-    }
-
     private bool primed;
-    private int selected;
-    private Array<string> options = new Array<string>();
-    private Control flows;
-    private PackedScene packs;
-    private readonly List<SelectOption> items = new List<SelectOption>();
+    private Control flow;
+    private PackedScene pack;
 
     public override void _Ready()
     {
-        updateOptions();
-        updateSelection();
-    }
-
-    public override void _ValidateProperty(Dictionary property)
-    {
-        if (property["name"].AsStringName() == PropertyName.Selected)
-        {
-            property["hint"] = (int)(property["hint"].As<PropertyHint>() | PropertyHint.Range);
-            property["hint_string"] = $"0,{Options.Count - 1}";
-        }
+        flow = GetNode<Control>("%Flow");
+        pack = GD.Load<PackedScene>("res://scenes/components/ui_button_option.tscn");
+        base._Ready();
     }
 
     protected override void OnStateChanged(State state)
     {
         bool active = state.HasFlag(State.Selected) || state.HasFlag(State.Hovered);
 
-        foreach (var item in items)
+        for (int i = 0; i < flow.GetChildCount(); i++)
         {
+            var item = flow.GetChild<SelectOption>(i);
             item.Highligted = item.Selected && active;
+        }
+    }
+
+    protected override void OnSelectChanged(int value)
+    {
+        for (int i = 0; i < flow.GetChildCount(); i++)
+        {
+            flow.GetChild<SelectOption>(i).Selected = value == i;
+        }
+    }
+
+    protected override void OnOptionChanged(Array<string> value)
+    {
+        foreach (var child in flow.GetChildren())
+        {
+            child.QueueFree();
+        }
+
+        for (int i = 0; i < value.Count; i++)
+        {
+            var button = pack.Instantiate<SelectOption>();
+            button.Text = value[i];
+            button.Selected = Selected == i;
+            button.Highligted = false;
+            button.SizeFlagsVertical = SizeFlags.ShrinkCenter;
+            button.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+            flow.AddChild(button);
         }
     }
 
@@ -74,14 +75,13 @@ public partial class Select : Interactable
 
                 if (primed && !b.Pressed)
                 {
-                    for (int i = 0; i < items.Count; i++)
+                    for (int i = 0; i < flow.GetChildCount(); i++)
                     {
-                        if (!items[i].GetGlobalRect().HasPoint(b.GlobalPosition))
+                        if (flow.GetChild<SelectOption>(i).GetGlobalRect().HasPoint(b.GlobalPosition))
                         {
-                            continue;
+                            Selected = i;
+                            break;
                         }
-
-                        setSelected(i);
                     }
 
                     primed = false;
@@ -101,132 +101,12 @@ public partial class Select : Interactable
 
         if (e.IsAction("ui_left"))
         {
-            prev();
+            Prev();
         }
 
         if (e.IsAction("ui_right"))
         {
-            next();
+            Next();
         }
     }
-
-    private void next()
-    {
-        step(+1);
-    }
-
-    private void prev()
-    {
-        step(-1);
-    }
-
-    private void step(int direction)
-    {
-        int next = Selected + direction;
-
-        if (next >= items.Count)
-        {
-            next = 0;
-        }
-
-        if (next <= 0)
-        {
-            next = items.Count - 1;
-        }
-
-        Selected = next;
-    }
-
-    private void setOptions(in Array<string> value)
-    {
-        if (value is not null && options is not null && options.RecursiveEqual(value))
-        {
-            return;
-        }
-
-        int prevLength = value is not null ? value.Count : 0;
-        int nextLength = options is not null ? options.Count : 0;
-
-        options = value;
-
-        if (IsNodeReady())
-        {
-            updateOptions(prevLength != nextLength);
-        }
-    }
-
-    private void setSelected(in int value)
-    {
-        if (selected == value)
-        {
-            return;
-        }
-
-        selected = value;
-
-        if (IsNodeReady())
-        {
-            updateSelection();
-        }
-
-        EmitSignal(SignalName.SelectionChanged, selected);
-    }
-
-    private void updateSelection()
-    {
-        if (selected >= items.Count)
-        {
-            return;
-        }
-
-        for (int i = 0; i < items.Count; i++)
-        {
-            items[i].Selected = selected == i;
-        }
-    }
-
-    private void updateOptions(bool lengthChanged = false)
-    {
-        flows ??= GetNode<Control>("%Flow");
-        packs ??= ResourceLoader.Load<PackedScene>("res://scenes/components/ui_button_option.tscn");
-        items.Clear();
-
-        foreach (var child in flows.GetChildren())
-        {
-            child.QueueFree();
-        }
-
-        if (options is null)
-        {
-            return;
-        }
-
-        for (int i = 0; i < options.Count; i++)
-        {
-            string option = options[i];
-
-            var scene = packs.Instantiate<SelectOption>();
-            scene.Text = option;
-            scene.Selected = selected == i;
-            scene.Highligted = false;
-            scene.SizeFlagsVertical = SizeFlags.ShrinkCenter;
-            scene.SizeFlagsHorizontal = SizeFlags.ExpandFill;
-
-            items.Add(scene);
-            flows.AddChild(scene);
-        }
-
-        if (lengthChanged)
-        {
-            if (items.Count > 0)
-            {
-                setSelected(Math.Clamp(selected, 0, items.Count - 1));
-            }
-
-            NotifyPropertyListChanged();
-        }
-    }
-
-    [Signal]
-    public delegate void SelectionChangedEventHandler(int index);
 }

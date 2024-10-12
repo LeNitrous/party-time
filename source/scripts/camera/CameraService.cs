@@ -15,6 +15,8 @@ public sealed partial class CameraService : Node, ICameraFeed
         set => feed.Current = value;
     }
 
+    public IReadOnlyList<CameraFeed> Feeds => feeds;
+
     public event Action<CameraFeed> OnFeedAdded;
 
     public event Action<CameraFeed> OnFeedRemoved;
@@ -177,11 +179,6 @@ public sealed partial class CameraService : Node, ICameraFeed
         public override void Close()
         {
             if (!hasStarted)
-            {
-                return;
-            }
-
-            if (current >= owner.feeds.Count)
             {
                 return;
             }

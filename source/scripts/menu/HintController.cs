@@ -47,22 +47,22 @@ public partial class HintController : RichTextLabel
 
         if (node is Control control)
         {
-            if (control.FocusNeighborTop is not null && !control.FocusNeighborTop.IsEmpty)
+            if (control.FindValidFocusNeighbor(Side.Top) is not null)
             {
                 flag |= HintFlags.NavigateUp;
             }
 
-            if (control.FocusNeighborBottom is not null && !control.FocusNeighborBottom.IsEmpty)
+            if (control.FindValidFocusNeighbor(Side.Bottom) is not null)
             {
                 flag |= HintFlags.NavigateDown;
             }
 
-            if (control.FocusNeighborLeft is not null && !control.FocusNeighborLeft.IsEmpty)
+            if (control.FindValidFocusNeighbor(Side.Left) is not null)
             {
                 flag |= HintFlags.NavigateLeft;
             }
 
-            if (control.FocusNeighborRight is not null && !control.FocusNeighborRight.IsEmpty)
+            if (control.FindValidFocusNeighbor(Side.Right) is not null)
             {
                 flag |= HintFlags.NavigateRight;
             }
@@ -81,6 +81,11 @@ public partial class HintController : RichTextLabel
         if (node is Select)
         {
             flag |= HintFlags.Radio;
+        }
+
+        if (node is SelectCaret)
+        {
+            flag |= HintFlags.Options;
         }
 
         if (SceneStack.Current is not null)

@@ -1,8 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://6xltl66ul4q6"]
+[gd_scene load_steps=7 format=3 uid="uid://6xltl66ul4q6"]
 
 [ext_resource type="PackedScene" uid="uid://cuvvyidg5h8uv" path="res://scenes/menu_base_select.tscn" id="1_2tpkm"]
+[ext_resource type="Script" path="res://scripts/menu/settings/SelectCameraDevice.cs" id="2_4un1f"]
 [ext_resource type="PackedScene" uid="uid://hnukac2fnvvx" path="res://scenes/components/ui_button_small.tscn" id="2_j4ugt"]
 [ext_resource type="Script" path="res://scripts/menu/ButtonSceneStackExit.cs" id="3_8k3sm"]
+[ext_resource type="PackedScene" uid="uid://tcda8fvrbhdh" path="res://scenes/components/ui_select_caret.tscn" id="4_4cix3"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_486mr"]
 bg_color = Color(0, 0, 0, 0)
@@ -13,9 +15,10 @@ border_width_bottom = 8
 border_color = Color(0, 0.955585, 0.471655, 1)
 
 [node name="Menu" instance=ExtResource("1_2tpkm")]
+script = ExtResource("2_4un1f")
 
 [node name="Input" parent="." index="0" node_paths=PackedStringArray("FirstSelected")]
-FirstSelected = NodePath("../Back")
+FirstSelected = NodePath("../Select")
 
 [node name="Colorable" parent="Header" index="0"]
 self_modulate = Color(0.724, 0.31, 1, 1)
@@ -35,9 +38,9 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 300.0
-offset_top = -143.0
+offset_top = -135.0
 offset_right = -300.0
-offset_bottom = -120.0
+offset_bottom = -62.0
 grow_horizontal = 2
 grow_vertical = 0
 text = "UI_SETTINGS_CAMERA_HINT"
@@ -45,14 +48,18 @@ horizontal_alignment = 1
 autowrap_mode = 3
 
 [node name="Camera" type="TextureRect" parent="Preview" index="0"]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+expand_mode = 3
 
 [node name="Indicator" type="PanelContainer" parent="Preview" index="1"]
+unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -61,18 +68,28 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_486mr")
 
-[node name="Back" parent="." index="8" instance=ExtResource("2_j4ugt")]
+[node name="Select" parent="." index="8" instance=ExtResource("4_4cix3")]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.5
 anchor_top = 1.0
-anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -104.0
-offset_top = -90.0
-offset_right = 104.0
-offset_bottom = -15.0
-grow_horizontal = 2
+offset_left = 320.0
+offset_top = -218.0
+offset_right = -320.0
+offset_bottom = -170.0
+grow_vertical = 0
+Accent = Color(0.724, 0.31, 1, 1)
+
+[node name="Back" parent="." index="9" instance=ExtResource("2_j4ugt")]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -75.0
+offset_right = 218.0
+offset_bottom = -60.0
 grow_vertical = 0
 Text = "UI_BUTTON_BACK"
 Default = Color(1, 0.31, 0.3215, 1)

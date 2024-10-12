@@ -88,7 +88,7 @@ theme_override_constants/separation = 20
 
 [connection signal="focus_entered" from="." to="." method="onSelected"]
 [connection signal="focus_exited" from="." to="." method="onDeselect"]
-[connection signal="gui_input" from="." to="." method="onGUIInput"]
 [connection signal="gui_input" from="." to="." method="onSelectGUIInput"]
+[connection signal="gui_input" from="." to="." method="onGUIInput"]
 [connection signal="mouse_entered" from="." to="." method="onHoverGain"]
 [connection signal="mouse_exited" from="." to="." method="onHoverLost"]

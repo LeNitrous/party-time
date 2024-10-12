@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -104,7 +105,7 @@ public sealed class CameraServiceDesktop : CameraService.Impl
 
         public override void Start()
         {
-            if (source is not null && runner is not null)
+            if (source is not null || runner is not null)
             {
                 return;
             }
@@ -116,7 +117,7 @@ public sealed class CameraServiceDesktop : CameraService.Impl
 
         public override void Close()
         {
-            if (source is null && runner is null)
+            if (source is null || runner is null)
             {
                 return;
             }
@@ -134,7 +135,7 @@ public sealed class CameraServiceDesktop : CameraService.Impl
             using var observable = await descriptor.AsObservableAsync(characters, token);
             using var subscription = observable.Subscribe(observer);
 
-            await observable.StartAsync(token);
+            await observable.StartAsync(CancellationToken.None);
 
             EmitStart();
 
@@ -148,6 +149,7 @@ public sealed class CameraServiceDesktop : CameraService.Impl
         private class Observer : IObserver<PixelBufferScope>, IDisposable
         {
             private bool disposed;
+            private bool isDisposeRequested;
             private byte[] buffer;
             private Image image;
             private readonly CameraFeedDesktop owner;
@@ -161,42 +163,52 @@ public sealed class CameraServiceDesktop : CameraService.Impl
 
             public void OnNext(PixelBufferScope value)
             {
-                if (buffer is null)
+                if (!isDisposeRequested)
                 {
-                    buffer = value.Buffer.CopyImage();
+                    if (buffer is null)
+                    {
+                        buffer = value.Buffer.CopyImage();
+                    }
+                    else
+                    {
+                        var referred = value.Buffer.ReferImage();
+
+                        if (buffer.Length < referred.Count)
+                        {
+                            Array.Resize(ref buffer, referred.Count);
+                        }
+
+                        referred.CopyTo(buffer);
+                    }
+
+                    image ??= new Image();
+
+                    switch (video.PixelFormat)
+                    {
+                        case PixelFormats.PNG:
+                            image.LoadPngFromBuffer(buffer);
+                            break;
+
+                        case PixelFormats.JPEG:
+                            image.LoadJpgFromBuffer(buffer);
+                            break;
+
+                        case PixelFormats.RGB8:
+                            image.SetData(video.Width, video.Height, false, Image.Format.Rgb8, buffer);
+                            break;
+                    }
+
+                    image.FlipX();
+
+                    owner.EmitFrame(image);
                 }
                 else
                 {
-                    var referred = value.Buffer.ReferImage();
+                    image.Dispose();
+                    image = null;
 
-                    if (buffer.Length < referred.Count)
-                    {
-                        Array.Resize(ref buffer, referred.Count);
-                    }
-
-                    referred.CopyTo(buffer);
+                    buffer = null;
                 }
-
-                image ??= new Image();
-
-                switch (video.PixelFormat)
-                {
-                    case PixelFormats.PNG:
-                        image.LoadPngFromBuffer(buffer);
-                        break;
-
-                    case PixelFormats.JPEG:
-                        image.LoadJpgFromBuffer(buffer);
-                        break;
-
-                    case PixelFormats.RGB8:
-                        image.SetData(video.Width, video.Height, false, Image.Format.Rgb8, buffer);
-                        break;
-                }
-
-                image.FlipX();
-
-                owner.EmitFrame(image);
             }
 
             public void OnCompleted()
@@ -215,10 +227,7 @@ public sealed class CameraServiceDesktop : CameraService.Impl
                     return;
                 }
 
-                image.Dispose();
-                image = null;
-
-                buffer = null;
+                isDisposeRequested = true;
 
                 disposed = true;
                 GC.SuppressFinalize(this);

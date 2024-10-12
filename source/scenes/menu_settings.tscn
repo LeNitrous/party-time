@@ -11,6 +11,9 @@
 
 [node name="Menu" instance=ExtResource("1_c7bep")]
 
+[node name="Input" parent="." index="0" node_paths=PackedStringArray("FirstSelected")]
+FirstSelected = NodePath("../Content/Video")
+
 [node name="Colorable" parent="Header" index="0"]
 self_modulate = Color(0.724, 0.31, 1, 1)
 

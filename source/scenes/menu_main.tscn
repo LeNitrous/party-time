@@ -58,6 +58,10 @@ Text = "UI_BUTTON_PRACTICE"
 Default = Color(0.228, 0.95, 0.4085, 1)
 metadata/tooltip = "UI_TOOLTIP_PRACTICE"
 
+[node name="Handler" type="Node" parent="Content/Practice" index="4"]
+script = ExtResource("6_ubljo")
+Scene = "res://scenes/menu_play_practice.tscn"
+
 [node name="Settings" parent="Content" index="4" instance=ExtResource("2_3bnvh")]
 custom_minimum_size = Vector2(495, 100)
 layout_mode = 2
@@ -78,7 +82,7 @@ Icon = ExtResource("5_me5q5")
 Default = Color(0.95, 0.228, 0.228, 1)
 metadata/tooltip = "UI_TOOLTIP_EXIT"
 
-[node name="Prompt" parent="." index="5" instance=ExtResource("7_gjccv")]
+[node name="Prompt" parent="." index="4" instance=ExtResource("7_gjccv")]
 visible = false
 layout_mode = 1
 

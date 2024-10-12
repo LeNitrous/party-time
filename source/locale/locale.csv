@@ -85,7 +85,7 @@ UI_TOOLTIP_SETTINGS_GAMEPLAY_ANNOUNCER,Change the announcer.,Palitan ang anunsya
 UI_BUTTON_EXTRAS,Extras,Bono
 UI_HEADER_SETTINGS_EXTRAS,Extras,Bono
 UI_TOOLTIP_SETTINGS_EXTRAS,Show extra content.,Ipakita ang karagdagang impormasyon.
-UI_SETTINGS_CAMERA_HINT,Stand in front of the camera until a green border flashes in this preview to ensure that the game can see you.,Tumayo sa harapan ng iyong kamera hanggang may kumikislap na berde sa giliran ng pribyu para tiyakin na nakikita ka ng laro
+UI_SETTINGS_CAMERA_HINT,Stand in front of the camera and show a thumbs up until a green border flashes in this preview to ensure that the game can see you.,Tumayo sa harapan ng iyong kamera at magpakita ng thumbs up hanggang may kumikislap na berde sa giliran ng pribyu upang tiyakin na nakikita ka ng laro.
 UI_BUTTON_ENDURANCE,Endurance,Katatagan
 UI_TOOLTIP_ENDURANCE,Test your skills in this endless mode.,Subukan ang iyong kakayahan sa modang walang katapusan.
 GAME_DONTSTOPMOVING,Don't Stop Moving!,Magpatuloy!
