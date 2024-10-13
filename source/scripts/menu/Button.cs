@@ -1,4 +1,6 @@
+using System;
 using Godot;
+using NathanHoad;
 
 namespace Party.Game.Menu;
 
@@ -25,7 +27,7 @@ public partial class Button : Interactable
     }
 
     [ExportGroup("Colors")]
-    [Export]
+    [Export(PropertyHint.ColorNoAlpha)]
     public Color Default
     {
         get => color;
@@ -58,6 +60,7 @@ public partial class Button : Interactable
     private ColorRect accent;
     private ColorRect padder;
     private Texture2D texture;
+    private AudioStream effect;
     private PanelContainer border;
 
     protected override void OnStateChanged(State state)
@@ -79,6 +82,7 @@ public partial class Button : Interactable
 
         border ??= GetNode<PanelContainer>("%Border");
         padder ??= GetNodeOrNull<ColorRect>("Content/Padder/Fill");
+        effect ??= GD.Load<AudioStream>("res://sounds/effects/ui_click.ogg");
 
         var color = state.HasFlag(State.Selected) ? Hovered : new Color(0.086f, 0.086f, 0.086f);
 
@@ -100,6 +104,7 @@ public partial class Button : Interactable
             if (b.Pressed)
             {
                 primed = true;
+                doSoundEffect();
             }
 
             if (primed && !b.Pressed)
@@ -122,6 +127,7 @@ public partial class Button : Interactable
         if (e.IsActionPressed("ui_select"))
         {
             primed = true;
+            doSoundEffect();
         }
 
         if (primed && e.IsActionReleased("ui_select"))
@@ -138,6 +144,11 @@ public partial class Button : Interactable
         {
             CallDeferred(MethodName.ReleaseFocus);
         }
+    }
+
+    private void doSoundEffect()
+    {
+        SoundManager.PlayUISoundWithPitch(effect, Mathf.Remap(Random.Shared.NextSingle(), 0.0f, 1.0f, 0.8f, 1.2f), "Effects");
     }
 
     [Signal]

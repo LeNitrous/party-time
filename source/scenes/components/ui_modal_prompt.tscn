@@ -21,10 +21,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_flxni")
-Title = "Title"
-Accent = Color(1, 1, 1, 1)
-CanAccept = true
-CanReject = true
 
 [node name="Blur" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_v71hu")
@@ -77,6 +73,7 @@ offset_right = 310.0
 offset_bottom = 180.0
 grow_horizontal = 2
 grow_vertical = 2
+pivot_offset = Vector2(310, 180)
 
 [node name="Modal" parent="MarginContainer" instance=ExtResource("1_13e4a")]
 unique_name_in_owner = true

@@ -61,7 +61,7 @@ public sealed partial class ConfigManager : Node
         add("display", "window/vsync/vsync_mode", DisplayServer.VSyncMode.Enabled, v => DisplayServer.WindowSetVsyncMode(v));
         add("sound", "master", 100f, v => AudioServer.SetBusVolumeDb(0, Mathf.Remap(v, 0, 100, -80, 0)));
         add("sound", "music", 100f, v => AudioServer.SetBusVolumeDb(1, Mathf.Remap(v, 0, 100, -80, 0)));
-        add("sound", "effect", 100f, v => AudioServer.SetBusVolumeDb(2, Mathf.Remap(v, 0, 100, -80, 0)));
+        add("sound", "effects", 100f, v => AudioServer.SetBusVolumeDb(2, Mathf.Remap(v, 0, 100, -80, 0)));
         add("sound", "voice", 100f, v => AudioServer.SetBusVolumeDb(3, Mathf.Remap(v, 0, 100, -80, 0)));
 
         foreach (var config in configurations.Values)

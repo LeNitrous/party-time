@@ -39,7 +39,9 @@ public sealed partial class Select : Choice
     {
         for (int i = 0; i < flow.GetChildCount(); i++)
         {
-            flow.GetChild<SelectOption>(i).Selected = value == i;
+            var item = flow.GetChild<SelectOption>(i);
+            item.Selected = value == i;
+            item.Highligted = value == i;
         }
     }
 
@@ -99,12 +101,12 @@ public sealed partial class Select : Choice
             }
         }
 
-        if (e.IsAction("ui_left"))
+        if (e.IsActionReleased("ui_left"))
         {
             Prev();
         }
 
-        if (e.IsAction("ui_right"))
+        if (e.IsActionReleased("ui_right"))
         {
             Next();
         }

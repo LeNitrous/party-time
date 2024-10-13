@@ -1,5 +1,6 @@
 using System;
 using Godot;
+using NathanHoad;
 
 namespace Party.Game.Menu;
 
@@ -49,9 +50,13 @@ public partial class Slider : Interactable
     private Control fill;
     private Control border;
     private Control knobBack;
+    private AudioStream click;
+    private AudioStream slide;
 
     public override void _Ready()
     {
+        click = GD.Load<AudioStream>("res://sounds/effects/ui_click.ogg");
+        slide = GD.Load<AudioStream>("res://sounds/effects/ui_slide.ogg");
         setPresentationToCurrent();
     }
 
@@ -101,6 +106,7 @@ public partial class Slider : Interactable
 
                         pressed = true;
                         Current = Maximum * (mpos.X / rect.Size.X);
+                        doClickEffect();
                     }
                 }
                 else
@@ -141,12 +147,15 @@ public partial class Slider : Interactable
 
     private void onCurrentChanged(in float value)
     {
-        if (current == value)
+        float next = Math.Clamp(value, Minimum, Maximum);
+
+        if (current == next)
         {
             return;
         }
 
-        EmitSignal(SignalName.CurrentChanged, current = Math.Clamp(value, Minimum, Maximum));
+        EmitSignal(SignalName.CurrentChanged, current = next);
+        doSlideEffect();
 
         setPresentationToCurrent();
     }
@@ -207,6 +216,24 @@ public partial class Slider : Interactable
 
         value ??= GetNode<Label>("%Value");
         value.Text = Current.ToString(@"##0");
+    }
+
+    private void doClickEffect()
+    {
+        SoundManager.PlayUISoundWithPitch(click, Mathf.Remap(Random.Shared.NextSingle(), 0.0f, 1.0f, 0.8f, 1.2f), "Effects");
+    }
+
+    private ulong prevSlideTime = 0;
+
+    private void doSlideEffect()
+    {
+        ulong currSlideTime = Time.GetTicksMsec();
+
+        if (currSlideTime > prevSlideTime + 50)
+        {
+            prevSlideTime = currSlideTime;
+            SoundManager.PlayUISoundWithPitch(click, Mathf.Remap(Current, Minimum, Maximum, 0.8f, 1.2f), "Effects");
+        }
     }
 
     [Signal]

@@ -1,6 +1,7 @@
 using System;
 using Godot;
 using Godot.Collections;
+using NathanHoad;
 
 namespace Party.Game.Menu;
 
@@ -21,10 +22,12 @@ public abstract partial class Choice : Interactable
     }
 
     private int select = -1;
+    private AudioStream effect;
     private Array<string> option = [];
 
     public override void _Ready()
     {
+        effect = GD.Load<AudioStream>("res://sounds/effects/ui_click.ogg");
         OnSelectChanged(select);
         OnOptionChanged(option);
     }
@@ -92,6 +95,7 @@ public abstract partial class Choice : Interactable
             if (IsNodeReady())
             {
                 OnSelectChanged(value);
+                SoundManager.PlayUISoundWithPitch(effect, Mathf.Remap(Random.Shared.NextSingle(), 0.0f, 1.0f, 0.8f, 1.2f), "Effects");
             }
 
             EmitSignal(SignalName.SelectionChanged, select);

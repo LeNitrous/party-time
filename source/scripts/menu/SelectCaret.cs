@@ -72,12 +72,12 @@ public sealed partial class SelectCaret : Choice
             }
         }
 
-        if (e.IsAction("ui_left"))
+        if (e.IsActionReleased("ui_left"))
         {
             Prev();
         }
 
-        if (e.IsAction("ui_right"))
+        if (e.IsActionReleased("ui_right"))
         {
             Next();
         }

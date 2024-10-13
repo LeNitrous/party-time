@@ -26,7 +26,6 @@ text = "UI_HEADER_SETTINGS_SOUND"
 layout_mode = 2
 Text = "UI_SETTINGS_SOUND_MASTER"
 Maximum = 100.0
-Current = 100.0
 Step = 1.0
 metadata/tooltip = "UI_TOOLTIP_SETTINGS_SOUND_MASTER"
 
@@ -37,7 +36,6 @@ script = ExtResource("3_48wpv")
 layout_mode = 2
 Text = "UI_SETTINGS_SOUND_MUSIC"
 Maximum = 100.0
-Current = 100.0
 Step = 1.0
 metadata/tooltip = "UI_TOOLTIP_SETTINGS_SOUND_MUSIC"
 
@@ -49,7 +47,6 @@ Bus = 1
 layout_mode = 2
 Text = "UI_SETTINGS_SOUND_EFFECTS"
 Maximum = 100.0
-Current = 100.0
 Step = 1.0
 metadata/tooltip = "UI_TOOLTIP_SETTINGS_SOUND_EFFECT"
 
@@ -61,7 +58,6 @@ Bus = 2
 layout_mode = 2
 Text = "UI_SETTINGS_SOUND_VOICE"
 Maximum = 100.0
-Current = 100.0
 Step = 1.0
 metadata/tooltip = "UI_TOOLTIP_SETTINGS_SOUND_VOICE"
 

@@ -61,9 +61,13 @@ public partial class SceneStack : Node
         }
     }
 
-    public void Push(string path)
+    public void Push(string path, bool append = true)
     {
-        scenes.Push(GetTree().CurrentScene.SceneFilePath);
+        if (append)
+        {
+            scenes.Push(GetTree().CurrentScene.SceneFilePath);
+        }
+        
         CallDeferred(MethodName.changeSceneToFile, path);
     }
 
