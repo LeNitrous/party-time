@@ -10,3 +10,6 @@
 [submodule "vendor/godot-debug-menu"]
 	path = vendor/godot-debug-menu
 	url = https://github.com/godot-extended-libraries/godot-debug-menu
+[submodule "vendor/SplashScreenWizard"]
+	path = vendor/SplashScreenWizard
+	url = https://github.com/ThePat02/SplashScreenWizard
