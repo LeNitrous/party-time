@@ -101,3 +101,28 @@ UI_TITLE_ACTION,Press {0} to start,Pindutin ang {0} para magsimula
 UI_BUTTON_PRACTICE_START,Start,Magsimula
 UI_TOOLTIP_PRACTICE_START,Start Practice Mode,Simulan ang Practice Mode
 UI_HEADER_SETTINGS_LICENSE,Licenses,Mga Lisensya
+UI_DISCLAIMER_REMINDER,Reminider,Paalala
+UI_DISCLAIMER_REMINDER_TEXT,"Before playing the game, please ensure that your surroundings are free from hazards to avoid risk of injury to yourself or damage to properties.","Bago maglaro, mangyaring tiyakin na ang iyong kapaligiran ay libre mula sa panganib upang maiwasan ang panganib ng pinsala sa iyong sarili o pinsala sa mga ari-arian."
+GAME_TUTORIAL_01_1,Welcome to Party Time!,Maligayang pagdating sa Party Time!
+GAME_TUTORIAL_01_2,The objective is really simple.,Ang layunin ay madali lamang.
+GAME_TUTORIAL_01_3,Pay attention and follow instructions!,Bigyang pansin at sundin ang mga tagubilin!
+GAME_TUTORIAL_01_4,Following the instructions will reward you points!,Ang pagsunod sa mga tagubilin ay nagbibigay ng puntos.
+GAME_TUTORIAL_01_5,Like this!,Tulad nito!
+GAME_TUTORIAL_02_1,Some events are timed as you can see in the bottom right corner.,Ang ilang mga kaganapan ay inorasan gaya ng nakikita mo sa kanang sulok sa ibaba.
+GAME_TUTORIAL_02_2,Make sure you finish the objectives before the timer runs out!,Siguraduhing tapusin mo ang mga layunin bago maubos ang oras!
+GAME_TUTORIAL_02_3,"But since you've been paying attention, you win this event again!","Pero dahil nagpapansin ka, nanalo ka ulit sa event na ito!"
+GAME_TUTORIAL_03_1,Many of the instructions in this game require you to perform an action.,Marami sa mga tagubilin sa larong ito ay nangangailangan sa iyo na magsagawa ng isang aksyon.
+GAME_TUTORIAL_03_2,"Lets keep things simple. If you've been paying attention so far, give me a thumbs up.","Gawin nating madali. Kung hanggang ngayon ay napapansin mo na, bigyan mo ako ng thumbs up."
+GAME_TUTORIAL_04_1,Great job! Looks like you're getting the hang of this now.,Mahusay! Mukhang nasasanay ka na dito.
+GAME_TUTORIAL_04_2,Let's make this more challenging for you.,Gawin nating mas mahirap iito para sa iyo.
+GAME_TUTORIAL_04_3,Give me a thumbs up but this time with a timer.,"Ngayong inoorasan ka na, bigyan mo ako ng thumbs up."
+GAME_TUTORIAL_05_1,Congratulations on completing the tutorial.,Natapos mo ang tutorial!
+GAME_TUTORIAL_05_2,Now go ahead and play to experience what this game has to offer!,Ipagpatuloy mo ang paglaro para maranasan mo pa kung ano pa nag maaalok sa iyo ng larong ito!
+GAME_SIMONSAYS,Simon Says!,Sabi ni Simon!
+GAME_DESC_SIMONSAYS,Follow Simon! Do what he says!,Sundan si Simon! Gawin ang sinabi niya!
+GAME_HINT_SIMONSAYS,Simon Says!,Sabi ni Simon!
+GAME_HINT_SIMONSAYS_LOVE,Make the I Love You gesture with your hands!,Gawin ang I Love You gesture gamit ang iyong kamay!
+GAME_HINT_SIMONSAYS_POINTSUP,Point your index finger up!,Itaas ang iyong hintuturo!
+GAME_HINT_SIMONSAYS_THUMBSUP,Give them a thumbs up!,Bigyan siya ng thumbs up!
+GAME_HINT_SIMONSAYS_VICTORY,Do a V sign with your hands!,Gawin ang V sign gamit ang iyong kamay!
+GAME_HINT_SIMONSAYS_THUMBSDOWN,Give them a thumbs down!,Bigyan siya ng thumbs down!
