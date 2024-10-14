@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://ck1wvq8dyv3yt"]
+
+[ext_resource type="PackedScene" uid="uid://jnhjeulalw51" path="res://scenes/minigames/minigame_tutorial.tscn" id="1_st8i1"]
+[ext_resource type="Script" path="res://scripts/game/events/tutorial/GameEventTutorial_02.cs" id="2_2jyu7"]
+
+[node name="Event" instance=ExtResource("1_st8i1")]
+script = ExtResource("2_2jyu7")

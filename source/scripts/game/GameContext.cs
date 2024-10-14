@@ -65,9 +65,19 @@ public sealed partial class GameContext : Node
 
         if (current is Phase.InProgress)
         {
-            if (time.TimeLeft > 0.0)
+            if (game.Duration > 0.0)
             {
-                return;
+                if (time.TimeLeft > 0.0)
+                {
+                    return;
+                }
+            }
+            else
+            {
+                if (completion == Completion.None)
+                {
+                    return;
+                }
             }
         }
         else

@@ -1,0 +1,48 @@
+[gd_resource type="Resource" script_class="GameEventCollection" load_steps=13 format=3 uid="uid://brg4mjpobvgcb"]
+
+[ext_resource type="PackedScene" uid="uid://bfrfdm82j7doc" path="res://scenes/minigames/minigame_tutorial_01.tscn" id="1_4mqi4"]
+[ext_resource type="Script" path="res://scripts/game/GameEventCollection.cs" id="1_ykuch"]
+[ext_resource type="Script" path="res://scripts/game/GameEventMetadata.cs" id="2_deg1t"]
+[ext_resource type="PackedScene" uid="uid://ck1wvq8dyv3yt" path="res://scenes/minigames/minigame_tutorial_02.tscn" id="3_4j4pc"]
+[ext_resource type="PackedScene" uid="uid://cdgut4xqej5je" path="res://scenes/minigames/minigame_tutorial_03.tscn" id="4_gb24j"]
+[ext_resource type="PackedScene" uid="uid://ddlqiwo5cueqc" path="res://scenes/minigames/minigame_tutorial_04.tscn" id="5_8e40a"]
+[ext_resource type="PackedScene" uid="uid://dw8bvj57nxfs0" path="res://scenes/minigames/minigame_tutorial_05.tscn" id="6_sssne"]
+
+[sub_resource type="Resource" id="Resource_n6n7n"]
+script = ExtResource("2_deg1t")
+name = "tutorial_11"
+description = "Tutorial"
+scene = ExtResource("1_4mqi4")
+weight = 0.0
+
+[sub_resource type="Resource" id="Resource_2poow"]
+script = ExtResource("2_deg1t")
+name = "tutorial_2"
+description = "Tutorial"
+scene = ExtResource("3_4j4pc")
+weight = 0.0
+
+[sub_resource type="Resource" id="Resource_cgcum"]
+script = ExtResource("2_deg1t")
+name = "tutorial_3"
+description = "Tutorial"
+scene = ExtResource("4_gb24j")
+weight = 0.0
+
+[sub_resource type="Resource" id="Resource_mxkcf"]
+script = ExtResource("2_deg1t")
+name = "tutorial_4"
+description = "Tutorial"
+scene = ExtResource("5_8e40a")
+weight = 0.0
+
+[sub_resource type="Resource" id="Resource_lq6ma"]
+script = ExtResource("2_deg1t")
+name = "tutorial_5"
+description = "Tutorial"
+scene = ExtResource("6_sssne")
+weight = 0.0
+
+[resource]
+script = ExtResource("1_ykuch")
+events = Array[Object]([SubResource("Resource_n6n7n"), SubResource("Resource_2poow"), SubResource("Resource_cgcum"), SubResource("Resource_mxkcf"), SubResource("Resource_lq6ma")])

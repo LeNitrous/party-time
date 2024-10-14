@@ -13,12 +13,12 @@ public abstract partial class GameEventDetectionTask<TOutput> : GameEvent
     private DetectionTask<TOutput> task;
     private readonly ManualResetEventSlim reset = new ManualResetEventSlim(false);
 
-    public sealed override void _Ready()
+    public override void _Ready()
     {
         task = CreateTask();
     }
 
-    public sealed override void _ExitTree()
+    public override void _ExitTree()
     {
         reset.Wait();
         reset.Dispose();
@@ -26,7 +26,7 @@ public abstract partial class GameEventDetectionTask<TOutput> : GameEvent
         task = null;
     }
 
-    public sealed override void _Process(double delta)
+    public override void _Process(double delta)
     {
         if (hasOutput)
         {
