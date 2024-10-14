@@ -9,6 +9,8 @@ public partial class GameEventMetadata : Resource
 
     public string Description => description;
 
+    public Texture2D Preview => preview;
+
     public PackedScene Scene => scene;
 
     public double Weight => weight;
@@ -24,4 +26,7 @@ public partial class GameEventMetadata : Resource
 
     [Export]
     private double weight;
+
+    [Export]
+    private Texture2D preview;
 }

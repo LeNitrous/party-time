@@ -1,4 +1,6 @@
 using Godot;
+using Party.Game.Experience.Directors;
+using Party.Game.Experience.Managers;
 using System;
 using System.Collections.Generic;
 
@@ -63,6 +65,9 @@ public sealed partial class ConfigManager : Node
         add("sound", "music", 100f, v => AudioServer.SetBusVolumeDb(1, Mathf.Remap(v, 0, 100, -80, 0)));
         add("sound", "effects", 100f, v => AudioServer.SetBusVolumeDb(2, Mathf.Remap(v, 0, 100, -80, 0)));
         add("sound", "voice", 100f, v => AudioServer.SetBusVolumeDb(3, Mathf.Remap(v, 0, 100, -80, 0)));
+        add("gameplay", "timeshift", true, v => GameDirectorStandard.Shift = v);
+        add("gameplay", "length", GameDirectorStandard.GameLength.Medium, v => GameDirectorStandard.Length = v);
+        add("gameplay", "announcer", GameCountdown.Announcer.Random, v => GameCountdown.Voice = v);
 
         foreach (var config in configurations.Values)
         {

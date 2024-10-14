@@ -1,14 +1,70 @@
-[gd_scene load_steps=5 format=3 uid="uid://sk323fv0nq7c"]
+[gd_scene load_steps=6 format=3 uid="uid://sk323fv0nq7c"]
 
 [ext_resource type="PackedScene" uid="uid://6juf6a2f66rw" path="res://scenes/menu_base.tscn" id="1_6s1e5"]
 [ext_resource type="PackedScene" uid="uid://cml6lqldirm2v" path="res://scenes/components/ui_button.tscn" id="2_qm6bl"]
 [ext_resource type="Texture2D" uid="uid://cp444xp8f6svw" path="res://textures/icons/exitLeft.png" id="3_2dkun"]
+[ext_resource type="Script" path="res://scripts/menu/ButtonSceneStackPush.cs" id="3_03asy"]
 [ext_resource type="Script" path="res://scripts/menu/ButtonSceneStackExit.cs" id="3_xt8wg"]
 
 [node name="Menu" instance=ExtResource("1_6s1e5")]
 
 [node name="Input" parent="." index="0" node_paths=PackedStringArray("FirstSelected")]
 FirstSelected = NodePath("../Content/Credits")
+
+[node name="Credits" parent="Content" index="0" instance=ExtResource("2_qm6bl")]
+custom_minimum_size = Vector2(1000, 100)
+layout_mode = 2
+Text = "UI_BUTTON_CREDITS"
+Default = Color(0.76, 0.4, 1, 1)
+metadata/tooltip = "UI_TOOLTIP_SETTINGS_CREDITS"
+
+[node name="Background" parent="Content/Credits" index="0"]
+color = Color(0.76, 0.4, 1, 1)
+
+[node name="Label" parent="Content/Credits/Content" index="1"]
+text = "UI_BUTTON_CREDITS"
+
+[node name="Handler" type="Node" parent="Content/Credits" index="4"]
+script = ExtResource("3_03asy")
+Scene = "res://scenes/credits.tscn"
+
+[node name="Legal" parent="Content" index="1" instance=ExtResource("2_qm6bl")]
+custom_minimum_size = Vector2(1000, 100)
+layout_mode = 2
+Text = "UI_BUTTON_LEGAL"
+Default = Color(0.76, 0.4, 1, 1)
+metadata/tooltip = "UI_TOOLTIP_SETTINGS_LEGAL"
+
+[node name="Background" parent="Content/Legal" index="0"]
+color = Color(0.76, 0.4, 1, 1)
+
+[node name="Label" parent="Content/Legal/Content" index="1"]
+text = "UI_BUTTON_LEGAL"
+
+[node name="Handler" type="Node" parent="Content/Legal" index="4"]
+script = ExtResource("3_03asy")
+Scene = "res://scenes/menu_settings_license.tscn"
+
+[node name="Back" parent="Content" index="2" instance=ExtResource("2_qm6bl")]
+custom_minimum_size = Vector2(1000, 100)
+layout_mode = 2
+Text = "UI_BUTTON_BACK"
+Icon = ExtResource("3_2dkun")
+Default = Color(1, 0.31, 0.3215, 1)
+metadata/tooltip = "UI_TOOLTIP_BACK"
+
+[node name="Background" parent="Content/Back" index="0"]
+color = Color(1, 0.31, 0.3215, 1)
+
+[node name="Icon" parent="Content/Back/Content/Padder/Margin" index="0"]
+visible = true
+texture = ExtResource("3_2dkun")
+
+[node name="Label" parent="Content/Back/Content" index="1"]
+text = "UI_BUTTON_BACK"
+
+[node name="Handler" type="Node" parent="Content/Back" index="4"]
+script = ExtResource("3_xt8wg")
 
 [node name="Colorable" parent="Header" index="0"]
 self_modulate = Color(0.724, 0.31, 1, 1)
@@ -20,27 +76,6 @@ text = "UI_HEADER_SETTINGS"
 [node name="Subtitle" parent="Header/Content/Flow" index="2"]
 text = "UI_HEADER_SETTINGS_EXTRAS"
 
-[node name="Credits" parent="Content" index="0" instance=ExtResource("2_qm6bl")]
-custom_minimum_size = Vector2(1000, 100)
-layout_mode = 2
-Text = "UI_BUTTON_CREDITS"
-Default = Color(0.76, 0.4, 1, 1)
-metadata/tooltip = "UI_TOOLTIP_SETTINGS_CREDITS"
-
-[node name="Legal" parent="Content" index="1" instance=ExtResource("2_qm6bl")]
-custom_minimum_size = Vector2(1000, 100)
-layout_mode = 2
-Text = "UI_BUTTON_LEGAL"
-Default = Color(0.76, 0.4, 1, 1)
-metadata/tooltip = "UI_TOOLTIP_SETTINGS_LEGAL"
-
-[node name="Back" parent="Content" index="2" instance=ExtResource("2_qm6bl")]
-custom_minimum_size = Vector2(1000, 100)
-layout_mode = 2
-Text = "UI_BUTTON_BACK"
-Icon = ExtResource("3_2dkun")
-Default = Color(1, 0.31, 0.3215, 1)
-metadata/tooltip = "UI_TOOLTIP_BACK"
-
-[node name="Handler" type="Node" parent="Content/Back" index="4"]
-script = ExtResource("3_xt8wg")
+[editable path="Content/Credits"]
+[editable path="Content/Legal"]
+[editable path="Content/Back"]

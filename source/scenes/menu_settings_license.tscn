@@ -1,0 +1,86 @@
+[gd_scene load_steps=6 format=3 uid="uid://bmuqdn80258sa"]
+
+[ext_resource type="PackedScene" uid="uid://6juf6a2f66rw" path="res://scenes/menu_base.tscn" id="1_qfbs8"]
+[ext_resource type="PackedScene" uid="uid://hnukac2fnvvx" path="res://scenes/components/ui_button_small.tscn" id="2_vokts"]
+[ext_resource type="Script" path="res://scripts/menu/extra/License.cs" id="2_xrru3"]
+[ext_resource type="Script" path="res://scripts/menu/ButtonSceneStackExit.cs" id="3_n1588"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_vfdqd"]
+font_color = Color(0.0862745, 0.0862745, 0.0862745, 1)
+
+[node name="Menu" instance=ExtResource("1_qfbs8")]
+script = ExtResource("2_xrru3")
+
+[node name="Input" parent="." index="0" node_paths=PackedStringArray("FirstSelected")]
+FirstSelected = NodePath("../Back")
+
+[node name="Fill" parent="Background" index="0"]
+color = Color(1, 1, 1, 1)
+
+[node name="Pattern" parent="Background" index="1"]
+visible = false
+
+[node name="Ellipse" parent="Background" index="2"]
+visible = false
+
+[node name="ScrollContainer" type="ScrollContainer" parent="." index="3"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -284.0
+offset_right = 400.0
+offset_bottom = 284.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="ScrollContainer" index="0"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+label_settings = SubResource("LabelSettings_vfdqd")
+autowrap_mode = 2
+
+[node name="Content" parent="." index="4"]
+visible = false
+
+[node name="Colorable" parent="Header" index="0"]
+self_modulate = Color(0.724, 0.31, 1, 1)
+
+[node name="Title" parent="Header/Content/Flow" index="0"]
+self_modulate = Color(0.724, 0.31, 1, 1)
+text = "UI_HEADER_SETTINGS"
+
+[node name="Subtitle" parent="Header/Content/Flow" index="2"]
+text = "UI_HEADER_SETTINGS_LICENSE"
+
+[node name="Back" parent="." index="7" instance=ExtResource("2_vokts")]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -135.0
+offset_right = 218.0
+offset_bottom = -60.0
+grow_vertical = 0
+Text = "UI_BUTTON_BACK"
+Default = Color(1, 0.31, 0.3215, 1)
+metadata/tooltip = "UI_TOOLTIP_BACK"
+
+[node name="Background" parent="Back" index="0"]
+color = Color(1, 0.31, 0.3215, 1)
+
+[node name="Label" parent="Back/Margin" index="0"]
+text = "UI_BUTTON_BACK"
+
+[node name="Handler" type="Node" parent="Back" index="4"]
+script = ExtResource("3_n1588")
+
+[editable path="Back"]

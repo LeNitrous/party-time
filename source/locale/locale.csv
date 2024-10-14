@@ -94,3 +94,10 @@ GAME_HINT_DONTSTOPMOVING,Don't Stop Moving!,Galaw!
 GAME_STANDSTILL,Don't Move!,Huwag Gumalaw!
 GAME_DESC_STANDSTILL,Don't move until the timer runs out.,Huwag gumalaw hanggang maubos ang oras.
 GAME_HINT_STANDSTILL,Don't Move!,Huwag Gumalaw!
+UI_HEADER_PRACTICE,Practice,Praktis
+UI_BUTTON_PRACTICE_START,Start,Magsimula
+UI_TITLE_ACTION_MOBILE,Touch to start,Pindutin para magsimula
+UI_TITLE_ACTION,Press {0} to start,Pindutin ang {0} para magsimula
+UI_BUTTON_PRACTICE_START,Start,Magsimula
+UI_TOOLTIP_PRACTICE_START,Start Practice Mode,Simulan ang Practice Mode
+UI_HEADER_SETTINGS_LICENSE,Licenses,Mga Lisensya

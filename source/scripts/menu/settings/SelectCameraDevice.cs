@@ -1,4 +1,6 @@
 using System.Linq;
+using System.Threading;
+using GDExtension.Wrappers;
 using Godot;
 using Party.Game.Camera;
 using Party.Game.Detection;
@@ -13,9 +15,12 @@ public sealed partial class SelectCameraDevice : Node
     private bool hasResult;
     private bool canDetectPresence;
     private bool hasUpdatedCameras;
+    private readonly ManualResetEventSlim reset = new ManualResetEventSlim(false);
 
     public override void _Ready()
     {
+        task = new GestureRecognizer();
+
         if (CameraService.Current is not null)
         {
             CameraService.Current.OnFeedAdded += onCameraFeedAdded;
@@ -23,11 +28,9 @@ public sealed partial class SelectCameraDevice : Node
             CameraService.Current.OnFrame += onCameraFrame;
             CameraService.Current.Start();
         }
-        
-        task = new GestureRecognizer();
+
         border = GetNode<Control>("%Indicator");
         camera = GetNode<TextureRect>("%Camera");
-        camera.Texture = new CameraFeedTexture();
 
         choice = GetNode<Choice>("%Select");
         choice.SelectionChanged += onCameraFeedSelectionChanged;
@@ -64,19 +67,29 @@ public sealed partial class SelectCameraDevice : Node
             CameraService.Current.Close();
         }
 
+        reset.Wait();
+
         task.Dispose();
+        task = null;
     }
 
-    private void onCameraFrame(Image image)
+    private void onCameraFrame(MediaPipeImage mp)
     {
         if (task is null)
         {
             return;
         }
 
+        reset.Reset();
+
         canDetectPresence = false;
 
-        var result = task.Detect(image, FrameSource.Stream, CameraService.Current.Accelerated);
+        if (mp.IsGpuImage())
+        {
+            mp.ConvertToCpu();
+        }
+
+        var result = task.Detect(mp, FrameSource.Stream);
     
         for (int i = 0; i < result.Count; i++)
         {
@@ -87,7 +100,23 @@ public sealed partial class SelectCameraDevice : Node
             }
         }
 
+        using var image = mp.GetImage();
+
+        if (camera.Texture.GetSize() == image.GetSize())
+        {
+            camera.Texture.CallDeferred(ImageTexture.MethodName.Update, image);
+        }
+        else
+        {
+            camera.Texture.CallDeferred(ImageTexture.MethodName.SetImage, image);
+        }
+
         hasResult = true;
+
+        reset.Set();
+
+        System.GC.Collect(System.GC.MaxGeneration, System.GCCollectionMode.Forced);
+        System.GC.WaitForPendingFinalizers();
     }
 
     private void onCameraFeedSelectionChanged(int index)

@@ -14,19 +14,6 @@
 [node name="Input" parent="." index="0" node_paths=PackedStringArray("FirstSelected")]
 FirstSelected = NodePath("../Content/Video")
 
-[node name="Colorable" parent="Header" index="0"]
-self_modulate = Color(0.724, 0.31, 1, 1)
-
-[node name="Title" parent="Header/Content/Flow" index="0"]
-self_modulate = Color(0.724, 0.31, 1, 1)
-text = "UI_HEADER_SETTINGS"
-
-[node name="Separator" parent="Header/Content/Flow" index="1"]
-visible = false
-
-[node name="Subtitle" parent="Header/Content/Flow" index="2"]
-visible = false
-
 [node name="Video" parent="Content" index="0" instance=ExtResource("4_kwuq0")]
 custom_minimum_size = Vector2(695, 100)
 layout_mode = 2
@@ -34,6 +21,16 @@ Text = "UI_BUTTON_VIDEO"
 Icon = ExtResource("6_dqknh")
 Default = Color(0.76, 0.4, 1, 1)
 metadata/tooltip = "UI_TOOLTIP_SETTINGS_VIDEO"
+
+[node name="Background" parent="Content/Video" index="0"]
+color = Color(0.76, 0.4, 1, 1)
+
+[node name="Icon" parent="Content/Video/Content/Padder/Margin" index="0"]
+visible = true
+texture = ExtResource("6_dqknh")
+
+[node name="Label" parent="Content/Video/Content" index="1"]
+text = "UI_BUTTON_VIDEO"
 
 [node name="Handler" type="Node" parent="Content/Video" index="4"]
 script = ExtResource("7_cb6ud")
@@ -45,6 +42,12 @@ layout_mode = 2
 Text = "UI_BUTTON_LANGUAGE"
 Default = Color(0.76, 0.4, 1, 1)
 metadata/tooltip = "UI_TOOLTIP_SETTINGS_LANGUAGE"
+
+[node name="Background" parent="Content/Language" index="0"]
+color = Color(0.76, 0.4, 1, 1)
+
+[node name="Label" parent="Content/Language/Content" index="1"]
+text = "UI_BUTTON_LANGUAGE"
 
 [node name="Handler" type="Node" parent="Content/Language" index="4"]
 script = ExtResource("7_cb6ud")
@@ -58,6 +61,16 @@ Icon = ExtResource("7_8ctgu")
 Default = Color(0.78, 0.45, 1, 1)
 metadata/tooltip = "UI_TOOLTIP_SETTINGS_SOUND"
 
+[node name="Background" parent="Content/Sound" index="0"]
+color = Color(0.78, 0.45, 1, 1)
+
+[node name="Icon" parent="Content/Sound/Content/Padder/Margin" index="0"]
+visible = true
+texture = ExtResource("7_8ctgu")
+
+[node name="Label" parent="Content/Sound/Content" index="1"]
+text = "UI_BUTTON_SOUND"
+
 [node name="Handler" type="Node" parent="Content/Sound" index="4"]
 script = ExtResource("7_cb6ud")
 Scene = "res://scenes/menu_settings_sound.tscn"
@@ -68,6 +81,12 @@ layout_mode = 2
 Text = "UI_BUTTON_EXTRAS"
 Default = Color(0.78, 0.45, 1, 1)
 metadata/tooltip = "UI_TOOLTIP_SETTINGS_EXTRAS"
+
+[node name="Background" parent="Content/Extras" index="0"]
+color = Color(0.78, 0.45, 1, 1)
+
+[node name="Label" parent="Content/Extras/Content" index="1"]
+text = "UI_BUTTON_EXTRAS"
 
 [node name="Handler" type="Node" parent="Content/Extras" index="4"]
 script = ExtResource("7_cb6ud")
@@ -81,6 +100,16 @@ Icon = ExtResource("8_pstfy")
 Default = Color(0.8, 0.5, 1, 1)
 metadata/tooltip = "UI_TOOLTIP_SETTINGS_GAMEPLAY"
 
+[node name="Background" parent="Content/Gameplay" index="0"]
+color = Color(0.8, 0.5, 1, 1)
+
+[node name="Icon" parent="Content/Gameplay/Content/Padder/Margin" index="0"]
+visible = true
+texture = ExtResource("8_pstfy")
+
+[node name="Label" parent="Content/Gameplay/Content" index="1"]
+text = "UI_BUTTON_GAMEPLAY"
+
 [node name="Handler" type="Node" parent="Content/Gameplay" index="4"]
 script = ExtResource("7_cb6ud")
 Scene = "res://scenes/menu_settings_gameplay.tscn"
@@ -93,6 +122,16 @@ Icon = ExtResource("9_l4o2h")
 Default = Color(0.82, 0.55, 1, 1)
 metadata/tooltip = "UI_TOOLTIP_SETTINGS_CAMERA"
 
+[node name="Background" parent="Content/Camera" index="0"]
+color = Color(0.82, 0.55, 1, 1)
+
+[node name="Icon" parent="Content/Camera/Content/Padder/Margin" index="0"]
+visible = true
+texture = ExtResource("9_l4o2h")
+
+[node name="Label" parent="Content/Camera/Content" index="1"]
+text = "UI_BUTTON_CAMERA"
+
 [node name="Handler" type="Node" parent="Content/Camera" index="4"]
 script = ExtResource("7_cb6ud")
 Scene = "res://scenes/menu_settings_camera.tscn"
@@ -104,5 +143,32 @@ Text = "UI_BUTTON_BACK"
 Default = Color(1, 0.31, 0.3215, 1)
 metadata/tooltip = "UI_TOOLTIP_BACK"
 
+[node name="Background" parent="Content/Back" index="0"]
+color = Color(1, 0.31, 0.3215, 1)
+
+[node name="Label" parent="Content/Back/Content" index="1"]
+text = "UI_BUTTON_BACK"
+
 [node name="Handler" type="Node" parent="Content/Back" index="4"]
 script = ExtResource("11_v8s0y")
+
+[node name="Colorable" parent="Header" index="0"]
+self_modulate = Color(0.724, 0.31, 1, 1)
+
+[node name="Title" parent="Header/Content/Flow" index="0"]
+self_modulate = Color(0.724, 0.31, 1, 1)
+text = "UI_HEADER_SETTINGS"
+
+[node name="Separator" parent="Header/Content/Flow" index="1"]
+visible = false
+
+[node name="Subtitle" parent="Header/Content/Flow" index="2"]
+visible = false
+
+[editable path="Content/Video"]
+[editable path="Content/Language"]
+[editable path="Content/Sound"]
+[editable path="Content/Extras"]
+[editable path="Content/Gameplay"]
+[editable path="Content/Camera"]
+[editable path="Content/Back"]

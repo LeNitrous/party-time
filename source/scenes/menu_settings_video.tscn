@@ -13,22 +13,15 @@
 [node name="Input" parent="." index="0" node_paths=PackedStringArray("FirstSelected")]
 FirstSelected = NodePath("../Content/Presentation")
 
-[node name="Colorable" parent="Header" index="0"]
-self_modulate = Color(0.724, 0.31, 1, 1)
-
-[node name="Title" parent="Header/Content/Flow" index="0"]
-self_modulate = Color(0.724, 0.31, 1, 1)
-text = "UI_HEADER_SETTINGS"
-
-[node name="Subtitle" parent="Header/Content/Flow" index="2"]
-text = "UI_HEADER_SETTINGS_VIDEO"
-
 [node name="Presentation" parent="Content" index="0" instance=ExtResource("2_klilt")]
 layout_mode = 2
 Text = "UI_SETTINGS_VIDEO_PRESENTATION"
 Options = ["UI_SETTINGS_VIDEO_PRESENTATION_WINDOWED", "UI_SETTINGS_VIDEO_PRESENTATION_FULLSCREEN"]
 Selected = 1
 metadata/tooltip = "UI_TOOLTIP_SETTINGS_VIDEO_PRESENTATION"
+
+[node name="Label" parent="Content/Presentation/Icon" index="0"]
+text = "UI_SETTINGS_VIDEO_PRESENTATION"
 
 [node name="Handler" type="Node" parent="Content/Presentation" index="6"]
 script = ExtResource("3_8cp52")
@@ -39,6 +32,9 @@ Text = "UI_SETTINGS_VIDEO_VSYNC"
 Options = ["UI_SETTINGS_GENERIC_DISABLE", "UI_SETTINGS_GENERIC_ENABLE"]
 Selected = 1
 metadata/tooltip = "UI_TOOLTIP_SETTINGS_VIDEO_VSYNC"
+
+[node name="Label" parent="Content/VSync/Icon" index="0"]
+text = "UI_SETTINGS_VIDEO_VSYNC"
 
 [node name="Handler" type="Node" parent="Content/VSync" index="6"]
 script = ExtResource("4_v2ctm")
@@ -51,5 +47,29 @@ Icon = ExtResource("4_hpf1l")
 Default = Color(1, 0.31, 0.3215, 1)
 metadata/tooltip = "UI_TOOLTIP_BACK"
 
+[node name="Background" parent="Content/Back" index="0"]
+color = Color(1, 0.31, 0.3215, 1)
+
+[node name="Icon" parent="Content/Back/Content/Padder/Margin" index="0"]
+visible = true
+texture = ExtResource("4_hpf1l")
+
+[node name="Label" parent="Content/Back/Content" index="1"]
+text = "UI_BUTTON_BACK"
+
 [node name="Handler" type="Node" parent="Content/Back" index="4"]
 script = ExtResource("5_177vr")
+
+[node name="Colorable" parent="Header" index="0"]
+self_modulate = Color(0.724, 0.31, 1, 1)
+
+[node name="Title" parent="Header/Content/Flow" index="0"]
+self_modulate = Color(0.724, 0.31, 1, 1)
+text = "UI_HEADER_SETTINGS"
+
+[node name="Subtitle" parent="Header/Content/Flow" index="2"]
+text = "UI_HEADER_SETTINGS_VIDEO"
+
+[editable path="Content/Presentation"]
+[editable path="Content/VSync"]
+[editable path="Content/Back"]

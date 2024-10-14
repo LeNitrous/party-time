@@ -1,6 +1,5 @@
 using System;
 using System.Threading;
-using System.Threading.Tasks;
 using GDExtension.Wrappers;
 using Godot;
 
@@ -13,7 +12,7 @@ public abstract class DetectionTask : IDisposable
 
 public abstract class DetectionTask<TOutput> : DetectionTask
 {
-    public abstract TOutput Detect(Image image, FrameSource sourceKind, bool isHardwareAccelerated);
+    public abstract TOutput Detect(MediaPipeImage image, FrameSource sourceKind);
 }
 
 public abstract class DetectionTask<TTask, TTaskOutput, TOutput> : DetectionTask<TOutput>
@@ -22,10 +21,8 @@ public abstract class DetectionTask<TTask, TTaskOutput, TOutput> : DetectionTask
 {
     private TTask task;
     private TTaskOutput output;
-    private bool isHardwareAccelerated;
     private FrameSource source;
     private AutoResetEvent reset;
-    private MediaPipeImage frame;
     private readonly string taskFilePath;
 
     protected DetectionTask(string taskFilePath)
@@ -33,9 +30,9 @@ public abstract class DetectionTask<TTask, TTaskOutput, TOutput> : DetectionTask
         this.taskFilePath = taskFilePath;
     }
 
-    public sealed override TOutput Detect(Image image, FrameSource source, bool isHardwareAccelerated)
+    public sealed override TOutput Detect(MediaPipeImage image, FrameSource source)
     {
-        if (task is null || this.source != source || this.isHardwareAccelerated != isHardwareAccelerated)
+        if (task is null || this.source != source)
         {
             if (task is not null)
             {
@@ -45,7 +42,12 @@ public abstract class DetectionTask<TTask, TTaskOutput, TOutput> : DetectionTask
 
             using var file = FileAccess.Open(taskFilePath, FileAccess.ModeFlags.Read);
             using var opts = MediaPipeTaskBaseOptions.Instantiate();
-            opts.Delegate = (int)(isHardwareAccelerated ? MediaPipeTaskBaseOptions.DelegateEnum.DelegateGpu : MediaPipeTaskBaseOptions.DelegateEnum.DelegateCpu);
+            opts.Delegate = 
+#if GODOT_MOBILE || GODOT_LINUXBSD
+                (int)MediaPipeTaskBaseOptions.DelegateEnum.DelegateGpu;
+#else
+                (int)MediaPipeTaskBaseOptions.DelegateEnum.DelegateCpu;
+#endif
             opts.ModelAssetBuffer = file.GetBuffer((long)file.GetLength());
 
             int mode = source switch
@@ -59,28 +61,23 @@ public abstract class DetectionTask<TTask, TTaskOutput, TOutput> : DetectionTask
             Initialize(task, opts, mode);
 
             this.source = source;
-            this.isHardwareAccelerated = isHardwareAccelerated;
         }
 
-        frame ??= MediaPipeImage.Instantiate();
-        frame.SetImage(image);
-
         int time = (int)Time.GetTicksMsec();
-        var area = new Rect2I(Vector2I.Zero, image.GetSize());
 
         if (source is FrameSource.Image)
         {
-            return Transform(DetectFromImage(task, frame, area));
+            return Transform(DetectFromImage(task, image, default));
         }
         else if (source is FrameSource.Video)
         {
-            return Transform(DetectFromVideo(task, frame, area, time));
+            return Transform(DetectFromVideo(task, image, default, time));
         }
         else if (source is FrameSource.Stream)
         {
             reset ??= new AutoResetEvent(false);
 
-            Detect(task, frame, area, time);
+            Detect(task, image, default, time);
             reset.WaitOne();
 
             if (output is not null)

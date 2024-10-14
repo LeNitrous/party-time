@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://vpvcl7rtgnye"]
+[gd_scene load_steps=34 format=3 uid="uid://vpvcl7rtgnye"]
 
 [ext_resource type="Script" path="res://scripts/game/managers/GameStateManager.cs" id="1_g7oxf"]
 [ext_resource type="Script" path="res://scripts/game/GameContext.cs" id="1_pfb1g"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://scripts/game/managers/GameAnimationsManager.cs" id="5_5oxlm"]
 [ext_resource type="Shader" path="res://shaders/grid.gdshader" id="7_eo44j"]
 [ext_resource type="Shader" path="res://shaders/screen_space_blur.gdshader" id="8_fkjxw"]
+[ext_resource type="Texture2D" uid="uid://3e6n4rq2v0en" path="res://icon-simple.svg" id="9_3gucg"]
 [ext_resource type="FontFile" uid="uid://cuj4gq8fufdl" path="res://fonts/Sublima-ExtraBold.otf" id="10_r31ya"]
 [ext_resource type="PackedScene" uid="uid://boo8jo7raatta" path="res://scenes/components/ui_game_label.tscn" id="10_vini8"]
 [ext_resource type="Script" path="res://scripts/game/HUDLabelValueSetter.cs" id="12_jr0lv"]
@@ -17,6 +18,8 @@
 [ext_resource type="Shader" path="res://shaders/stripes.gdshader" id="15_svvxn"]
 [ext_resource type="Texture2D" uid="uid://drnebolenupil" path="res://textures/menu/spinner.png" id="16_76xhb"]
 [ext_resource type="PackedScene" uid="uid://dtfsvcpcqi8j3" path="res://scenes/components/ui_modal_results.tscn" id="16_ykq0k"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_pd038"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_v1rec"]
 shader = ExtResource("8_fkjxw")
@@ -350,6 +353,15 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_g7oxf")
 
+[node name="Fill" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
 [node name="Context" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("1_pfb1g")
@@ -389,8 +401,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-expand_mode = 5
-stretch_mode = 6
+texture = SubResource("ImageTexture_pd038")
+expand_mode = 3
+stretch_mode = 5
 
 [node name="View" type="CanvasLayer" parent="."]
 unique_name_in_owner = true
@@ -429,6 +442,14 @@ material = SubResource("ShaderMaterial_nsx35")
 layout_mode = 2
 mouse_filter = 2
 color = Color(0.194349, 0.194349, 0.194349, 1)
+
+[node name="Icon" type="TextureRect" parent="HUD/U Margin/Modulator"]
+self_modulate = Color(0.194349, 0.194349, 0.194349, 1)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("9_3gucg")
+stretch_mode = 3
 
 [node name="Expander" type="Node" parent="HUD/U Margin"]
 script = ExtResource("2_448es")
@@ -493,6 +514,12 @@ mouse_filter = 2
 Label = "GAME_HUD_SCORE"
 Value = "0"
 
+[node name="Label" parent="HUD/V Margin/Labels/Score/HBoxContainer/MarginContainer/MarginContainer" index="0"]
+text = "GAME_HUD_SCORE"
+
+[node name="Value" parent="HUD/V Margin/Labels/Score/HBoxContainer/MarginContainer2" index="0"]
+text = "0"
+
 [node name="Setter" type="Node" parent="HUD/V Margin/Labels/Score"]
 script = ExtResource("12_jr0lv")
 
@@ -508,6 +535,12 @@ size_flags_vertical = 8
 mouse_filter = 2
 Label = "GAME_HUD_COMBO"
 Value = "0"
+
+[node name="Label" parent="HUD/V Margin/Labels/Combo/Label/HBoxContainer/MarginContainer/MarginContainer" index="0"]
+text = "GAME_HUD_COMBO"
+
+[node name="Value" parent="HUD/V Margin/Labels/Combo/Label/HBoxContainer/MarginContainer2" index="0"]
+text = "0"
 
 [node name="Setter" type="Node" parent="HUD/V Margin/Labels/Combo/Label"]
 script = ExtResource("12_jr0lv")
@@ -616,6 +649,24 @@ layer = 4
 [node name="Results" parent="Overlay" instance=ExtResource("16_ykq0k")]
 visible = false
 
+[node name="Background" parent="Overlay/Results/MarginContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/Return" index="0"]
+color = Color(0.94902, 0.807843, 0.231373, 1)
+
+[node name="Label" parent="Overlay/Results/MarginContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/Return/Margin" index="0"]
+text = "UI_MODAL_BUTTON_RETURN"
+
+[node name="Background" parent="Overlay/Results/MarginContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/Resume" index="0"]
+color = Color(0.94902, 0.807843, 0.231373, 1)
+
+[node name="Label" parent="Overlay/Results/MarginContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/Resume/Margin" index="0"]
+text = "UI_MODAL_BUTTON_RESUME"
+
+[node name="Background" parent="Overlay/Results/MarginContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/Continue" index="0"]
+color = Color(0.94902, 0.807843, 0.231373, 1)
+
+[node name="Label" parent="Overlay/Results/MarginContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/Continue/Margin" index="0"]
+text = "UI_MODAL_BUTTON_CONTINUE"
+
 [connection signal="ComboChanged" from="." to="HUD/V Margin/Labels/Combo" method="onValueChanged"]
 [connection signal="ComboChanged" from="." to="HUD/V Margin/Labels/Combo/Label/Setter" method="onValueChanged"]
 [connection signal="ScoreChanged" from="." to="HUD/V Margin/Labels/Score/Setter" method="onValueChanged"]
@@ -631,3 +682,10 @@ visible = false
 [connection signal="PhaseChanged" from="Context" to="Sounds/Voice/Countdown" method="onPhaseChanged"]
 [connection signal="PhaseChanged" from="Context" to="Animations" method="onPhaseChanged"]
 [connection signal="PhaseChanged" from="Context" to="Overlay/Results" method="onPhaseChanged"]
+
+[editable path="HUD/V Margin/Labels/Score"]
+[editable path="HUD/V Margin/Labels/Combo/Label"]
+[editable path="Overlay/Results"]
+[editable path="Overlay/Results/MarginContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/Return"]
+[editable path="Overlay/Results/MarginContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/Resume"]
+[editable path="Overlay/Results/MarginContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/Continue"]

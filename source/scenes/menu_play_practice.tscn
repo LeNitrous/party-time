@@ -1,26 +1,19 @@
-[gd_scene load_steps=5 format=3 uid="uid://bk6v34x2kybwj"]
+[gd_scene load_steps=6 format=3 uid="uid://bk6v34x2kybwj"]
 
 [ext_resource type="PackedScene" uid="uid://cuvvyidg5h8uv" path="res://scenes/menu_base_select.tscn" id="1_e1fhs"]
 [ext_resource type="PackedScene" uid="uid://tcda8fvrbhdh" path="res://scenes/components/ui_select_caret.tscn" id="2_3yh6q"]
+[ext_resource type="Script" path="res://scripts/menu/play/SelectPracticeEvent.cs" id="2_edruf"]
 [ext_resource type="PackedScene" uid="uid://hnukac2fnvvx" path="res://scenes/components/ui_button_small.tscn" id="2_pwtxx"]
 [ext_resource type="Script" path="res://scripts/menu/ButtonSceneStackExit.cs" id="3_82fou"]
 
 [node name="Menu" instance=ExtResource("1_e1fhs")]
+script = ExtResource("2_edruf")
 
-[node name="Colorable" parent="Header" index="0"]
-self_modulate = Color(0.228, 0.95, 0.4085, 1)
+[node name="Input" parent="." index="0" node_paths=PackedStringArray("FirstSelected")]
+FirstSelected = NodePath("../Select")
 
-[node name="Title" parent="Header/Content/Flow" index="0"]
-self_modulate = Color(0.228, 0.95, 0.4085, 1)
-text = "UI_HEADER_PRACTICE"
-
-[node name="Separator" parent="Header/Content/Flow" index="1"]
-visible = false
-
-[node name="Subtitle" parent="Header/Content/Flow" index="2"]
-visible = false
-
-[node name="Label" type="Label" parent="." index="5"]
+[node name="Inform" type="Label" parent="." index="5"]
+unique_name_in_owner = true
 self_modulate = Color(0.3, 0.3, 0.3, 1)
 layout_mode = 1
 anchors_preset = -1
@@ -36,6 +29,29 @@ grow_vertical = 0
 text = "Label"
 horizontal_alignment = 1
 autowrap_mode = 3
+
+[node name="Image" type="TextureRect" parent="Preview" index="0"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 3
+
+[node name="Colorable" parent="Header" index="0"]
+self_modulate = Color(0.228, 0.95, 0.4085, 1)
+
+[node name="Title" parent="Header/Content/Flow" index="0"]
+self_modulate = Color(0.228, 0.95, 0.4085, 1)
+text = "UI_HEADER_PRACTICE"
+
+[node name="Separator" parent="Header/Content/Flow" index="1"]
+visible = false
+
+[node name="Subtitle" parent="Header/Content/Flow" index="2"]
+visible = false
 
 [node name="Select" parent="." index="8" instance=ExtResource("2_3yh6q")]
 unique_name_in_owner = true
@@ -64,6 +80,12 @@ Text = "UI_BUTTON_BACK"
 Default = Color(1, 0.31, 0.3215, 1)
 metadata/tooltip = "UI_TOOLTIP_BACK"
 
+[node name="Background" parent="Back" index="0"]
+color = Color(1, 0.31, 0.3215, 1)
+
+[node name="Label" parent="Back/Margin" index="0"]
+text = "UI_BUTTON_BACK"
+
 [node name="Handler" type="Node" parent="Back" index="4"]
 script = ExtResource("3_82fou")
 
@@ -82,4 +104,15 @@ grow_horizontal = 0
 grow_vertical = 0
 Text = "UI_BUTTON_PRACTICE_START"
 Default = Color(0.94902, 0.807843, 0.231373, 1)
-metadata/tooltip = "UI_TOOLTIP_BACK"
+metadata/tooltip = "UI_TOOLTIP_PRACTICE_START"
+
+[node name="Background" parent="Next" index="0"]
+color = Color(0.94902, 0.807843, 0.231373, 1)
+
+[node name="Label" parent="Next/Margin" index="0"]
+text = "UI_BUTTON_PRACTICE_START"
+
+[connection signal="Confirm" from="Next" to="." method="Confirm"]
+
+[editable path="Back"]
+[editable path="Next"]

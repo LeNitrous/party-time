@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using FlashCap;
+using GDExtension.Wrappers;
 using Godot;
 
 namespace Party.Game.Camera;
@@ -45,7 +45,9 @@ public sealed class CameraServiceDesktop : CameraService.Impl
 
         while (!token.IsCancellationRequested)
         {
-            var descriptors = devices.EnumerateDescriptors();
+            var descriptors = devices
+                .EnumerateDescriptors()
+                .Where(d => d.DeviceType != DeviceTypes.VideoForWindows);
 
             removed.Clear();
             removed.AddRange(current.Keys.Except(descriptors.Select(d => d.Name)));
@@ -90,7 +92,6 @@ public sealed class CameraServiceDesktop : CameraService.Impl
         public override string Name => descriptor.Name;
         public override int Width => characters.Width;
         public override int Height => characters.Height;
-        public override bool Accelerated => false;
 
         private Task runner;
         private CancellationTokenSource source;
@@ -149,11 +150,11 @@ public sealed class CameraServiceDesktop : CameraService.Impl
         private class Observer : IObserver<PixelBufferScope>, IDisposable
         {
             private bool disposed;
-            private bool isDisposeRequested;
             private byte[] buffer;
             private Image image;
             private readonly CameraFeedDesktop owner;
             private readonly VideoCharacteristics video;
+            private readonly ManualResetEventSlim reset = new ManualResetEventSlim();
 
             public Observer(CameraFeedDesktop owner, VideoCharacteristics video)
             {
@@ -163,52 +164,46 @@ public sealed class CameraServiceDesktop : CameraService.Impl
 
             public void OnNext(PixelBufferScope value)
             {
-                if (!isDisposeRequested)
+                reset.Reset();
+
+                if (buffer is null)
                 {
-                    if (buffer is null)
-                    {
-                        buffer = value.Buffer.CopyImage();
-                    }
-                    else
-                    {
-                        var referred = value.Buffer.ReferImage();
-
-                        if (buffer.Length < referred.Count)
-                        {
-                            Array.Resize(ref buffer, referred.Count);
-                        }
-
-                        referred.CopyTo(buffer);
-                    }
-
-                    image ??= new Image();
-
-                    switch (video.PixelFormat)
-                    {
-                        case PixelFormats.PNG:
-                            image.LoadPngFromBuffer(buffer);
-                            break;
-
-                        case PixelFormats.JPEG:
-                            image.LoadJpgFromBuffer(buffer);
-                            break;
-
-                        case PixelFormats.RGB8:
-                            image.SetData(video.Width, video.Height, false, Image.Format.Rgb8, buffer);
-                            break;
-                    }
-
-                    image.FlipX();
-
-                    owner.EmitFrame(image);
+                    buffer = value.Buffer.CopyImage();
                 }
                 else
                 {
-                    image.Dispose();
-                    image = null;
+                    var referred = value.Buffer.ReferImage();
 
-                    buffer = null;
+                    if (buffer.Length < referred.Count)
+                    {
+                        Array.Resize(ref buffer, referred.Count);
+                    }
+
+                    referred.CopyTo(buffer);
                 }
+
+                image ??= new Image();
+
+                switch (video.PixelFormat)
+                {
+                    case PixelFormats.PNG:
+                        image.LoadPngFromBuffer(buffer);
+                        break;
+
+                    case PixelFormats.JPEG:
+                        image.LoadJpgFromBuffer(buffer);
+                        break;
+
+                    case PixelFormats.RGB8:
+                        image.SetData(video.Width, video.Height, false, Image.Format.Rgb8, buffer);
+                        break;
+                }
+
+                image.FlipX();
+
+                owner.EmitFrame(MediaPipeImage.CreateFromImage(image));
+
+                reset.Set();
             }
 
             public void OnCompleted()
@@ -227,7 +222,13 @@ public sealed class CameraServiceDesktop : CameraService.Impl
                     return;
                 }
 
-                isDisposeRequested = true;
+                reset.Wait();
+                reset.Dispose();
+
+                image.Dispose();
+                image = null;
+
+                buffer = null;
 
                 disposed = true;
                 GC.SuppressFinalize(this);

@@ -1,4 +1,5 @@
 using System;
+using GDExtension.Wrappers;
 using Godot;
 
 namespace Party.Game.Experience.Events;
@@ -14,6 +15,10 @@ public abstract partial class GameEvent : Node
     public virtual Completion GetCompletionOnTimeout()
     {
         return Completion.LoseTimeout;
+    }
+
+    public virtual void CameraFrameReceived(MediaPipeImage image)
+    {
     }
 
     protected void Trigger(Completion state)

@@ -227,6 +227,11 @@ public partial class Slider : Interactable
 
     private void doSlideEffect()
     {
+        if (Engine.IsEditorHint())
+        {
+            return;
+        }
+
         ulong currSlideTime = Time.GetTicksMsec();
 
         if (currSlideTime > prevSlideTime + 50)

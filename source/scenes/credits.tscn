@@ -1,0 +1,64 @@
+[gd_scene load_steps=7 format=3 uid="uid://ct4dek63v5j5j"]
+
+[ext_resource type="Script" path="res://scripts/menu/credits/credits.gd" id="1_3jpn6"]
+[ext_resource type="Texture2D" uid="uid://d2x1hymf606xy" path="res://logo.png" id="2_wg8ja"]
+[ext_resource type="Script" path="res://scripts/MusicTrackBoundary.cs" id="3_oklkt"]
+[ext_resource type="AudioStream" uid="uid://dehimbxfd3w7m" path="res://sounds/music/game_epilogue_loop.wav" id="4_h22lv"]
+[ext_resource type="Shader" path="res://shaders/grid.gdshader" id="5_2k8ff"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qvueb"]
+shader = ExtResource("5_2k8ff")
+shader_parameter/size = Vector2(1280, 720)
+shader_parameter/line_width = 0.1
+shader_parameter/offset = Vector2(0, 0)
+shader_parameter/speed = Vector2(0, 20)
+shader_parameter/grid_size = 32.0
+
+[node name="credits" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_3jpn6")
+creditsFile = "res://CREDITS"
+titleImage = ExtResource("2_wg8ja")
+titlesColor = Color(0.501406, 0.501407, 0.501406, 1)
+
+[node name="Track" type="Node" parent="."]
+script = ExtResource("3_oklkt")
+Track = ExtResource("4_h22lv")
+Fade = 0.0
+
+[node name="Fill" type="ColorRect" parent="."]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.0862745, 0.0862745, 0.0862745, 1)
+
+[node name="Grid" type="ColorRect" parent="."]
+self_modulate = Color(1, 1, 1, 0.392157)
+material = SubResource("ShaderMaterial_qvueb")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.0999859, 0.099986, 0.099986, 1)
+
+[node name="scrollingContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="titleImg" type="TextureRect" parent="scrollingContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+stretch_mode = 5

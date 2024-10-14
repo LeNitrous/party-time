@@ -1,17 +1,14 @@
-[gd_scene load_steps=14 format=3 uid="uid://edrx4it8eaws"]
+[gd_scene load_steps=17 format=3 uid="uid://edrx4it8eaws"]
 
+[ext_resource type="Script" path="res://scripts/menu/Title.cs" id="1_byx7i"]
 [ext_resource type="Shader" path="res://shaders/scrolling.gdshader" id="1_ilsiw"]
+[ext_resource type="Script" path="res://scripts/MusicTrackBoundary.cs" id="1_prmg1"]
+[ext_resource type="AudioStream" uid="uid://dehimbxfd3w7m" path="res://sounds/music/game_epilogue_loop.wav" id="2_frf42"]
 [ext_resource type="Texture2D" uid="uid://cyipjs2jvo7h7" path="res://textures/menu/pattern.png" id="2_lsh72"]
-[ext_resource type="Shader" path="res://shaders/stripes.gdshader" id="3_awu0l"]
-[ext_resource type="Shader" path="res://shaders/oscillator.gdshader" id="4_as3xt"]
-[ext_resource type="FontFile" uid="uid://cpnv5acl2lyyw" path="res://fonts/Sublima-ExtraBoldItalic.otf" id="4_dfx3g"]
-
-[sub_resource type="Gradient" id="Gradient_p1ql5"]
-colors = PackedColorArray(0.45507, 0.2046, 0.66, 1, 0.32, 0.32, 1, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_gf4sv"]
-gradient = SubResource("Gradient_p1ql5")
-fill_to = Vector2(0, 1)
+[ext_resource type="Shader" path="res://shaders/mask.gdshader" id="2_ux6ov"]
+[ext_resource type="Script" path="res://scripts/input/InputManager.cs" id="2_y8sku"]
+[ext_resource type="Shader" path="res://shaders/oscillator.gdshader" id="3_k4n8m"]
+[ext_resource type="Texture2D" uid="uid://d2x1hymf606xy" path="res://logo.png" id="3_pglpv"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4ri4g"]
 shader = ExtResource("1_ilsiw")
@@ -19,34 +16,33 @@ shader_parameter/m_scale = 1.0
 shader_parameter/m_speed = Vector2(-10, 10)
 shader_parameter/m_offset = Vector2(0, 0)
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_x2fcv"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_wsga3"]
-shader = ExtResource("3_awu0l")
-shader_parameter/stripe_color = Color(0, 0, 0, 0.0392157)
-shader_parameter/stripe_bias = 2.5
-shader_parameter/speed = 0.05
-shader_parameter/angle = 4.0
-shader_parameter/density = 16.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_qdd1d"]
-shader = ExtResource("4_as3xt")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2vqij"]
+shader = ExtResource("3_k4n8m")
 shader_parameter/speed = 1.0
-shader_parameter/amplitude = 15.0
+shader_parameter/amplitude = 10.0
 shader_parameter/multiplier = Vector2(0, 1)
 
-[sub_resource type="FontVariation" id="FontVariation_h67jr"]
-base_font = ExtResource("4_dfx3g")
-spacing_glyph = -1
+[sub_resource type="Gradient" id="Gradient_hprds"]
+offsets = PackedFloat32Array(0, 0.5, 1)
+colors = PackedColorArray(0.0862745, 0.0862745, 0.0862745, 1, 0.09, 0.09, 0.09, 0, 0.0862745, 0.0862745, 0.0862745, 1)
 
-[sub_resource type="LabelSettings" id="LabelSettings_kt2ip"]
-line_spacing = 0.0
-font_size = 128
-outline_size = 40
-outline_color = Color(0.0862745, 0.0862745, 0.0862745, 1)
-shadow_size = 20
-shadow_color = Color(0.0862745, 0.0862745, 0.0862745, 1)
-shadow_offset = Vector2(8, 8)
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_5x47f"]
+gradient = SubResource("Gradient_hprds")
+fill_from = Vector2(0, 0.1)
+fill_to = Vector2(0, 0.9)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lpsih"]
+shader = ExtResource("2_ux6ov")
+shader_parameter/mask_color = Color(1, 1, 1, 1)
+shader_parameter/mask_range = 1.155
+
+[sub_resource type="Gradient" id="Gradient_p1ql5"]
+colors = PackedColorArray(0.45507, 0.2046, 0.66, 1, 0.32, 0.32, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_gf4sv"]
+gradient = SubResource("Gradient_p1ql5")
+fill_from = Vector2(0, 0.357798)
+fill_to = Vector2(0, 0.683486)
 
 [node name="Title" type="Control"]
 layout_mode = 3
@@ -55,17 +51,79 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_byx7i")
 
-[node name="Background" type="Control" parent="."]
+[node name="Input" type="Node" parent="."]
+script = ExtResource("2_y8sku")
+
+[node name="Track" type="Node" parent="."]
+script = ExtResource("1_prmg1")
+Track = ExtResource("2_frf42")
+Fade = 0.0
+
+[node name="Solid" type="ColorRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
+color = Color(0.0862745, 0.0862745, 0.0862745, 1)
 
-[node name="Fill" type="TextureRect" parent="Background"]
+[node name="Pattern" type="TextureRect" parent="."]
+self_modulate = Color(1, 1, 1, 0.0117647)
+material = SubResource("ShaderMaterial_4ri4g")
 layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_lsh72")
+stretch_mode = 1
+
+[node name="Logo" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_2vqij")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("3_pglpv")
+expand_mode = 5
+stretch_mode = 3
+
+[node name="Letterbox" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_5x47f")
+
+[node name="Fill" type="SubViewportContainer" parent="."]
+material = SubResource("ShaderMaterial_lpsih")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="Fill"]
+handle_input_locally = false
+size = Vector2i(1280, 720)
+render_target_update_mode = 4
+
+[node name="Fill" type="TextureRect" parent="Fill/SubViewport"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -73,10 +131,9 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("GradientTexture2D_gf4sv")
 
-[node name="Pattern" type="TextureRect" parent="Background"]
+[node name="Pattern" type="TextureRect" parent="Fill/SubViewport"]
 self_modulate = Color(1, 1, 1, 0.0588235)
 material = SubResource("ShaderMaterial_4ri4g")
-layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -85,60 +142,21 @@ grow_vertical = 2
 texture = ExtResource("2_lsh72")
 stretch_mode = 1
 
-[node name="Content" type="Control" parent="."]
-clip_contents = true
+[node name="Label" type="RichTextLabel" parent="."]
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = 14
+anchor_top = 0.5
 anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_bottom = 0.5
+offset_top = 268.0
+offset_bottom = 300.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="Marker" type="PanelContainer" parent="Content"]
-custom_minimum_size = Vector2(0, 50)
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -50.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_styles/panel = SubResource("StyleBoxEmpty_x2fcv")
-
-[node name="Fill" type="ColorRect" parent="Content/Marker"]
-material = SubResource("ShaderMaterial_wsga3")
-custom_minimum_size = Vector2(0, 50)
-layout_mode = 2
-color = Color(0.94902, 0.807843, 0.231373, 1)
-
-[node name="Margins" type="MarginContainer" parent="Content/Marker"]
-layout_mode = 2
-theme_override_constants/margin_left = 0
-theme_override_constants/margin_top = 0
-theme_override_constants/margin_right = 25
-theme_override_constants/margin_bottom = 0
-
-[node name="Label" type="RichTextLabel" parent="Content/Marker/Margins"]
-layout_mode = 2
-size_flags_vertical = 4
+mouse_filter = 2
 bbcode_enabled = true
-text = "[font=res://fonts/Sublima-ExtraBold.otf]Press [img=32x32]res://textures/input/xbox/xbox_button_a.png[/img] to start."
+text = "[center]Press [img=32]textures/input/keyboard/keyboard_0.png[/img] to start[/center]"
 fit_content = true
-horizontal_alignment = 2
+scroll_active = false
+autowrap_mode = 0
 
-[node name="Title" type="Label" parent="Content"]
-material = SubResource("ShaderMaterial_qdd1d")
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_bottom = -50.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_fonts/font = SubResource("FontVariation_h67jr")
-text = "PARTY
-TIME"
-label_settings = SubResource("LabelSettings_kt2ip")
-horizontal_alignment = 1
-vertical_alignment = 1
+[connection signal="gui_input" from="." to="." method="onGUIInput"]

@@ -1,15 +1,78 @@
-[gd_scene load_steps=6 format=3 uid="uid://haaxcuq4cvrx"]
+[gd_scene load_steps=9 format=3 uid="uid://haaxcuq4cvrx"]
 
 [ext_resource type="PackedScene" uid="uid://6juf6a2f66rw" path="res://scenes/menu_base.tscn" id="1_32i3y"]
 [ext_resource type="PackedScene" uid="uid://cml6lqldirm2v" path="res://scenes/components/ui_button.tscn" id="2_046ml"]
 [ext_resource type="PackedScene" uid="uid://0352dctld7qo" path="res://scenes/components/ui_select.tscn" id="2_jt5cf"]
 [ext_resource type="Texture2D" uid="uid://cp444xp8f6svw" path="res://textures/icons/exitLeft.png" id="3_7nrj1"]
+[ext_resource type="Script" path="res://scripts/menu/settings/SelectGameLength.cs" id="3_7rw6u"]
 [ext_resource type="Script" path="res://scripts/menu/ButtonSceneStackExit.cs" id="4_66wbp"]
+[ext_resource type="Script" path="res://scripts/menu/settings/SelectGameTimeshift.cs" id="4_sry35"]
+[ext_resource type="Script" path="res://scripts/menu/settings/SelectGameAnnouncer.cs" id="5_gqtr1"]
 
 [node name="Menu" instance=ExtResource("1_32i3y")]
 
 [node name="Input" parent="." index="0" node_paths=PackedStringArray("FirstSelected")]
 FirstSelected = NodePath("../Content/Length")
+
+[node name="Length" parent="Content" index="0" instance=ExtResource("2_jt5cf")]
+layout_mode = 2
+Text = "UI_SETTINGS_GAMEPLAY_LENGTH"
+Options = ["UI_SETTINGS_GAMEPLAY_LENGTH_SHORT", "UI_SETTINGS_GAMEPLAY_LENGTH_MEDIUM", "UI_SETTINGS_GAMEPLAY_LENGTH_LONG"]
+Selected = 0
+metadata/tooltip = "UI_TOOLTIP_SETTINGS_GAMEPLAY_LENGTH"
+
+[node name="Label" parent="Content/Length/Icon" index="0"]
+text = "UI_SETTINGS_GAMEPLAY_LENGTH"
+
+[node name="Handler" type="Node" parent="Content/Length" index="6"]
+script = ExtResource("3_7rw6u")
+
+[node name="Shifting" parent="Content" index="1" instance=ExtResource("2_jt5cf")]
+layout_mode = 2
+Text = "UI_SETTINGS_GAMEPLAY_TIMESHIFT"
+Options = ["UI_SETTINGS_GAMEPLAY_TIMESHIFT_NORMAL", "UI_SETTINGS_GAMEPLAY_TIMESHIFT_SHIFTING"]
+Selected = 0
+metadata/tooltip = "UI_TOOLTIP_SETTINGS_GAMEPLAY_TIMESHIFT"
+
+[node name="Label" parent="Content/Shifting/Icon" index="0"]
+text = "UI_SETTINGS_GAMEPLAY_TIMESHIFT"
+
+[node name="Handler" type="Node" parent="Content/Shifting" index="6"]
+script = ExtResource("4_sry35")
+
+[node name="Announcer" parent="Content" index="2" instance=ExtResource("2_jt5cf")]
+layout_mode = 2
+Text = "UI_SETTINGS_GAMEPLAY_ANNOUNCER"
+Options = ["UI_SETTINGS_GAMEPLAY_ANNOUNCER_MALE", "UI_SETTINGS_GAMEPLAY_ANNOUNCER_FEMALE", "UI_SETTINGS_GAMEPLAY_ANNOUNCER_RANDOM"]
+Selected = 0
+metadata/tooltip = "UI_TOOLTIP_SETTINGS_GAMEPLAY_ANNOUNCER"
+
+[node name="Label" parent="Content/Announcer/Icon" index="0"]
+text = "UI_SETTINGS_GAMEPLAY_ANNOUNCER"
+
+[node name="Handler" type="Node" parent="Content/Announcer" index="6"]
+script = ExtResource("5_gqtr1")
+
+[node name="Back" parent="Content" index="3" instance=ExtResource("2_046ml")]
+custom_minimum_size = Vector2(1000, 100)
+layout_mode = 2
+Text = "UI_BUTTON_BACK"
+Icon = ExtResource("3_7nrj1")
+Default = Color(1, 0.31, 0.3215, 1)
+metadata/tooltip = "UI_TOOLTIP_BACK"
+
+[node name="Background" parent="Content/Back" index="0"]
+color = Color(1, 0.31, 0.3215, 1)
+
+[node name="Icon" parent="Content/Back/Content/Padder/Margin" index="0"]
+visible = true
+texture = ExtResource("3_7nrj1")
+
+[node name="Label" parent="Content/Back/Content" index="1"]
+text = "UI_BUTTON_BACK"
+
+[node name="Handler" type="Node" parent="Content/Back" index="4"]
+script = ExtResource("4_66wbp")
 
 [node name="Colorable" parent="Header" index="0"]
 self_modulate = Color(0.724, 0.31, 1, 1)
@@ -21,31 +84,7 @@ text = "UI_HEADER_SETTINGS"
 [node name="Subtitle" parent="Header/Content/Flow" index="2"]
 text = "UI_HEADER_SETTINGS_GAMEPLAY"
 
-[node name="Length" parent="Content" index="0" instance=ExtResource("2_jt5cf")]
-layout_mode = 2
-Text = "UI_SETTINGS_GAMEPLAY_LENGTH"
-Options = ["UI_SETTINGS_GAMEPLAY_LENGTH_SHORT", "UI_SETTINGS_GAMEPLAY_LENGTH_MEDIUM", "UI_SETTINGS_GAMEPLAY_LENGTH_LONG"]
-metadata/tooltip = "UI_TOOLTIP_SETTINGS_GAMEPLAY_LENGTH"
-
-[node name="Shifting" parent="Content" index="1" instance=ExtResource("2_jt5cf")]
-layout_mode = 2
-Text = "UI_SETTINGS_GAMEPLAY_TIMESHIFT"
-Options = ["UI_SETTINGS_GAMEPLAY_TIMESHIFT_NORMAL", "UI_SETTINGS_GAMEPLAY_TIMESHIFT_SHIFTING"]
-metadata/tooltip = "UI_TOOLTIP_SETTINGS_GAMEPLAY_TIMESHIFT"
-
-[node name="Announcer" parent="Content" index="2" instance=ExtResource("2_jt5cf")]
-layout_mode = 2
-Text = "UI_SETTINGS_GAMEPLAY_ANNOUNCER"
-Options = ["UI_SETTINGS_GAMEPLAY_ANNOUNCER_MALE", "UI_SETTINGS_GAMEPLAY_ANNOUNCER_FEMALE", "UI_SETTINGS_GAMEPLAY_ANNOUNCER_RANDOM"]
-metadata/tooltip = "UI_TOOLTIP_SETTINGS_GAMEPLAY_ANNOUNCER"
-
-[node name="Back" parent="Content" index="3" instance=ExtResource("2_046ml")]
-custom_minimum_size = Vector2(1000, 100)
-layout_mode = 2
-Text = "UI_BUTTON_BACK"
-Icon = ExtResource("3_7nrj1")
-Default = Color(1, 0.31, 0.3215, 1)
-metadata/tooltip = "UI_TOOLTIP_BACK"
-
-[node name="Handler" type="Node" parent="Content/Back" index="4"]
-script = ExtResource("4_66wbp")
+[editable path="Content/Length"]
+[editable path="Content/Shifting"]
+[editable path="Content/Announcer"]
+[editable path="Content/Back"]

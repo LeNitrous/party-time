@@ -6,13 +6,18 @@ namespace Party.Game.Experience.Directors;
 
 public sealed class GameDirectorPractice : GameDirector
 {
-    public static PackedScene Event = null;
+    private readonly PackedScene scene;
+
+    public GameDirectorPractice(PackedScene scene)
+    {
+        this.scene = scene;
+    }
 
     public override bool Next([NotNullWhen(true)] out GameEvent game)
     {
-        if (Event is not null)
+        if (scene is not null)
         {
-            game = Event.Instantiate<GameEvent>();
+            game = scene.Instantiate<GameEvent>();
             return true;
         }
         else

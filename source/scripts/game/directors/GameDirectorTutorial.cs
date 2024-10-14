@@ -7,6 +7,7 @@ public sealed class GameDirectorTutorial : GameDirector
 {
     public override bool Next([NotNullWhen(true)] out GameEvent game)
     {
-        throw new System.NotImplementedException();
+        game = null;
+        return false;
     }
 }

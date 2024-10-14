@@ -492,3 +492,9 @@ $RECYCLE.BIN/
 ~*.so
 ~*.ios
 ~*.aar
+
+# Godot Export
+build/
+
+# Godot Export Tools
+tools/

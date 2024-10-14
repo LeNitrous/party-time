@@ -1,3 +1,4 @@
+using System.Threading;
 using System.Threading.Tasks;
 using GDExtension.Wrappers;
 using Godot;
@@ -11,7 +12,6 @@ public sealed class CameraServiceMobile : CameraService.Impl
     public CameraServiceMobile(CameraService owner)
     {
         owner.AddFeed(new CameraFeedMobile(camera, MediaPipeCameraHelper.CameraFacing.FacingFront));
-        owner.AddFeed(new CameraFeedMobile(camera, MediaPipeCameraHelper.CameraFacing.FacingBack));
     }
 
     public override bool PermissionGranted()
@@ -28,7 +28,7 @@ public sealed class CameraServiceMobile : CameraService.Impl
         else
         {
             camera.RequestPermission();
-            await camera.ToSignal(camera, "permission_request");
+            await camera.ToSignal(camera, "permission_result");
             return PermissionGranted();
         }
     }
@@ -39,10 +39,9 @@ public sealed class CameraServiceMobile : CameraService.Impl
 
     private sealed class CameraFeedMobile : CameraFeed
     {
-        public override string Name => facing.ToString();
-        public override int Width => DisplayServer.WindowGetSize().X;
-        public override int Height => DisplayServer.WindowGetSize().Y;
-        public override bool Accelerated => true;
+        public override string Name { get; } = "Camera";
+        public override int Width => 1280;
+        public override int Height => 720;
 
         private bool hasStarted;
         private readonly MediaPipeCameraHelper camera;
@@ -87,12 +86,7 @@ public sealed class CameraServiceMobile : CameraService.Impl
 
         private void onNewFrame(MediaPipeImage image)
         {
-            if (image.IsGpuImage())
-            {
-                image.ConvertToCpu();
-            }
-
-            EmitFrame(image.GetImage());
+            EmitFrame(image);
         }
     }
 }

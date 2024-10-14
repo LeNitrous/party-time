@@ -11,14 +11,21 @@ public abstract partial class Component<TParent> : Node
     {
         if (what == NotificationParented)
         {
-            Parent = GetParent<TParent>();
-            OnAttach();
+            Parent = GetParent() as TParent;
+            
+            if (Parent is not null)
+            {
+                OnAttach();
+            }
         }
 
         if (what == NotificationUnparented)
         {
-            OnDetach();
-            Parent = null;
+            if (Parent is not null)
+            {
+                OnDetach();
+                Parent = null;
+            }
         }
     }
 

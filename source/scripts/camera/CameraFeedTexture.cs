@@ -16,7 +16,6 @@ public sealed partial class CameraFeedTexture : Texture2D
     public CameraFeedTexture(ICameraFeed feed)
     {
         this.feed = feed;
-        this.feed.OnFrame += onFrame;
         this.feed.OnClose += onClose;
         this.feed.OnStart += onStart;
     }
@@ -50,7 +49,6 @@ public sealed partial class CameraFeedTexture : Texture2D
     {
         RenderingServer.FreeRid(placeholder);
         placeholder = default;
-        feed.OnFrame -= onFrame;
         feed.OnClose -= onClose;
         feed.OnStart -= onStart;
         base.Dispose(disposing);
@@ -65,20 +63,6 @@ public sealed partial class CameraFeedTexture : Texture2D
     {
         RenderingServer.FreeRid(texture);
         texture = default;
-        CallDeferred(Resource.MethodName.EmitChanged);
-    }
-
-    private void onFrame(Image image)
-    {
-        if (!texture.IsValid)
-        {
-            texture = RenderingServer.Texture2DCreate(image);
-        }
-        else
-        {
-            RenderingServer.Texture2DUpdate(texture, image, 0);
-        }
-
         CallDeferred(Resource.MethodName.EmitChanged);
     }
 }

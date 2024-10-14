@@ -1,11 +1,14 @@
-[gd_scene load_steps=10 format=3 uid="uid://cki1s06mfg70a"]
+[gd_scene load_steps=13 format=3 uid="uid://cki1s06mfg70a"]
 
 [ext_resource type="PackedScene" uid="uid://6juf6a2f66rw" path="res://scenes/menu_base.tscn" id="1_5rt21"]
 [ext_resource type="PackedScene" uid="uid://cml6lqldirm2v" path="res://scenes/components/ui_button.tscn" id="2_3bnvh"]
 [ext_resource type="Texture2D" uid="uid://dhop5p2vtifmm" path="res://textures/icons/flag.png" id="3_ehjbt"]
 [ext_resource type="Texture2D" uid="uid://ds7la6kglbg22" path="res://textures/icons/target.png" id="4_fdm34"]
 [ext_resource type="Texture2D" uid="uid://eiwl8xya3n0g" path="res://textures/icons/gear.png" id="4_mikrk"]
+[ext_resource type="Script" path="res://scripts/menu/ButtonStartGameStandard.cs" id="4_sf08g"]
+[ext_resource type="Script" path="res://scripts/menu/ButtonStartGameTutorial.cs" id="5_4defx"]
 [ext_resource type="Texture2D" uid="uid://dvpnxvawjcujf" path="res://textures/icons/exit.png" id="5_me5q5"]
+[ext_resource type="Script" path="res://scripts/menu/ButtonStartGameEndurance.cs" id="6_643u1"]
 [ext_resource type="Script" path="res://scripts/menu/ButtonSceneStackPush.cs" id="6_ubljo"]
 [ext_resource type="PackedScene" uid="uid://ceh6x7s2368uo" path="res://scenes/components/ui_modal_prompt.tscn" id="7_gjccv"]
 [ext_resource type="Script" path="res://scripts/menu/ButtonSceneStackExit.cs" id="8_3vdt7"]
@@ -15,19 +18,6 @@
 [node name="Input" parent="." index="0" node_paths=PackedStringArray("FirstSelected")]
 FirstSelected = NodePath("../Content/Start")
 
-[node name="Colorable" parent="Header" index="0"]
-self_modulate = Color(0.94902, 0.807843, 0.231373, 1)
-
-[node name="Title" parent="Header/Content/Flow" index="0"]
-self_modulate = Color(0.94902, 0.807843, 0.231373, 1)
-text = "UI_HEADER_MAINMENU"
-
-[node name="Separator" parent="Header/Content/Flow" index="1"]
-visible = false
-
-[node name="Subtitle" parent="Header/Content/Flow" index="2"]
-visible = false
-
 [node name="Start" parent="Content" index="0" instance=ExtResource("2_3bnvh")]
 custom_minimum_size = Vector2(695, 100)
 layout_mode = 2
@@ -36,12 +26,34 @@ Icon = ExtResource("3_ehjbt")
 Default = Color(0.94902, 0.807843, 0.231373, 1)
 metadata/tooltip = "UI_TOOLTIP_START"
 
+[node name="Background" parent="Content/Start" index="0"]
+color = Color(0.94902, 0.807843, 0.231373, 1)
+
+[node name="Icon" parent="Content/Start/Content/Padder/Margin" index="0"]
+visible = true
+texture = ExtResource("3_ehjbt")
+
+[node name="Label" parent="Content/Start/Content" index="1"]
+text = "UI_BUTTON_START"
+
+[node name="Handler" type="Node" parent="Content/Start" index="4"]
+script = ExtResource("4_sf08g")
+
 [node name="Tutorial" parent="Content" index="1" instance=ExtResource("2_3bnvh")]
 custom_minimum_size = Vector2(295, 100)
 layout_mode = 2
 Text = "UI_BUTTON_TUTORIAL"
 Default = Color(0.228, 0.757467, 0.95, 1)
 metadata/tooltip = "UI_TOOLTIP_TUTORIAL"
+
+[node name="Background" parent="Content/Tutorial" index="0"]
+color = Color(0.228, 0.757467, 0.95, 1)
+
+[node name="Label" parent="Content/Tutorial/Content" index="1"]
+text = "UI_BUTTON_TUTORIAL"
+
+[node name="Handler" type="Node" parent="Content/Tutorial" index="4"]
+script = ExtResource("5_4defx")
 
 [node name="Endurance" parent="Content" index="2" instance=ExtResource("2_3bnvh")]
 custom_minimum_size = Vector2(595, 100)
@@ -51,12 +63,31 @@ Icon = ExtResource("4_fdm34")
 Default = Color(0, 1, 0.816667, 1)
 metadata/tooltip = "UI_TOOLTIP_ENDURANCE"
 
+[node name="Background" parent="Content/Endurance" index="0"]
+color = Color(0, 1, 0.816667, 1)
+
+[node name="Icon" parent="Content/Endurance/Content/Padder/Margin" index="0"]
+visible = true
+texture = ExtResource("4_fdm34")
+
+[node name="Label" parent="Content/Endurance/Content" index="1"]
+text = "UI_BUTTON_ENDURANCE"
+
+[node name="Handler" type="Node" parent="Content/Endurance" index="4"]
+script = ExtResource("6_643u1")
+
 [node name="Practice" parent="Content" index="3" instance=ExtResource("2_3bnvh")]
 custom_minimum_size = Vector2(395, 100)
 layout_mode = 2
 Text = "UI_BUTTON_PRACTICE"
 Default = Color(0.228, 0.95, 0.4085, 1)
 metadata/tooltip = "UI_TOOLTIP_PRACTICE"
+
+[node name="Background" parent="Content/Practice" index="0"]
+color = Color(0.228, 0.95, 0.4085, 1)
+
+[node name="Label" parent="Content/Practice/Content" index="1"]
+text = "UI_BUTTON_PRACTICE"
 
 [node name="Handler" type="Node" parent="Content/Practice" index="4"]
 script = ExtResource("6_ubljo")
@@ -70,6 +101,16 @@ Icon = ExtResource("4_mikrk")
 Default = Color(0.724, 0.31, 1, 1)
 metadata/tooltip = "UI_TOOLTIP_SETTINGS"
 
+[node name="Background" parent="Content/Settings" index="0"]
+color = Color(0.724, 0.31, 1, 1)
+
+[node name="Icon" parent="Content/Settings/Content/Padder/Margin" index="0"]
+visible = true
+texture = ExtResource("4_mikrk")
+
+[node name="Label" parent="Content/Settings/Content" index="1"]
+text = "UI_BUTTON_SETTINGS"
+
 [node name="Handler" type="Node" parent="Content/Settings" index="4"]
 script = ExtResource("6_ubljo")
 Scene = "res://scenes/menu_settings.tscn"
@@ -81,6 +122,16 @@ Text = "UI_BUTTON_EXIT"
 Icon = ExtResource("5_me5q5")
 Default = Color(0.95, 0.228, 0.228, 1)
 metadata/tooltip = "UI_TOOLTIP_EXIT"
+
+[node name="Background" parent="Content/Exit" index="0"]
+color = Color(0.95, 0.228, 0.228, 1)
+
+[node name="Icon" parent="Content/Exit/Content/Padder/Margin" index="0"]
+visible = true
+texture = ExtResource("5_me5q5")
+
+[node name="Label" parent="Content/Exit/Content" index="1"]
+text = "UI_BUTTON_EXIT"
 
 [node name="Prompt" parent="." index="4" instance=ExtResource("7_gjccv")]
 visible = false
@@ -95,11 +146,44 @@ text = "UI_MODAL_TITLE_WARNING"
 [node name="Text" parent="Prompt/MarginContainer/Content/VBoxContainer/MarginContainer" index="0"]
 text = "UI_MODAL_MAINMENU_CONFIRM_EXIT"
 
+[node name="Background" parent="Prompt/MarginContainer/Content/VBoxContainer/MarginContainer2/HBoxContainer/Reject" index="0"]
+color = Color(0.94902, 0.807843, 0.231373, 1)
+
+[node name="Label" parent="Prompt/MarginContainer/Content/VBoxContainer/MarginContainer2/HBoxContainer/Reject/Margin" index="0"]
+text = "UI_MODAL_BUTTON_REJECT"
+
+[node name="Background" parent="Prompt/MarginContainer/Content/VBoxContainer/MarginContainer2/HBoxContainer/Accept" index="0"]
+color = Color(0.94902, 0.807843, 0.231373, 1)
+
+[node name="Label" parent="Prompt/MarginContainer/Content/VBoxContainer/MarginContainer2/HBoxContainer/Accept/Margin" index="0"]
+text = "UI_MODAL_BUTTON_ACCEPT"
+
 [node name="Handler" type="Node" parent="Prompt/MarginContainer/Content/VBoxContainer/MarginContainer2/HBoxContainer/Accept" index="4"]
 script = ExtResource("8_3vdt7")
+
+[node name="Colorable" parent="Header" index="0"]
+self_modulate = Color(0.94902, 0.807843, 0.231373, 1)
+
+[node name="Title" parent="Header/Content/Flow" index="0"]
+self_modulate = Color(0.94902, 0.807843, 0.231373, 1)
+text = "UI_HEADER_MAINMENU"
+
+[node name="Separator" parent="Header/Content/Flow" index="1"]
+visible = false
+
+[node name="Subtitle" parent="Header/Content/Flow" index="2"]
+visible = false
 
 [connection signal="Confirm" from="Content/Exit" to="Prompt" method="show"]
 [connection signal="Confirm" from="Prompt/MarginContainer/Content/VBoxContainer/MarginContainer2/HBoxContainer/Reject" to="Prompt" method="hide"]
 
+[editable path="Content/Start"]
+[editable path="Content/Tutorial"]
+[editable path="Content/Endurance"]
+[editable path="Content/Practice"]
+[editable path="Content/Settings"]
+[editable path="Content/Exit"]
 [editable path="Prompt"]
 [editable path="Prompt/MarginContainer/Modal"]
+[editable path="Prompt/MarginContainer/Content/VBoxContainer/MarginContainer2/HBoxContainer/Reject"]
+[editable path="Prompt/MarginContainer/Content/VBoxContainer/MarginContainer2/HBoxContainer/Accept"]

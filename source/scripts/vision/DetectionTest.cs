@@ -1,5 +1,6 @@
 using System.Threading;
 using System.Threading.Tasks;
+using GDExtension.Wrappers;
 using Godot;
 using Party.Game.Camera;
 
@@ -50,27 +51,15 @@ public abstract partial class DetectionTest<TAnnotator, TOutput> : Control
 
     private void start()
     {
-        if (image.Texture is CameraFeedTexture)
-        {
-            return;
-        }
-
         video.Stop();
         video.Hide();
         image.Show();
-        image.Texture = new CameraFeedTexture();
-
         CameraService.Current.OnFrame += onCameraFrame;
         CameraService.Current.Start();
     }
 
     private void close()
     {
-        if (image.Texture is not CameraFeedTexture)
-        {
-            return;
-        }
-
         CameraService.Current.OnFrame -= onCameraFrame;
         CameraService.Current.Close();
     }
@@ -82,7 +71,7 @@ public abstract partial class DetectionTest<TAnnotator, TOutput> : Control
         video.Hide();
         image.Show();
         image.Texture = ImageTexture.CreateFromImage(resource);
-        annotate.Annotate(task.Detect(resource, FrameSource.Image, false));
+        annotate.Annotate(task.Detect(MediaPipeImage.CreateFromImage(resource), FrameSource.Image));
     }
 
     private void onVideoSelected(string path)
@@ -94,9 +83,23 @@ public abstract partial class DetectionTest<TAnnotator, TOutput> : Control
         video.Play();
     }
 
-    private void onCameraFrame(Image image)
+    private void onCameraFrame(MediaPipeImage mp)
     {
-        annotate.Annotate(task.Detect(image, FrameSource.Stream, CameraService.Current.Accelerated));
+        annotate.Annotate(task.Detect(mp, FrameSource.Stream));
+
+        if (mp.IsGpuImage())
+        {
+            mp.ConvertToCpu();
+        }
+
+        if (image.Texture is null)
+        {
+            image.CallDeferred(TextureRect.MethodName.SetTexture, ImageTexture.CreateFromImage(mp.GetImage()));
+        }
+        else
+        {
+            image.Texture.CallDeferred(ImageTexture.MethodName.Update, mp.GetImage());
+        }
     }
 
     private void pollForStream(CancellationToken token)
@@ -111,7 +114,8 @@ public abstract partial class DetectionTest<TAnnotator, TOutput> : Control
             var t = video.GetVideoTexture();
             var i = t.GetImage();
 
-            annotate.Annotate(task.Detect(i, FrameSource.Video, false));
+            annotate.Annotate(task.Detect(MediaPipeImage.CreateFromImage(i), FrameSource.Video));
+            image.CallThreadSafe(TextureRect.MethodName.SetTexture, t);
         }
     }
 }

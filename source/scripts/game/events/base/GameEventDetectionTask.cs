@@ -1,3 +1,5 @@
+using System.Threading;
+using GDExtension.Wrappers;
 using Godot;
 using Party.Game.Camera;
 using Party.Game.Detection;
@@ -9,24 +11,17 @@ public abstract partial class GameEventDetectionTask<TOutput> : GameEvent
     private TOutput output;
     private bool hasOutput;
     private DetectionTask<TOutput> task;
+    private readonly ManualResetEventSlim reset = new ManualResetEventSlim(false);
 
     public sealed override void _Ready()
     {
-        if (CameraService.Current is not null)
-        {
-            CameraService.Current.OnFrame += onCameraFrame;
-        }
-
         task = CreateTask();
     }
 
     public sealed override void _ExitTree()
     {
-        if (CameraService.Current is not null)
-        {
-            CameraService.Current.OnFrame -= onCameraFrame;
-        }
-
+        reset.Wait();
+        reset.Dispose();
         task?.Dispose();
         task = null;
     }
@@ -44,12 +39,14 @@ public abstract partial class GameEventDetectionTask<TOutput> : GameEvent
         }
     }
 
-    private void onCameraFrame(Image image)
+    public sealed override void CameraFrameReceived(MediaPipeImage image)
     {
         if (task is not null && !hasOutput)
         {
-            output = task.Detect(image, FrameSource.Stream, CameraService.Current.Accelerated);
+            reset.Reset();
+            output = task.Detect(image, FrameSource.Stream);
             hasOutput = true;
+            reset.Set();
         }
     }
 

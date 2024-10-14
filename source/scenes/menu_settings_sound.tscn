@@ -12,22 +12,26 @@
 [node name="Input" parent="." index="0" node_paths=PackedStringArray("FirstSelected")]
 FirstSelected = NodePath("../Content/Master")
 
-[node name="Colorable" parent="Header" index="0"]
-self_modulate = Color(0.724, 0.31, 1, 1)
-
-[node name="Title" parent="Header/Content/Flow" index="0"]
-self_modulate = Color(0.724, 0.31, 1, 1)
-text = "UI_HEADER_SETTINGS"
-
-[node name="Subtitle" parent="Header/Content/Flow" index="2"]
-text = "UI_HEADER_SETTINGS_SOUND"
-
 [node name="Master" parent="Content" index="0" instance=ExtResource("2_ps2l8")]
 layout_mode = 2
 Text = "UI_SETTINGS_SOUND_MASTER"
 Maximum = 100.0
+Current = 100.0
 Step = 1.0
 metadata/tooltip = "UI_TOOLTIP_SETTINGS_SOUND_MASTER"
+
+[node name="Label" parent="Content/Master/Icon" index="0"]
+text = "UI_SETTINGS_SOUND_MASTER"
+
+[node name="Gradient" parent="Content/Master/Body/Base/Fill" index="0"]
+anchor_right = 1.0
+
+[node name="Knob" parent="Content/Master/Body/Drag" index="0"]
+anchor_left = 1.0
+anchor_right = 1.0
+
+[node name="Value" parent="Content/Master" index="7"]
+text = "100"
 
 [node name="Handler" type="Node" parent="Content/Master" index="8"]
 script = ExtResource("3_48wpv")
@@ -36,8 +40,22 @@ script = ExtResource("3_48wpv")
 layout_mode = 2
 Text = "UI_SETTINGS_SOUND_MUSIC"
 Maximum = 100.0
+Current = 100.0
 Step = 1.0
 metadata/tooltip = "UI_TOOLTIP_SETTINGS_SOUND_MUSIC"
+
+[node name="Label" parent="Content/Music/Icon" index="0"]
+text = "UI_SETTINGS_SOUND_MUSIC"
+
+[node name="Gradient" parent="Content/Music/Body/Base/Fill" index="0"]
+anchor_right = 1.0
+
+[node name="Knob" parent="Content/Music/Body/Drag" index="0"]
+anchor_left = 1.0
+anchor_right = 1.0
+
+[node name="Value" parent="Content/Music" index="7"]
+text = "100"
 
 [node name="Handler" type="Node" parent="Content/Music" index="8"]
 script = ExtResource("3_48wpv")
@@ -47,8 +65,22 @@ Bus = 1
 layout_mode = 2
 Text = "UI_SETTINGS_SOUND_EFFECTS"
 Maximum = 100.0
+Current = 100.0
 Step = 1.0
 metadata/tooltip = "UI_TOOLTIP_SETTINGS_SOUND_EFFECT"
+
+[node name="Label" parent="Content/Effects/Icon" index="0"]
+text = "UI_SETTINGS_SOUND_EFFECTS"
+
+[node name="Gradient" parent="Content/Effects/Body/Base/Fill" index="0"]
+anchor_right = 1.0
+
+[node name="Knob" parent="Content/Effects/Body/Drag" index="0"]
+anchor_left = 1.0
+anchor_right = 1.0
+
+[node name="Value" parent="Content/Effects" index="7"]
+text = "100"
 
 [node name="Handler" type="Node" parent="Content/Effects" index="8"]
 script = ExtResource("3_48wpv")
@@ -58,8 +90,22 @@ Bus = 2
 layout_mode = 2
 Text = "UI_SETTINGS_SOUND_VOICE"
 Maximum = 100.0
+Current = 100.0
 Step = 1.0
 metadata/tooltip = "UI_TOOLTIP_SETTINGS_SOUND_VOICE"
+
+[node name="Label" parent="Content/Voice/Icon" index="0"]
+text = "UI_SETTINGS_SOUND_VOICE"
+
+[node name="Gradient" parent="Content/Voice/Body/Base/Fill" index="0"]
+anchor_right = 1.0
+
+[node name="Knob" parent="Content/Voice/Body/Drag" index="0"]
+anchor_left = 1.0
+anchor_right = 1.0
+
+[node name="Value" parent="Content/Voice" index="7"]
+text = "100"
 
 [node name="Handler" type="Node" parent="Content/Voice" index="8"]
 script = ExtResource("3_48wpv")
@@ -73,5 +119,31 @@ Icon = ExtResource("4_aqb7u")
 Default = Color(1, 0.31, 0.3215, 1)
 metadata/tooltip = "UI_TOOLTIP_BACK"
 
+[node name="Background" parent="Content/Back" index="0"]
+color = Color(1, 0.31, 0.3215, 1)
+
+[node name="Icon" parent="Content/Back/Content/Padder/Margin" index="0"]
+visible = true
+texture = ExtResource("4_aqb7u")
+
+[node name="Label" parent="Content/Back/Content" index="1"]
+text = "UI_BUTTON_BACK"
+
 [node name="Handler" type="Node" parent="Content/Back" index="4"]
 script = ExtResource("5_ay6oc")
+
+[node name="Colorable" parent="Header" index="0"]
+self_modulate = Color(0.724, 0.31, 1, 1)
+
+[node name="Title" parent="Header/Content/Flow" index="0"]
+self_modulate = Color(0.724, 0.31, 1, 1)
+text = "UI_HEADER_SETTINGS"
+
+[node name="Subtitle" parent="Header/Content/Flow" index="2"]
+text = "UI_HEADER_SETTINGS_SOUND"
+
+[editable path="Content/Master"]
+[editable path="Content/Music"]
+[editable path="Content/Effects"]
+[editable path="Content/Voice"]
+[editable path="Content/Back"]

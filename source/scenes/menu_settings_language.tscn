@@ -13,22 +13,22 @@
 [node name="Input" parent="." index="0" node_paths=PackedStringArray("FirstSelected")]
 FirstSelected = NodePath("../Content/English")
 
-[node name="Colorable" parent="Header" index="0"]
-self_modulate = Color(0.724, 0.31, 1, 1)
-
-[node name="Title" parent="Header/Content/Flow" index="0"]
-self_modulate = Color(0.724, 0.31, 1, 1)
-text = "UI_HEADER_SETTINGS"
-
-[node name="Subtitle" parent="Header/Content/Flow" index="2"]
-text = "UI_HEADER_SETTINGS_LANGUAGE"
-
 [node name="English" parent="Content" index="0" instance=ExtResource("2_oxvrk")]
 custom_minimum_size = Vector2(1000, 100)
 layout_mode = 2
 Text = "English (US)"
 Icon = ExtResource("3_ltoqg")
 Default = Color(0.529412, 0.807843, 0.921569, 1)
+
+[node name="Background" parent="Content/English" index="0"]
+color = Color(0.529412, 0.807843, 0.921569, 1)
+
+[node name="Icon" parent="Content/English/Content/Padder/Margin" index="0"]
+visible = true
+texture = ExtResource("3_ltoqg")
+
+[node name="Label" parent="Content/English/Content" index="1"]
+text = "English (US)"
 
 [node name="Handler" type="Node" parent="Content/English" index="4"]
 script = ExtResource("4_xjyoy")
@@ -39,6 +39,16 @@ layout_mode = 2
 Text = "Filipino"
 Icon = ExtResource("4_4drdg")
 Default = Color(0.254902, 0.411765, 0.882353, 1)
+
+[node name="Background" parent="Content/Filipino" index="0"]
+color = Color(0.254902, 0.411765, 0.882353, 1)
+
+[node name="Icon" parent="Content/Filipino/Content/Padder/Margin" index="0"]
+visible = true
+texture = ExtResource("4_4drdg")
+
+[node name="Label" parent="Content/Filipino/Content" index="1"]
+text = "Filipino"
 
 [node name="Handler" type="Node" parent="Content/Filipino" index="4"]
 script = ExtResource("4_xjyoy")
@@ -52,5 +62,29 @@ Icon = ExtResource("5_adhuh")
 Default = Color(1, 0.31, 0.3215, 1)
 metadata/tooltip = "UI_TOOLTIP_BACK"
 
+[node name="Background" parent="Content/Back" index="0"]
+color = Color(1, 0.31, 0.3215, 1)
+
+[node name="Icon" parent="Content/Back/Content/Padder/Margin" index="0"]
+visible = true
+texture = ExtResource("5_adhuh")
+
+[node name="Label" parent="Content/Back/Content" index="1"]
+text = "UI_BUTTON_BACK"
+
 [node name="Handler" type="Node" parent="Content/Back" index="4"]
 script = ExtResource("6_5htfs")
+
+[node name="Colorable" parent="Header" index="0"]
+self_modulate = Color(0.724, 0.31, 1, 1)
+
+[node name="Title" parent="Header/Content/Flow" index="0"]
+self_modulate = Color(0.724, 0.31, 1, 1)
+text = "UI_HEADER_SETTINGS"
+
+[node name="Subtitle" parent="Header/Content/Flow" index="2"]
+text = "UI_HEADER_SETTINGS_LANGUAGE"
+
+[editable path="Content/English"]
+[editable path="Content/Filipino"]
+[editable path="Content/Back"]

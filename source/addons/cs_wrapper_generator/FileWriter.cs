@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using Godot;
 
+#if TOOLS
+
 namespace GDExtensionAPIGenerator;
 
 internal static class FileWriter
@@ -22,3 +24,5 @@ internal static class FileWriter
             .Scan();
     }
 }
+
+#endif

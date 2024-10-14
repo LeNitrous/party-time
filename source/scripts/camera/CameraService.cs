@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using GDExtension.Wrappers;
 using Godot;
 
 namespace Party.Game.Camera;
@@ -21,7 +22,7 @@ public sealed partial class CameraService : Node, ICameraFeed
 
     public event Action<CameraFeed> OnFeedRemoved;
 
-    public event Action<Image> OnFrame
+    public event Action<MediaPipeImage> OnFrame
     {
         add => feed.OnFrame += value;
         remove => feed.OnFrame -= value;
@@ -38,8 +39,6 @@ public sealed partial class CameraService : Node, ICameraFeed
         add => feed.OnClose += value;
         remove => feed.OnClose -= value;
     }
-
-    public bool Accelerated => feed.Accelerated;
     
     private Impl impl;
     private CameraFeedSwitchable feed;
@@ -119,8 +118,6 @@ public sealed partial class CameraService : Node, ICameraFeed
 
         public override int Height => current < owner.feeds.Count ? owner.feeds[current].Height : 0;
 
-        public override bool Accelerated => current < owner.feeds.Count && owner.feeds[current].Accelerated;
-
         public int Current
         {
             get => current;
@@ -146,11 +143,6 @@ public sealed partial class CameraService : Node, ICameraFeed
         {
             this.owner = owner;
             this.owner.OnFeedAdded += onFeedAdded;
-        }
-
-        public bool IsAccelerated()
-        {
-            return Accelerated;
         }
 
         public override void Start()

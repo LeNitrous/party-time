@@ -7,14 +7,18 @@ namespace Party.Game.Experience.Managers;
 
 public sealed partial class GameCountdown : Node
 {
+    public static Announcer Voice = Announcer.Random;
+
     private Timer time;
     private Timer wait;
+    private string announcer;
     private bool isCountdownActive;
 
     public override void _Ready()
     {
         time = GetNode<Timer>("Time");
         wait = GetNode<Timer>("Wait");
+        announcer = getAnnouncerFolder(Voice);
     }
 
     private void startCountdownVoice(int from)
@@ -140,7 +144,7 @@ public sealed partial class GameCountdown : Node
 
     private void speak(string line)
     {
-        string path = Path.Combine("res://", "sounds", "voice", "a", Path.ChangeExtension(line, ".ogg"));
+        string path = Path.Combine("res://", "sounds", "voice", announcer, Path.ChangeExtension(line, ".ogg"));
 
         if (ResourceLoader.Exists(path))
         {
@@ -152,8 +156,18 @@ public sealed partial class GameCountdown : Node
         }
     }
 
-    private static readonly string[] countdown = new string[]
+    private static string getAnnouncerFolder(Announcer announcer)
     {
+        return announcer switch
+        {
+            Announcer.Male => announcers[0],
+            Announcer.Female => announcers[1],
+            _ => announcers.GetRandom(),
+        };
+    }
+
+    private static readonly string[] countdown =
+    [
         "1.ogg",
         "2.ogg",
         "3.ogg",
@@ -164,5 +178,13 @@ public sealed partial class GameCountdown : Node
         "8.ogg",
         "9.ogg",
         "10.ogg",
-    };
+    ];
+    private static readonly string[] announcers = ["a", "b"];
+
+    public enum Announcer
+    {
+        Male,
+        Female,
+        Random
+    }
 }

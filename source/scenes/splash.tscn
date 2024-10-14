@@ -1,0 +1,194 @@
+[gd_scene load_steps=17 format=3 uid="uid://bahqcjamyqvvb"]
+
+[ext_resource type="Script" path="res://addons/splash_screen_wizard/splash_screen.gd" id="1_2dmof"]
+[ext_resource type="Script" path="res://scripts/menu/ButtonSceneStackPush.cs" id="1_y5qx3"]
+[ext_resource type="Script" path="res://addons/splash_screen_wizard/splash_screen_slide.gd" id="2_xmjx5"]
+[ext_resource type="Script" path="res://addons/splash_screen_wizard/transitions/slide_transition_fade.gd" id="3_y1k40"]
+[ext_resource type="Texture2D" uid="uid://y4ljjpnxgax" path="res://textures/godot.svg" id="4_4f0ij"]
+[ext_resource type="FontFile" uid="uid://cuj4gq8fufdl" path="res://fonts/Sublima-ExtraBold.otf" id="4_tnx0c"]
+[ext_resource type="Texture2D" uid="uid://d2x1hymf606xy" path="res://logo.png" id="5_ok2b6"]
+
+[sub_resource type="Resource" id="Resource_ccnx1"]
+script = ExtResource("3_y1k40")
+fade_type = 0
+duration = 0.5
+transition_type = 0
+
+[sub_resource type="Resource" id="Resource_l2tnv"]
+script = ExtResource("3_y1k40")
+fade_type = 1
+duration = 0.5
+transition_type = 0
+
+[sub_resource type="FontVariation" id="FontVariation_r5p4t"]
+base_font = ExtResource("4_tnx0c")
+spacing_top = 4
+
+[sub_resource type="LabelSettings" id="LabelSettings_n8r6b"]
+font = SubResource("FontVariation_r5p4t")
+font_size = 64
+
+[sub_resource type="LabelSettings" id="LabelSettings_vu5mc"]
+font = SubResource("FontVariation_r5p4t")
+font_size = 32
+
+[sub_resource type="Resource" id="Resource_85bwd"]
+script = ExtResource("3_y1k40")
+fade_type = 0
+duration = 0.5
+transition_type = 0
+
+[sub_resource type="Resource" id="Resource_1anjj"]
+script = ExtResource("3_y1k40")
+fade_type = 1
+duration = 0.5
+transition_type = 0
+
+[sub_resource type="Resource" id="Resource_e2jb8"]
+script = ExtResource("3_y1k40")
+fade_type = 0
+duration = 0.5
+transition_type = 0
+
+[sub_resource type="Resource" id="Resource_8d1od"]
+script = ExtResource("3_y1k40")
+fade_type = 1
+duration = 0.5
+transition_type = 0
+
+[node name="Splash" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Push" type="Node" parent="."]
+script = ExtResource("1_y5qx3")
+Scene = "res://scenes/title.tscn"
+Append = false
+
+[node name="Fill" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0862745, 0.0862745, 0.0862745, 1)
+
+[node name="Slides" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_2dmof")
+skip_input_action = &"ui_select"
+delete_after_finished = false
+
+[node name="Recommendation" type="Control" parent="Slides"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_xmjx5")
+transition_in = SubResource("Resource_ccnx1")
+transition_out = SubResource("Resource_l2tnv")
+duration = 5.0
+
+[node name="Caution" type="Label" parent="Slides/Recommendation"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -92.5
+offset_top = -89.0
+offset_right = 92.5
+offset_bottom = -32.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Reminder"
+label_settings = SubResource("LabelSettings_n8r6b")
+
+[node name="Description" type="Label" parent="Slides/Recommendation"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -426.0
+offset_top = 10.0
+offset_right = 427.0
+offset_bottom = 87.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Before playing the game, please ensure that your surroundings are free from hazards to avoid risk of injury to yourself or damage to properties."
+label_settings = SubResource("LabelSettings_vu5mc")
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Godot" type="Control" parent="Slides"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_xmjx5")
+transition_in = SubResource("Resource_85bwd")
+transition_out = SubResource("Resource_1anjj")
+duration = 3.0
+
+[node name="Godot" type="TextureRect" parent="Slides/Godot"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -171.0
+offset_top = -180.0
+offset_right = 171.0
+offset_bottom = 180.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_4f0ij")
+
+[node name="Logo" type="Control" parent="Slides"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_xmjx5")
+transition_in = SubResource("Resource_e2jb8")
+transition_out = SubResource("Resource_8d1od")
+duration = 3.0
+
+[node name="Logo" type="TextureRect" parent="Slides/Logo"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -346.5
+offset_top = -147.5
+offset_right = 346.5
+offset_bottom = 147.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_ok2b6")
+
+[connection signal="finished" from="Slides" to="Push" method="OnConfirm"]

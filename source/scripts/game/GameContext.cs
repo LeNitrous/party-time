@@ -1,3 +1,4 @@
+using GDExtension.Wrappers;
 using Godot;
 using Party.Game.Camera;
 using Party.Game.Experience.Directors;
@@ -7,6 +8,8 @@ namespace Party.Game.Experience;
 
 public sealed partial class GameContext : Node
 {
+    public static GameDirector Director = null;
+
     private GameEvent game;
     private Phase current;
     private CanvasLayer view;
@@ -14,24 +17,27 @@ public sealed partial class GameContext : Node
     private Timer wait;
     private GameDirector director;
     private Completion completion;
+    private TextureRect camera;
 
     public override void _Ready()
     {
         if (CameraService.Current is not null)
         {
-            GetNode<TextureRect>("%Camera").Texture = new CameraFeedTexture();
+            CameraService.Current.OnFrame += onCameraFrame;
             CameraService.Current.Start();
         }
 
         time = GetNode<Timer>("Time");
         wait = GetNode<Timer>("Wait");
         view = GetNode<CanvasLayer>("%View");
+        camera = GetNode<TextureRect>("%Camera");
     }
 
     public override void _ExitTree()
     {
         if (CameraService.Current is not null)
         {
+            CameraService.Current.OnFrame -= onCameraFrame;
             CameraService.Current.Close();
         }
     }
@@ -165,12 +171,38 @@ public sealed partial class GameContext : Node
 
     public void Start()
     {
-        Start(new GameDirectorDummy(2));
+        Start(Director ?? new GameDirectorDummy(2));
     }
 
     public void Start(GameDirector director)
     {
         this.director = director;
+    }
+
+    private void onCameraFrame(MediaPipeImage mp)
+    {
+        if (mp.IsGpuImage())
+        {
+            mp.ConvertToCpu();
+        }
+
+        game?.CameraFrameReceived(mp);
+
+        // This forsaken line is causing memory leaks that only happens in C#
+        using var image = mp.GetImage();
+
+        if (camera.Texture.GetSize() == image.GetSize())
+        {
+            camera.Texture.CallDeferred(ImageTexture.MethodName.Update, image);
+        }
+        else
+        {
+            camera.Texture.CallDeferred(ImageTexture.MethodName.SetImage, image);
+        }
+
+        // DO NOT DO THIS AT ANY COST BUT WE ARE FORCED
+        System.GC.Collect(System.GC.MaxGeneration, System.GCCollectionMode.Forced);
+        System.GC.WaitForPendingFinalizers();
     }
 
     private static Phase getNextPhase(Phase phase)

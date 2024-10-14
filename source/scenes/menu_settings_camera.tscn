@@ -1,10 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://6xltl66ul4q6"]
+[gd_scene load_steps=8 format=3 uid="uid://6xltl66ul4q6"]
 
 [ext_resource type="PackedScene" uid="uid://cuvvyidg5h8uv" path="res://scenes/menu_base_select.tscn" id="1_2tpkm"]
 [ext_resource type="Script" path="res://scripts/menu/settings/SelectCameraDevice.cs" id="2_4un1f"]
 [ext_resource type="PackedScene" uid="uid://hnukac2fnvvx" path="res://scenes/components/ui_button_small.tscn" id="2_j4ugt"]
 [ext_resource type="Script" path="res://scripts/menu/ButtonSceneStackExit.cs" id="3_8k3sm"]
 [ext_resource type="PackedScene" uid="uid://tcda8fvrbhdh" path="res://scenes/components/ui_select_caret.tscn" id="4_4cix3"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_5gfab"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_486mr"]
 bg_color = Color(0, 0, 0, 0)
@@ -19,16 +21,6 @@ script = ExtResource("2_4un1f")
 
 [node name="Input" parent="." index="0" node_paths=PackedStringArray("FirstSelected")]
 FirstSelected = NodePath("../Select")
-
-[node name="Colorable" parent="Header" index="0"]
-self_modulate = Color(0.724, 0.31, 1, 1)
-
-[node name="Title" parent="Header/Content/Flow" index="0"]
-self_modulate = Color(0.724, 0.31, 1, 1)
-text = "UI_HEADER_SETTINGS"
-
-[node name="Subtitle" parent="Header/Content/Flow" index="2"]
-text = "UI_HEADER_SETTINGS_CAMERA"
 
 [node name="Label" type="Label" parent="." index="5"]
 self_modulate = Color(0.3, 0.3, 0.3, 1)
@@ -55,6 +47,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+texture = SubResource("ImageTexture_5gfab")
 expand_mode = 3
 
 [node name="Indicator" type="PanelContainer" parent="Preview" index="1"]
@@ -67,6 +60,16 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_486mr")
+
+[node name="Colorable" parent="Header" index="0"]
+self_modulate = Color(0.724, 0.31, 1, 1)
+
+[node name="Title" parent="Header/Content/Flow" index="0"]
+self_modulate = Color(0.724, 0.31, 1, 1)
+text = "UI_HEADER_SETTINGS"
+
+[node name="Subtitle" parent="Header/Content/Flow" index="2"]
+text = "UI_HEADER_SETTINGS_CAMERA"
 
 [node name="Select" parent="." index="8" instance=ExtResource("4_4cix3")]
 unique_name_in_owner = true
@@ -95,5 +98,13 @@ Text = "UI_BUTTON_BACK"
 Default = Color(1, 0.31, 0.3215, 1)
 metadata/tooltip = "UI_TOOLTIP_BACK"
 
+[node name="Background" parent="Back" index="0"]
+color = Color(1, 0.31, 0.3215, 1)
+
+[node name="Label" parent="Back/Margin" index="0"]
+text = "UI_BUTTON_BACK"
+
 [node name="Handler" type="Node" parent="Back" index="4"]
 script = ExtResource("3_8k3sm")
+
+[editable path="Back"]

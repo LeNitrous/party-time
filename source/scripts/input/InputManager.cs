@@ -81,7 +81,7 @@ public partial class InputManager : Node
 
         if (input.IsActionPressed("ui_focus_next") || input.IsActionPressed("ui_focus_prev") || input.IsActionPressed("ui_up") || input.IsActionPressed("ui_down") || input.IsActionPressed("ui_left") || input.IsActionPressed("ui_right"))
         {
-            if (FirstSelected.IsInsideTree() && (Focused is null || Focused.IsEmpty))
+            if (FirstSelected is not null && FirstSelected.IsInsideTree() && (Focused is null || Focused.IsEmpty))
             {
                 FirstSelected.CallDeferred(Control.MethodName.GrabFocus);
             }

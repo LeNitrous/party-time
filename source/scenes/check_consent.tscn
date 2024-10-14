@@ -1,0 +1,58 @@
+[gd_scene load_steps=3 format=3 uid="uid://dyn7mga8ds1m0"]
+
+[ext_resource type="PackedScene" uid="uid://ceh6x7s2368uo" path="res://scenes/components/ui_modal_prompt.tscn" id="1_2qtr8"]
+[ext_resource type="Script" path="res://scripts/PermissionCheck.cs" id="1_41sky"]
+
+[node name="Check" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_41sky")
+
+[node name="Fill" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0862745, 0.0862745, 0.0862745, 1)
+
+[node name="Prompt" parent="." instance=ExtResource("1_2qtr8")]
+visible = false
+layout_mode = 1
+
+[node name="Blur" parent="Prompt" index="0"]
+visible = false
+
+[node name="Background" parent="Prompt" index="1"]
+visible = false
+
+[node name="Accent" parent="Prompt/MarginContainer/Modal/Header" index="0"]
+modulate = Color(1, 0, 0, 1)
+
+[node name="Title" parent="Prompt/MarginContainer/Modal/Header/MarginContainer/HBoxContainer" index="0"]
+text = "UI_MODAL_TITLE_PERMISSION_REQUIRED"
+
+[node name="Text" parent="Prompt/MarginContainer/Content/VBoxContainer/MarginContainer" index="0"]
+custom_minimum_size = Vector2(500, 0)
+size_flags_vertical = 1
+text = "UI_MODAL_PERMISSION_REQUEST"
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Reject" parent="Prompt/MarginContainer/Content/VBoxContainer/MarginContainer2/HBoxContainer" index="0"]
+visible = false
+
+[node name="Background" parent="Prompt/MarginContainer/Content/VBoxContainer/MarginContainer2/HBoxContainer/Accept" index="0"]
+color = Color(0.94902, 0.807843, 0.231373, 1)
+
+[node name="Label" parent="Prompt/MarginContainer/Content/VBoxContainer/MarginContainer2/HBoxContainer/Accept/Margin" index="0"]
+text = "UI_MODAL_BUTTON_ACCEPT"
+
+[editable path="Prompt"]
+[editable path="Prompt/MarginContainer/Modal"]
+[editable path="Prompt/MarginContainer/Content/VBoxContainer/MarginContainer2/HBoxContainer/Accept"]
