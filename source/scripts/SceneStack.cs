@@ -85,7 +85,7 @@ public partial class SceneStack : Node
             scenes.Pop();
         }
 
-        CallDeferred(MethodName.changeSceneToFile, path);
+        CallDeferred(MethodName.changeSceneToFile, scenes.Pop());
         return true;
     }
 
