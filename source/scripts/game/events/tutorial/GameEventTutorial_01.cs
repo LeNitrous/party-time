@@ -4,11 +4,11 @@ public sealed partial class GameEventTutorial_01 : GameEvent
 {
     private static readonly string[] dialogue =
     [
-        "Welcome to Party Time!",
-        "The objective is really simple.",
-        "Pay attention and follow instructions!",
-        "Following the instructions will reward you points!",
-        "Like this!"
+        "GAME_TUTORIAL_01_1",
+        "GAME_TUTORIAL_01_2",
+        "GAME_TUTORIAL_01_3",
+        "GAME_TUTORIAL_01_4",
+        "GAME_TUTORIAL_01_5",
     ];
 
     public override void _Ready()

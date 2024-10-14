@@ -4,8 +4,8 @@ public sealed partial class GameEventTutorial_05 : GameEvent
 {
     private static readonly string[] dialogue =
     [
-        "Congratulations on completing the tutorial.",
-        "Now go ahead and play to experience what this game has to offer!",
+        "GAME_TUTORIAL_05_1",
+        "GAME_TUTORIAL_05_2",
     ];
 
     public override void _Ready()

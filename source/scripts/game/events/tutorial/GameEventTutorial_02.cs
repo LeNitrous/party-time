@@ -6,9 +6,9 @@ public sealed partial class GameEventTutorial_02 : GameEvent
 
     private static readonly string[] dialogue =
     [
-        "Some events are timed as you can see in the bottom right corner.",
-        "Make sure you finish the objectives before the timer runs out!",
-        "But since you've been paying attention, you win this event again!",
+        "GAME_TUTORIAL_02_1",
+        "GAME_TUTORIAL_02_2",
+        "GAME_TUTORIAL_02_3",
     ];
 
     public override void _Ready()

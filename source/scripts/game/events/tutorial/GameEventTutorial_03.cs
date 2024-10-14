@@ -7,8 +7,8 @@ public sealed partial class GameEventTutorial_03 : GameEventGestureRecognizer
 {
     private static readonly string[] dialogue =
     [
-        "Many of the instructions in this game require you to perform an action.",
-        "Lets keep things simple. If you've been paying attention so far, give me a thumbs up.",
+        "GAME_TUTORIAL_03_1",
+        "GAME_TUTORIAL_03_2",
     ];
 
     private bool isDialogueFinished;

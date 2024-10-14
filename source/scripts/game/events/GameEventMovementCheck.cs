@@ -8,12 +8,21 @@ public abstract partial class GameEventMovementCheck : GameEventPoseLandmarker
 {
     private Vector3[] current;
 
-    protected virtual float Threshold => 0.05f;
-
+    protected virtual float Threshold => 0.015f;
     protected virtual int RequiredLandmarksMoved => 10;
+
+    protected virtual bool ShouldDetect()
+    {
+        return true;
+    }
 
     protected sealed override void OnDetect(PoseLandmarkerResult output)
     {
+        if (!ShouldDetect())
+        {
+            return;
+        }
+
         if (current is null)
         {
             current = output.ToArray();
@@ -22,7 +31,7 @@ public abstract partial class GameEventMovementCheck : GameEventPoseLandmarker
 
         int landmarksMoved = 0;
 
-        for (int i = 0; i < (int)PoseLandmark.Maximum; i++)
+        for (int i = 0; i < (int)PoseLandmark.LeftKnee; i++)
         {
             var min = current[i] - (Vector3.One * Threshold);
             var max = current[i] + (Vector3.One * Threshold);

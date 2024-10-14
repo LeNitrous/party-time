@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="GameEventMetadata" load_steps=3 format=3 uid="uid://waecpqfuxlkk"]
+
+[ext_resource type="PackedScene" uid="uid://cahva6617ol0m" path="res://scenes/minigames/minigame_gesture_simonsays.tscn" id="1_av5y0"]
+[ext_resource type="Script" path="res://scripts/game/GameEventMetadata.cs" id="1_uk0f5"]
+
+[resource]
+script = ExtResource("1_uk0f5")
+name = "GAME_SIMONSAYS"
+description = "GAME_DESC_SIMONSAYS"
+scene = ExtResource("1_av5y0")
+weight = 1.0

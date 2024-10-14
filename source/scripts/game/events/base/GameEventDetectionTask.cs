@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using GDExtension.Wrappers;
 using Godot;
@@ -20,10 +21,16 @@ public abstract partial class GameEventDetectionTask<TOutput> : GameEvent
 
     public override void _ExitTree()
     {
-        reset.Wait();
-        reset.Dispose();
-        task?.Dispose();
-        task = null;
+        if (reset.Wait(TimeSpan.FromSeconds(5)))
+        {
+            reset.Dispose();
+            task?.Dispose();
+            task = null;
+        }
+        else
+        {
+            GD.PrintErr(nameof(GameEventDetectionTask<TOutput>), " :: failed to cleanup resources!");
+        }
     }
 
     public override void _Process(double delta)
@@ -39,13 +46,15 @@ public abstract partial class GameEventDetectionTask<TOutput> : GameEvent
         }
     }
 
-    public sealed override void CameraFrameReceived(MediaPipeImage image)
+    public sealed override void OnFrame(MediaPipeImage image)
     {
         if (task is not null && !hasOutput)
         {
             reset.Reset();
+
             output = task.Detect(image, FrameSource.Stream);
             hasOutput = true;
+            
             reset.Set();
         }
     }

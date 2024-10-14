@@ -114,7 +114,7 @@ offset_right = 92.5
 offset_bottom = -32.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "Reminder"
+text = "UI_DISCLAIMER_REMINDER"
 label_settings = SubResource("LabelSettings_n8r6b")
 
 [node name="Description" type="Label" parent="Slides/Recommendation"]
@@ -130,7 +130,7 @@ offset_right = 427.0
 offset_bottom = 87.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "Before playing the game, please ensure that your surroundings are free from hazards to avoid risk of injury to yourself or damage to properties."
+text = "UI_DISCLAIMER_REMINDER_TEXT"
 label_settings = SubResource("LabelSettings_vu5mc")
 horizontal_alignment = 1
 autowrap_mode = 3

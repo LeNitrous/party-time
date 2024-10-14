@@ -17,7 +17,7 @@ public sealed class GameDirectorStandard : GameDirectorRandomized
     {
         int next = current + 1;
 
-        if (next >= (int)Length * 10)
+        if (next >= getRoundCount(Length))
         {
             game = null;
             return false;
@@ -51,5 +51,15 @@ public sealed class GameDirectorStandard : GameDirectorRandomized
         Medium,
 
         Long,
+    }
+
+    private static int getRoundCount(GameLength length)
+    {
+        return length switch
+        {
+            GameLength.Short => 10,
+            GameLength.Medium => 15,
+            _ => 20,
+        };
     }
 }

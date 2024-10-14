@@ -111,6 +111,7 @@ public sealed partial class GameContext : Node
         if (next is Phase.Starting)
         {
             director.OnStart();
+            game.OnStart();
 
             if (game.Duration > 0.0)
             {
@@ -147,6 +148,7 @@ public sealed partial class GameContext : Node
                 raise(game.GetCompletionOnTimeout());
             }
 
+            game.OnFinish();
             director.OnFinish(completion);
 
             game.QueueFree();
@@ -196,7 +198,7 @@ public sealed partial class GameContext : Node
             mp.ConvertToCpu();
         }
 
-        game?.CameraFrameReceived(mp);
+        game?.OnFrame(mp);
 
         // This forsaken line is causing memory leaks that only happens in C#
         using var image = mp.GetImage();

@@ -1,7 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://d2wvsblap8ccn"]
+[gd_scene load_steps=4 format=3 uid="uid://d2wvsblap8ccn"]
 
 [ext_resource type="Script" path="res://scripts/game/events/GameEventStandStill.cs" id="1_xllvc"]
-[ext_resource type="LabelSettings" uid="uid://crkkitv4n21q3" path="res://fonts/settings/ui_control.tres" id="2_ej8uk"]
+[ext_resource type="FontFile" uid="uid://cuj4gq8fufdl" path="res://fonts/Sublima-ExtraBold.otf" id="2_g61w6"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_4213a"]
+font = ExtResource("2_g61w6")
+font_size = 64
+outline_size = 120
+outline_color = Color(0.0862745, 0.0862745, 0.0862745, 1)
+shadow_size = 20
+shadow_color = Color(0.0862745, 0.0862745, 0.0862745, 1)
+shadow_offset = Vector2(4, 4)
 
 [node name="Game" type="Control"]
 layout_mode = 3
@@ -16,12 +25,10 @@ script = ExtResource("1_xllvc")
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
-offset_left = 160.0
 offset_top = 30.0
-offset_right = -160.0
-offset_bottom = 41.0
+offset_bottom = 96.0
 grow_horizontal = 2
 text = "GAME_HINT_STANDSTILL"
-label_settings = ExtResource("2_ej8uk")
+label_settings = SubResource("LabelSettings_4213a")
 horizontal_alignment = 1
 autowrap_mode = 3

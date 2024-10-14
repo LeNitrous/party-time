@@ -17,7 +17,15 @@ public abstract partial class GameEvent : Node
         return Completion.LoseTimeout;
     }
 
-    public virtual void CameraFrameReceived(MediaPipeImage image)
+    public virtual void OnStart()
+    {
+    }
+
+    public virtual void OnFrame(MediaPipeImage image)
+    {
+    }
+
+    public virtual void OnFinish()
     {
     }
 

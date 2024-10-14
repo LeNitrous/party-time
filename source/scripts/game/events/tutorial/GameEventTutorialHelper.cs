@@ -25,7 +25,7 @@ public sealed partial class GameEventTutorialHelper : Node
     {
         current = -1;
         dialogue = lines;
-        timer.WaitTime = 3.0;
+        timer.WaitTime = 4.0;
         timer.Start();
         onTimeout();
     }
