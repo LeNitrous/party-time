@@ -7,11 +7,11 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/party.sln",
+                "${workspaceFolder}/Party.Game.sln",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary;ForceNoAlign"
             ],
             "problemMatcher": "$msCompile"
-        }  
+        }
     ]
 }
