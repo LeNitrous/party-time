@@ -22,7 +22,7 @@ public abstract class DetectionTask<TTask, TTaskOutput, TOutput> : DetectionTask
     private TTask task;
     private TTaskOutput output;
     private FrameSource source;
-    private AutoResetEvent reset;
+    private ManualResetEventSlim reset;
     private readonly string taskFilePath;
 
     protected DetectionTask(string taskFilePath)
@@ -75,10 +75,11 @@ public abstract class DetectionTask<TTask, TTaskOutput, TOutput> : DetectionTask
         }
         else if (source is FrameSource.Stream)
         {
-            reset ??= new AutoResetEvent(false);
+            reset ??= new ManualResetEventSlim();
 
+            reset.Reset();
             Detect(task, image, default, time);
-            reset.WaitOne();
+            reset.Wait();
 
             if (output is not null)
             {
