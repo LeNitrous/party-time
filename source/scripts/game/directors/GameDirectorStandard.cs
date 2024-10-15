@@ -1,4 +1,3 @@
-using System;
 using System.Diagnostics.CodeAnalysis;
 using Godot;
 using Party.Game.Experience.Events;
@@ -11,7 +10,7 @@ public sealed class GameDirectorStandard : GameDirectorRandomized
     public static GameLength Length = GameLength.Medium;
 
     private int combo;
-    private int current;
+    private int current = -1;
 
     public override bool Next([NotNullWhen(true)] out GameEvent game)
     {
@@ -29,7 +28,7 @@ public sealed class GameDirectorStandard : GameDirectorRandomized
 
     public override float GetSpeed()
     {
-        return Shift ? Mathf.Lerp(1.0f, 1.5f, Mathf.Remap(combo, 0.0f, 5.0f, 0.0f, 1.0f)) : base.GetSpeed();
+        return Shift && combo >= 3 ? Mathf.Lerp(1.0f, 1.5f, Mathf.Remap(combo, 3.0f, 6.0f, 0.0f, 1.0f)) : base.GetSpeed();
     }
 
     public override void OnFinish(Completion completion)
