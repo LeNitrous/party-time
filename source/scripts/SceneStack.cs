@@ -80,7 +80,7 @@ public partial class SceneStack : Node
             return false;
         }
 
-        for (int i = scenes.Count; i > index; i--)
+        for (int i = scenes.Count - 1; i > index; i--)
         {
             scenes.Pop();
         }
