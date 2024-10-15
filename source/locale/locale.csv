@@ -126,3 +126,15 @@ GAME_HINT_SIMONSAYS_POINTSUP,Point your index finger up!,Itaas ang iyong hintutu
 GAME_HINT_SIMONSAYS_THUMBSUP,Give them a thumbs up!,Bigyan siya ng thumbs up!
 GAME_HINT_SIMONSAYS_VICTORY,Do a V sign with your hands!,Gawin ang V sign gamit ang iyong kamay!
 GAME_HINT_SIMONSAYS_THUMBSDOWN,Give them a thumbs down!,Bigyan siya ng thumbs down!
+GAME_TRIVIA_COLOR,Trivia (Color),Trivia (Kulay)
+GAME_DESC_TRIVIA_COLOR,Go to the correct color!,Pumunta sa tamang kulay!
+GAME_HINT_TRIVIA_COLOR,Go to the color,Pumunta sa kulay
+GAME_HINT_TRIVIA_COLOR_RED,red,pula
+GAME_HINT_TRIVIA_COLOR_ORANGE,orange,kahel
+GAME_HINT_TRIVIA_COLOR_YELLOW,yellow,dilaw
+GAME_HINT_TRIVIA_COLOR_GREEN,green,berde
+GAME_HINT_TRIVIA_COLOR_BLUE,blue,asul
+GAME_HINT_TRIVIA_COLOR_INDIGO,indigo,anyil
+GAME_HINT_TRIVIA_COLOR_VIOLET,violet,lila
+GAME_TRIVIA_MATH,Trivia (Arithmetic),Trivia (Aritmetika)
+GAME_DESC_TRIVIA_MATH,Solve arithmetic problems!,Lutasin ang mga problema sa aritmetika!

@@ -28,7 +28,7 @@ public sealed partial class GameEventTriviaColor : GameEventTrivia
 
         GetNode<Control>("%L/Modulate").Modulate = getColor(a).WithAlpha(0.2f);
         GetNode<Control>("%R/Modulate").Modulate = getColor(b).WithAlpha(0.2f);
-        GetNode<Label>("%Q").Text = $"{Tr("GAME_HINT_TRIVIA_COLOR")} {Tr(getLocalized(correct))}";
+        GetNode<Label>("%Q").Text = $"{Tr("GAME_HINT_TRIVIA_COLOR")} {Tr(getLocalized(correct))}!";
     }
 
     protected override bool IsCorrect(int index)
