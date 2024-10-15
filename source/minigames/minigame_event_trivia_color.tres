@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="GameEventMetadata" load_steps=3 format=3 uid="uid://bbfsv1dpkj0yl"]
+
+[ext_resource type="PackedScene" uid="uid://dflw3chd1ca2x" path="res://scenes/minigames/minigame_trivia_math.tscn" id="1_esfml"]
+[ext_resource type="Script" path="res://scripts/game/GameEventMetadata.cs" id="2_l02cy"]
+
+[resource]
+script = ExtResource("2_l02cy")
+name = "GAME_TRIVIA_MATH"
+description = "GAME_DESC_TRIVIA_MATH"
+scene = ExtResource("1_esfml")
+weight = 1.0

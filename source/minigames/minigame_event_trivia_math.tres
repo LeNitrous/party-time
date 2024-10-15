@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="GameEventMetadata" load_steps=3 format=3 uid="uid://doyqf6xyq5i62"]
+
+[ext_resource type="Script" path="res://scripts/game/GameEventMetadata.cs" id="1_11660"]
+[ext_resource type="PackedScene" uid="uid://buubnwtkap6oa" path="res://scenes/minigames/minigame_trivia_color.tscn" id="1_m1rvh"]
+
+[resource]
+script = ExtResource("1_11660")
+name = "GAME_TRIVIA_COLOR"
+description = "GAME_DESC_TRIVIA_COLOR"
+scene = ExtResource("1_m1rvh")
+weight = 1.0

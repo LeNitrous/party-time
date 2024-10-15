@@ -1,0 +1,124 @@
+[gd_scene load_steps=10 format=3 uid="uid://buubnwtkap6oa"]
+
+[ext_resource type="PackedScene" uid="uid://clj5onjlh0jcc" path="res://scenes/minigames/minigame_trivia.tscn" id="1_4p3h7"]
+[ext_resource type="Shader" path="res://shaders/grid.gdshader" id="2_7rols"]
+[ext_resource type="Script" path="res://scripts/game/events/GameEventTriviaColor.cs" id="2_mdp1f"]
+[ext_resource type="Shader" path="res://shaders/stripes.gdshader" id="2_ys5fx"]
+[ext_resource type="FontFile" uid="uid://cuj4gq8fufdl" path="res://fonts/Sublima-ExtraBold.otf" id="3_cteof"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3s0sl"]
+shader = ExtResource("2_7rols")
+shader_parameter/size = Vector2(640, 720)
+shader_parameter/line_width = 0.1
+shader_parameter/offset = Vector2(0, 0)
+shader_parameter/speed = Vector2(0, 20)
+shader_parameter/grid_size = 32.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_00bvg"]
+shader = ExtResource("2_7rols")
+shader_parameter/size = Vector2(640, 720)
+shader_parameter/line_width = 0.1
+shader_parameter/offset = Vector2(0, 0)
+shader_parameter/speed = Vector2(0, -20)
+shader_parameter/grid_size = 32.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_psqp5"]
+shader = ExtResource("2_ys5fx")
+shader_parameter/stripe_color = Color(0, 0, 0, 0.0823529)
+shader_parameter/stripe_bias = 2.5
+shader_parameter/speed = 0.01
+shader_parameter/angle = 2.0
+shader_parameter/density = 30.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_lqiar"]
+font = ExtResource("3_cteof")
+font_size = 64
+outline_size = 120
+outline_color = Color(0.0862745, 0.0862745, 0.0862745, 1)
+shadow_size = 20
+shadow_color = Color(0.0862745, 0.0862745, 0.0862745, 1)
+shadow_offset = Vector2(4, 4)
+
+[node name="Event" instance=ExtResource("1_4p3h7")]
+script = ExtResource("2_mdp1f")
+
+[node name="Modulate" type="Control" parent="L" index="0"]
+modulate = Color(1, 1, 1, 0.0392157)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Fill" type="ColorRect" parent="L/Modulate" index="0"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Grid" type="ColorRect" parent="L/Modulate" index="1"]
+self_modulate = Color(1, 1, 1, 0.392157)
+material = SubResource("ShaderMaterial_3s0sl")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.894922, 0.894922, 0.894922, 1)
+
+[node name="Modulate" type="Control" parent="R" index="0"]
+modulate = Color(1, 1, 1, 0.0392157)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Fill" type="ColorRect" parent="R/Modulate" index="0"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Grid" type="ColorRect" parent="R/Modulate" index="1"]
+self_modulate = Color(1, 1, 1, 0.392157)
+material = SubResource("ShaderMaterial_00bvg")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.894922, 0.894922, 0.894922, 1)
+
+[node name="Warning" type="ColorRect" parent="." index="2"]
+material = SubResource("ShaderMaterial_psqp5")
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 19.0
+offset_bottom = 104.0
+grow_horizontal = 2
+color = Color(1, 1, 0, 1)
+
+[node name="Q" type="Label" parent="." index="3"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+offset_top = 30.0
+offset_bottom = 96.0
+grow_horizontal = 2
+text = "Go to the color"
+label_settings = SubResource("LabelSettings_lqiar")
+horizontal_alignment = 1
+autowrap_mode = 3

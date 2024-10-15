@@ -11,10 +11,9 @@ public sealed partial class GameEventSimonSays : GameEventGestureRecognizer
 
     private Gesture gesture;
 
-    public override void _Ready()
+    protected override void Init()
     {
-        base._Ready();
-        GetNode<Label>("Label").Text = string.Format("{0}\n{1}",Tr("GAME_HINT_SIMONSAYS"), Tr(gestureDescription[gesture = possible.GetRandom()]));
+        GetNode<Label>("Label").Text = Tr(gestureDescription[gesture = possible.GetRandom()]);
     }
 
     protected override void OnDetect(GestureRecognizerResult output)

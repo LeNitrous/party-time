@@ -1,0 +1,111 @@
+[gd_scene load_steps=8 format=3 uid="uid://dflw3chd1ca2x"]
+
+[ext_resource type="PackedScene" uid="uid://clj5onjlh0jcc" path="res://scenes/minigames/minigame_trivia.tscn" id="1_4b40a"]
+[ext_resource type="FontFile" uid="uid://cuj4gq8fufdl" path="res://fonts/Sublima-ExtraBold.otf" id="2_2ju5c"]
+[ext_resource type="Script" path="res://scripts/game/events/GameEventTriviaMath.cs" id="2_f1u7w"]
+[ext_resource type="Shader" path="res://shaders/stripes.gdshader" id="3_w3h0y"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wi0ij"]
+shader = ExtResource("3_w3h0y")
+shader_parameter/stripe_color = Color(0, 0, 0, 0.0823529)
+shader_parameter/stripe_bias = 2.5
+shader_parameter/speed = 0.03
+shader_parameter/angle = 2.0
+shader_parameter/density = 15.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_rdd4i"]
+font = ExtResource("2_2ju5c")
+font_size = 64
+outline_size = 120
+outline_color = Color(0.0862745, 0.0862745, 0.0862745, 1)
+shadow_size = 20
+shadow_color = Color(0.0862745, 0.0862745, 0.0862745, 1)
+shadow_offset = Vector2(4, 4)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_a6mxh"]
+shader = ExtResource("3_w3h0y")
+shader_parameter/stripe_color = Color(0, 0, 0, 0.0823529)
+shader_parameter/stripe_bias = 2.5
+shader_parameter/speed = 0.03
+shader_parameter/angle = 2.0
+shader_parameter/density = 30.0
+
+[node name="Event" instance=ExtResource("1_4b40a")]
+script = ExtResource("2_f1u7w")
+
+[node name="Warning" type="ColorRect" parent="L" index="0"]
+material = SubResource("ShaderMaterial_wi0ij")
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 516.0
+offset_bottom = 601.0
+grow_horizontal = 2
+color = Color(0.3, 0.3, 1, 1)
+
+[node name="A" type="Label" parent="L" index="1"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -240.0
+offset_bottom = -174.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "0"
+label_settings = SubResource("LabelSettings_rdd4i")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Warning" type="ColorRect" parent="R" index="0"]
+material = SubResource("ShaderMaterial_wi0ij")
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 516.0
+offset_bottom = 601.0
+grow_horizontal = 2
+color = Color(1, 0.3, 0.696667, 1)
+
+[node name="B" type="Label" parent="R" index="1"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -240.0
+offset_bottom = -174.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "0"
+label_settings = SubResource("LabelSettings_rdd4i")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Warning" type="ColorRect" parent="." index="2"]
+material = SubResource("ShaderMaterial_a6mxh")
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 19.0
+offset_bottom = 104.0
+grow_horizontal = 2
+color = Color(1, 1, 0, 1)
+
+[node name="Q" type="Label" parent="." index="3"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+offset_top = 30.0
+offset_bottom = 96.0
+grow_horizontal = 2
+text = "0 + 0 = ?"
+label_settings = SubResource("LabelSettings_rdd4i")
+horizontal_alignment = 1
+autowrap_mode = 3

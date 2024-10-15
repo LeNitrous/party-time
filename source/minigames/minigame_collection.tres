@@ -1,10 +1,12 @@
-[gd_resource type="Resource" script_class="GameEventCollection" load_steps=5 format=3 uid="uid://bdrth8cjsuu0i"]
+[gd_resource type="Resource" script_class="GameEventCollection" load_steps=7 format=3 uid="uid://bdrth8cjsuu0i"]
 
 [ext_resource type="Resource" uid="uid://d1diyycip72o0" path="res://minigames/minigame_event_dontstopmoving.tres" id="1_4ok3k"]
 [ext_resource type="Script" path="res://scripts/game/GameEventCollection.cs" id="1_ly2tx"]
 [ext_resource type="Resource" uid="uid://cx5iiibnte75y" path="res://minigames/minigame_event_standstill.tres" id="2_ew4qx"]
 [ext_resource type="Resource" uid="uid://waecpqfuxlkk" path="res://minigames/minigame_event_simonsays.tres" id="3_lbnfu"]
+[ext_resource type="Resource" uid="uid://bbfsv1dpkj0yl" path="res://minigames/minigame_event_trivia_color.tres" id="4_ewjxf"]
+[ext_resource type="Resource" uid="uid://doyqf6xyq5i62" path="res://minigames/minigame_event_trivia_math.tres" id="5_yq3fy"]
 
 [resource]
 script = ExtResource("1_ly2tx")
-events = Array[Object]([ExtResource("1_4ok3k"), ExtResource("2_ew4qx"), ExtResource("3_lbnfu")])
+events = Array[Object]([ExtResource("1_4ok3k"), ExtResource("2_ew4qx"), ExtResource("3_lbnfu"), ExtResource("4_ewjxf"), ExtResource("5_yq3fy")])

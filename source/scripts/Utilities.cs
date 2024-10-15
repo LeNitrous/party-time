@@ -32,6 +32,22 @@ public static class EnumerableExtensions
     }
 }
 
+public static class ColorExtensions
+{
+    public static Color WithAlpha(this Color color, float alpha)
+    {
+        return new Color(color.R, color.G, color.B, alpha);
+    }
+}
+
+public static class RandomExtensions
+{
+    public static bool NextBoolean(this Random random)
+    {
+        return random.Next(2) == 1;
+    }
+}
+
 public static class DirAccessExtensions
 {
     public static IEnumerable<string> Enumerate(this DirAccess dir, bool includeDirectories = false)

@@ -17,12 +17,14 @@ public abstract partial class GameEventDetectionTask<TOutput> : GameEvent
     public override void _Ready()
     {
         task = CreateTask();
+        Init();
     }
 
     public override void _ExitTree()
     {
         if (reset.Wait(TimeSpan.FromSeconds(5)))
         {
+            Exit();
             reset.Dispose();
             task?.Dispose();
             task = null;
@@ -48,15 +50,23 @@ public abstract partial class GameEventDetectionTask<TOutput> : GameEvent
 
     public sealed override void OnFrame(MediaPipeImage image)
     {
+        reset.Reset();
+
         if (task is not null && !hasOutput)
         {
-            reset.Reset();
-
             output = task.Detect(image, FrameSource.Stream);
             hasOutput = true;
-            
-            reset.Set();
         }
+
+        reset.Set();
+    }
+
+    protected virtual void Init()
+    {
+    }
+
+    protected virtual void Exit()
+    {
     }
 
     protected abstract void OnDetect(TOutput output);
