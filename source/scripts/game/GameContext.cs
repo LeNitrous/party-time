@@ -1,3 +1,5 @@
+using System.Threading;
+using System.Threading.Tasks;
 using GDExtension.Wrappers;
 using Godot;
 using Party.Game.Camera;
@@ -13,11 +15,15 @@ public sealed partial class GameContext : Node
     private GameEvent game;
     private Phase current;
     private CanvasLayer view;
-    private Timer time;
-    private Timer wait;
+    private Godot.Timer time;
+    private Godot.Timer wait;
     private GameDirector director;
     private Completion completion;
     private TextureRect camera;
+    private MediaPipeImage frame;
+    private Task runner;
+    private CancellationTokenSource source;
+    private readonly ManualResetEventSlim reset = new ManualResetEventSlim();
 
     public override void _Ready()
     {
@@ -27,10 +33,14 @@ public sealed partial class GameContext : Node
             CameraService.Current.Start();
         }
 
-        time = GetNode<Timer>("Time");
-        wait = GetNode<Timer>("Wait");
+        time = GetNode<Godot.Timer>("Time");
+        wait = GetNode<Godot.Timer>("Wait");
         view = GetNode<CanvasLayer>("%View");
         camera = GetNode<TextureRect>("%Camera");
+
+        source = new CancellationTokenSource();
+        runner = Task.Factory
+            .StartNew(() => gameFrameLoop(source.Token), CancellationToken.None, TaskCreationOptions.LongRunning, TaskScheduler.Default);
     }
 
     public override void _ExitTree()
@@ -40,6 +50,12 @@ public sealed partial class GameContext : Node
             CameraService.Current.OnFrame -= onCameraFrame;
             CameraService.Current.Close();
         }
+
+        source.Cancel();
+        source = null;
+
+        runner.Wait();
+        runner = null;
     }
 
     public override void _Process(double delta)
@@ -48,7 +64,7 @@ public sealed partial class GameContext : Node
         {
             if (state is not Completion.None && time.TimeLeft > 5.0)
             {
-                time.CallThreadSafe(Timer.MethodName.Start, 5.0);
+                time.CallThreadSafe(Godot.Timer.MethodName.Start, 5.0);
             }
 
             completion = state;
@@ -198,8 +214,6 @@ public sealed partial class GameContext : Node
             mp.ConvertToCpu();
         }
 
-        game?.OnFrame(mp);
-
         // This forsaken line is causing memory leaks that only happens in C#
         using var image = mp.GetImage();
 
@@ -215,6 +229,27 @@ public sealed partial class GameContext : Node
         // DO NOT DO THIS AT ANY COST BUT WE ARE FORCED
         System.GC.Collect(System.GC.MaxGeneration, System.GCCollectionMode.Forced);
         System.GC.WaitForPendingFinalizers();
+
+        frame = mp;
+        reset.Set();
+    }
+
+    private void gameFrameLoop(CancellationToken token)
+    {
+        while (!token.IsCancellationRequested)
+        {
+            reset.Wait(token);
+
+            if (frame is not null)
+            {
+                game?.OnFrame(frame);
+                frame = null;
+            }
+
+            reset.Reset();
+        }
+
+        frame = null;
     }
 
     private static Phase getNextPhase(Phase phase)

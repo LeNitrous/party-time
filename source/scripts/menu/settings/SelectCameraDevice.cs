@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using GDExtension.Wrappers;
 using Godot;
 using Party.Game.Camera;
@@ -8,19 +9,19 @@ using Party.Game.Menu;
 
 public sealed partial class SelectCameraDevice : Node
 {
-    private GestureRecognizer task;
     private Choice choice;
     private TextureRect camera;
     private Control border;
     private bool hasResult;
     private bool canDetectPresence;
     private bool hasUpdatedCameras;
+    private MediaPipeImage frame;
+    private Task runner;
+    private CancellationTokenSource source;
     private readonly ManualResetEventSlim reset = new ManualResetEventSlim(false);
 
     public override void _Ready()
     {
-        task = new GestureRecognizer();
-
         if (CameraService.Current is not null)
         {
             CameraService.Current.OnFeedAdded += onCameraFeedAdded;
@@ -28,6 +29,10 @@ public sealed partial class SelectCameraDevice : Node
             CameraService.Current.OnFrame += onCameraFrame;
             CameraService.Current.Start();
         }
+
+        source = new CancellationTokenSource();
+        runner = Task.Factory
+            .StartNew(() => detectionLoop(source.Token), CancellationToken.None, TaskCreationOptions.LongRunning, TaskScheduler.Default);
 
         border = GetNode<Control>("%Indicator");
         camera = GetNode<TextureRect>("%Camera");
@@ -67,37 +72,18 @@ public sealed partial class SelectCameraDevice : Node
             CameraService.Current.Close();
         }
 
-        reset.Wait();
+        source.Cancel();
+        source = null;
 
-        task.Dispose();
-        task = null;
+        runner.Wait();
+        runner = null;
     }
 
     private void onCameraFrame(MediaPipeImage mp)
     {
-        if (task is null)
-        {
-            return;
-        }
-
-        reset.Reset();
-
-        canDetectPresence = false;
-
         if (mp.IsGpuImage())
         {
             mp.ConvertToCpu();
-        }
-
-        var result = task.Detect(mp, FrameSource.Stream);
-    
-        for (int i = 0; i < result.Count; i++)
-        {
-            if (result[i].Gesture == Gesture.ThumbsUp)
-            {
-                canDetectPresence = true;
-                break;
-            }
         }
 
         using var image = mp.GetImage();
@@ -111,12 +97,43 @@ public sealed partial class SelectCameraDevice : Node
             camera.Texture.CallDeferred(ImageTexture.MethodName.SetImage, image);
         }
 
-        hasResult = true;
-
+        frame = mp;
         reset.Set();
 
         System.GC.Collect(System.GC.MaxGeneration, System.GCCollectionMode.Forced);
         System.GC.WaitForPendingFinalizers();
+    }
+
+    private void detectionLoop(CancellationToken token)
+    {
+        var task = new GestureRecognizer();
+
+        while (!token.IsCancellationRequested)
+        {
+            reset.Wait();
+
+            canDetectPresence = false;
+
+            if (frame is not null)
+            {
+                var result = task.Detect(frame, FrameSource.Stream);
+
+                for (int i = 0; i < result.Count; i++)
+                {
+                    if (result[i].Gesture == Gesture.ThumbsUp)
+                    {
+                        canDetectPresence = true;
+                        break;
+                    }
+                }
+            }
+
+            hasResult = true;
+
+            reset.Reset();
+        }
+
+        task.Dispose();
     }
 
     private void onCameraFeedSelectionChanged(int index)
