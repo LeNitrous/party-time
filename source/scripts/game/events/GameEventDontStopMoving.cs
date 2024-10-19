@@ -4,6 +4,8 @@ public sealed partial class GameEventDontStopMoving : GameEventMovementCheck
 {
     public override double Duration => 8.0;
 
+    protected override int RequiredLandmarksMoved => 5;
+
     private int framesMoved;
 
     public override Completion GetCompletionOnTimeout()
@@ -16,5 +18,5 @@ public sealed partial class GameEventDontStopMoving : GameEventMovementCheck
         framesMoved++;
     }
 
-    private const int requiredMovementFrames = 30;
+    private const int requiredMovementFrames = 20;
 }
