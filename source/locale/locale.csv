@@ -121,11 +121,11 @@ GAME_TUTORIAL_05_2,Now go ahead and play to experience what this game has to off
 GAME_SIMONSAYS,Simon Says!,Sabi ni Simon!
 GAME_DESC_SIMONSAYS,Follow Simon! Do what he says!,Sundan si Simon! Gawin ang sinabi niya!
 GAME_HINT_SIMONSAYS,Simon Says!,Sabi ni Simon!
-GAME_HINT_SIMONSAYS_LOVE,Make the I Love You gesture with your hands!,Gawin ang I Love You gesture gamit ang iyong kamay!
-GAME_HINT_SIMONSAYS_POINTSUP,Point your index finger up!,Itaas ang iyong hintuturo!
-GAME_HINT_SIMONSAYS_THUMBSUP,Give them a thumbs up!,Bigyan siya ng thumbs up!
-GAME_HINT_SIMONSAYS_VICTORY,Do a V sign with your hands!,Gawin ang V sign gamit ang iyong kamay!
-GAME_HINT_SIMONSAYS_THUMBSDOWN,Give them a thumbs down!,Bigyan siya ng thumbs down!
+GAME_HINT_SIMONSAYS_LOVE,Do an I Love You in sign language!,Gawin ang I Love You sa sign language!
+GAME_HINT_SIMONSAYS_POINTSUP,Point up!,Turo pataas!
+GAME_HINT_SIMONSAYS_THUMBSUP,Give them a thumbs up!,Bigyan mo ako ng thumbs up!
+GAME_HINT_SIMONSAYS_VICTORY,Do a victory sign with one of your hands!,Gawin ang victory sign gamit ng isang kamay!
+GAME_HINT_SIMONSAYS_THUMBSDOWN,Give them a thumbs down!,Bigyan mo ako ng thumbs down!
 GAME_TRIVIA_COLOR,Trivia (Color),Trivia (Kulay)
 GAME_DESC_TRIVIA_COLOR,Go to the correct color!,Pumunta sa tamang kulay!
 GAME_HINT_TRIVIA_COLOR,Go to the color,Pumunta sa kulay
