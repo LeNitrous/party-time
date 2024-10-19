@@ -62,9 +62,9 @@ public sealed partial class GameContext : Node
     {
         void raise(Completion state)
         {
-            if (state is not Completion.None && time.TimeLeft > 5.0)
+            if (state is not Completion.None && time.TimeLeft > 3.0)
             {
-                time.CallThreadSafe(Godot.Timer.MethodName.Start, 5.0);
+                time.CallThreadSafe(Godot.Timer.MethodName.Start, 3.0);
             }
 
             completion = state;
