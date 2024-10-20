@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -110,27 +111,34 @@ public sealed partial class SelectCameraDevice : Node
 
         while (!token.IsCancellationRequested)
         {
-            reset.Wait();
-
-            canDetectPresence = false;
-
-            if (frame is not null)
+            try
             {
-                var result = task.Detect(frame, FrameSource.Stream);
+                reset.Wait(token);
 
-                for (int i = 0; i < result.Count; i++)
+                canDetectPresence = false;
+
+                if (frame is not null)
                 {
-                    if (result[i].Gesture == Gesture.ThumbsUp)
+                    var result = task.Detect(frame, FrameSource.Stream);
+
+                    for (int i = 0; i < result.Count; i++)
                     {
-                        canDetectPresence = true;
-                        break;
+                        if (result[i].Gesture == Gesture.ThumbsUp)
+                        {
+                            canDetectPresence = true;
+                            break;
+                        }
                     }
                 }
+
+                hasResult = true;
+
+                reset.Reset();
             }
-
-            hasResult = true;
-
-            reset.Reset();
+            catch (OperationCanceledException)
+            {
+                break;
+            }
         }
 
         task.Dispose();

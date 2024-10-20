@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using GDExtension.Wrappers;
@@ -238,15 +239,22 @@ public sealed partial class GameContext : Node
     {
         while (!token.IsCancellationRequested)
         {
-            reset.Wait(token);
-
-            if (frame is not null)
+            try
             {
-                game?.OnFrame(frame);
-                frame = null;
-            }
+                reset.Wait(token);
 
-            reset.Reset();
+                if (frame is not null)
+                {
+                    game?.OnFrame(frame);
+                    frame = null;
+                }
+
+                reset.Reset();
+            }
+            catch (OperationCanceledException)
+            {
+                break;
+            }
         }
 
         frame = null;
