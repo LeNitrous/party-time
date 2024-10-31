@@ -7,5 +7,6 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="FlashCap" Version="1.10.0" />
+    <PackageReference Include="Velopack" Version="0.0.626" />
   </ItemGroup>
 </Project>
