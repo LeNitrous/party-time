@@ -6,14 +6,16 @@ namespace Party.Game;
 public class Velopack 
 {
     private const string UPDATE_URL = "https://github.com/LeNitrous/party-time/releases/";
+    private readonly UpdateManager updMgr; 
 
-    #nullable enable
-    public UpdateInfo? CheckUpdates()
+    public Velopack()
     {
-        var updMgr = new UpdateManager(UPDATE_URL);
+        updMgr = new UpdateManager(UPDATE_URL);
+    }
 
-        if (updMgr == null) return null;
-        else return updMgr.CheckForUpdates();
+    public UpdateInfo CheckUpdates()
+    {
+        return updMgr.CheckForUpdates();
     }
 
     public static void DownloadUpdate(UpdateInfo info) 
