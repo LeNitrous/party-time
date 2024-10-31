@@ -1,0 +1,23 @@
+name: Build
+on: push
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os:
+          - {prettyName: Windows, action-name: windows-latest, godot-archname: win64}
+          - {prettyName: Linux, action-name: ubuntu-latest, godot-archname: linux_x86_64}
+    name: Build
+    runs-on: ${matrix.os.action-name}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.0
+      - name: Download Godot Engine
+        run: |
+          curl -L -o godot.zip https://downloads.tuxfamily.org/godotengine/4.3/mono/Godot_v4.3-stable_mono_${matrix.os.godot-archname}.zip
+          unzip godot.zip
