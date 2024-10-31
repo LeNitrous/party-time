@@ -18,7 +18,7 @@ public class Velopack
         return updMgr.CheckForUpdates();
     }
 
-    public static void DownloadUpdate(UpdateInfo info) 
+    public static void DownloadUpdate() 
     {
         // ... add bootstrap code here!
     }
