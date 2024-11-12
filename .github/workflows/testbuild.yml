@@ -1,0 +1,45 @@
+name: Build
+on: push
+
+jobs:
+  build-windows:
+    name: Build on Windows
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          submodules: 'recursive'
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Get Godot Engine
+        run: |
+          Invoke-WebRequest -Uri "https://downloads.tuxfamily.org/godotengine/4.3/mono/Godot_v4.3-stable_mono_win64.zip" -OutFile "godot.zip"
+          New-Item -ItemType Directory -Path "godot"
+          Expand-Archive -Path "godot.zip" -Destination "${{ github.workspace }}"
+          Move-Item -Path "Godot_v4.3-stable_mono_win64/*" -Destination "godot/"
+          Remove-Item -Path "godot.zip"
+          Remove-Item -Path "Godot_v4.3-stable_mono_win64" -Recurse
+          ls godot/
+
+      - name: Get Godot Engine Templates
+        # Reference: https://www.reddit.com/r/godot/comments/7zbtmh/where_does_godot_download_export_templates/
+        run: |
+          Invoke-WebRequest -Uri "https://downloads.tuxfamily.org/godotengine/4.3/mono/Godot_v4.3-stable_mono_export_templates.tpz" -OutFile "export_templates.tpz"
+          New-Item -ItemType Directory -Path "$env:APPDATA\Godot\"
+          Expand-Archive -Path "export_templates.tpz" -Destination "$env:APPDATA\Godot\"
+          # Godot is expecting the templates to be in a folder named "export_templates", so we need to move them there
+          New-Item -ItemType Directory -Path "$env:APPDATA\Godot\export_templates\4.3.stable.mono\"
+          Move-Item -Path "$env:APPDATA\Godot\templates" -Destination "$env:APPDATA\Godot\export_templates\4.3.stable.mono\"
+          Remove-Item -Path "export_templates.tpz"
+          ls "$env:APPDATA\Godot\export_templates\4.3.stable.mono\"
+
+      - name: Build Project
+        run: |
+          ..\godot\Godot_v4.3-stable_mono_win64.exe --headless --verbose --export-debug "win-x64" ../builds/win-x64/release/
+        working-directory: ${{ github.workspace }}/source/
